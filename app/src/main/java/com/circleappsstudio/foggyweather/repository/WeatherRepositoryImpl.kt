@@ -1,7 +1,7 @@
 package com.circleappsstudio.foggyweather.repository
 
-//import com.circleappsstudio.foggyweather.data.model.CurrentWeatherLocationResults
 import com.circleappsstudio.foggyweather.data.model.CurrentWeatherResults
+import com.circleappsstudio.foggyweather.data.model.ForecastResults
 import com.circleappsstudio.foggyweather.data.remote.WeatherRemoteDataSource
 
 class WeatherRepositoryImpl(
@@ -13,11 +13,13 @@ class WeatherRepositoryImpl(
         airQuality: Boolean
     ): CurrentWeatherResults = dataSource.getCurrentWeather(location, airQuality)
 
-    /*override suspend fun getCurrentWeatherLocation(
+    override suspend fun getForecast(
         location: String,
-        airQuality: Boolean
-    ): CurrentWeatherLocationResults = dataSource.getCurrentWeatherLocation(
-        location,
-        airQuality
-    )*/
+        days: Int,
+        airQuality: Boolean,
+        alerts: Boolean
+    ): ForecastResults = dataSource.getForecast(
+        location, days, airQuality, alerts
+    )
+
 }

@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.circleappsstudio.foggyweather.R
 import com.circleappsstudio.foggyweather.application.AppConstants
 import com.circleappsstudio.foggyweather.core.Result
+import com.circleappsstudio.foggyweather.data.model.ForecastDay
 import com.circleappsstudio.foggyweather.data.remote.WeatherRemoteDataSource
 import com.circleappsstudio.foggyweather.databinding.FragmentCurrentWeatherBinding
 import com.circleappsstudio.foggyweather.presenter.WeatherViewModel
@@ -38,7 +39,7 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
         binding = FragmentCurrentWeatherBinding.bind(view)
 
         getCurrentWeatherObserver("Grecia", false)
-        //getCurrentWeatherLocationObserver("Grecia", false)
+        getForecast("Grecia", 1, false, false)
 
     }
 
@@ -63,7 +64,8 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
 
                 is Result.Success -> {
 
-                    binding.txtLocation.text = "${resultEmitted.data.location.name}, ${resultEmitted.data.location.region}"
+                    binding.txtLocation.text =
+                        "${resultEmitted.data.location.name}, ${resultEmitted.data.location.region}"
 
                     binding.txtTemperature.text = "${resultEmitted.data.current.temp_c}°C"
 
@@ -74,18 +76,9 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
 
                     binding.txtCondition.text = resultEmitted.data.current.condition.text
 
-
-
                     binding.txtFeelsLike.text = "${resultEmitted.data.current.feelslike_c}°C"
+
                     binding.txtLastUpdate.text = resultEmitted.data.current.last_updated
-
-
-                    /*Log.wtf(
-                        "TAG", "Current Weather:\n" +
-                            "Last Updated: ${resultEmitted.data.current.last_updated}\n" +
-                            "Temperature: ${resultEmitted.data.current.temp_c}\n" +
-                            "Feels like: ${resultEmitted.data.current.feelslike_c}"
-                    )*/
 
                 }
 
@@ -105,11 +98,18 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
 
     }
 
-    /*private fun getCurrentWeatherLocationObserver(location: String, airQuality: Boolean) {
+    private fun getForecast(
+        location: String,
+        days: Int,
+        airQuality: Boolean,
+        alerts: Boolean
+    ) {
 
-        viewModel.fetchCurrentWeatherLocation(
+        viewModel.fetchForecast(
             location,
-            airQuality
+            days,
+            airQuality,
+            alerts
         ).observe(viewLifecycleOwner, Observer { resultEmitted ->
 
             when (resultEmitted) {
@@ -126,7 +126,14 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
 
                 is Result.Success -> {
 
-                    binding.txtLocation.text = "${resultEmitted.data.location.name}, ${resultEmitted.data.location.region}"
+                    resultEmitted.data.forecast.forecastday.forEachIndexed { index, forecastDay ->
+
+                        if (index == 0) {
+                            binding.txtMaxTemp.text = "${forecastDay.day.maxtemp_c}°C"
+                            binding.txtMinTemp.text = "${forecastDay.day.mintemp_c}°C"
+                        }
+
+                    }
 
                 }
 
@@ -138,13 +145,15 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
                         Toast.LENGTH_SHORT
                     ).show()
 
+                    Log.wtf("TAG", resultEmitted.exception.message.toString())
+
                 }
 
             }
 
         })
 
-    }*/
+    }
 
 
 }

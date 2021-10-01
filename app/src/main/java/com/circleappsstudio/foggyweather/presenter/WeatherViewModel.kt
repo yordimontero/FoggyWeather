@@ -46,9 +46,11 @@ class WeatherViewModel(
 
     }
 
-    /*fun fetchCurrentWeatherLocation(
+    fun fetchForecast(
         location: String,
-        airQuality: Boolean
+        days: Int,
+        airQuality: Boolean,
+        alerts: Boolean
     ) = liveData(
         viewModelScope.coroutineContext + Dispatchers.Main
     ) {
@@ -57,14 +59,16 @@ class WeatherViewModel(
 
             emit(Result.Loading())
 
-            repository.getCurrentWeatherLocation(
+            repository.getForecast(
                 location,
-                airQuality
+                days,
+                airQuality,
+                alerts
             )
 
-        }.onSuccess { weather ->
+        }.onSuccess { forecast ->
             emit(
-                Result.Success(weather)
+                Result.Success(forecast)
             )
 
         }.onFailure { throwable ->
@@ -77,7 +81,7 @@ class WeatherViewModel(
             )
         }
 
-    }*/
+    }
 
 }
 

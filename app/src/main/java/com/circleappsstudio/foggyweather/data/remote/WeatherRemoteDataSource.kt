@@ -2,7 +2,7 @@ package com.circleappsstudio.foggyweather.data.remote
 
 import com.circleappsstudio.foggyweather.application.AppConstants
 import com.circleappsstudio.foggyweather.data.model.CurrentWeatherResults
-//import com.circleappsstudio.foggyweather.data.model.CurrentWeatherLocationResults
+import com.circleappsstudio.foggyweather.data.model.ForecastResults
 import com.circleappsstudio.foggyweather.repository.WebService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -22,17 +22,21 @@ class WeatherRemoteDataSource(private val webService: WebService) {
 
     }
 
-    /*suspend fun getCurrentWeatherLocation(
+    suspend fun getForecast(
         location: String,
-        airQuality: Boolean
-    ): CurrentWeatherLocationResults = withContext(Dispatchers.IO) {
+        days: Int,
+        airQuality: Boolean,
+        alerts: Boolean
+    ): ForecastResults = withContext(Dispatchers.IO) {
 
-        webService.getCurrentWeatherLocation(
+        webService.getForecast(
             AppConstants.API_KEY,
             location,
-            airQuality
+            days,
+            airQuality,
+            alerts
         )
 
-    }*/
+    }
 
 }

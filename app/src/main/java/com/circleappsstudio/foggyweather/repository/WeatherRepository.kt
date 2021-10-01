@@ -1,7 +1,7 @@
 package com.circleappsstudio.foggyweather.repository
 
-//import com.circleappsstudio.foggyweather.data.model.CurrentWeatherLocationResults
 import com.circleappsstudio.foggyweather.data.model.CurrentWeatherResults
+import com.circleappsstudio.foggyweather.data.model.ForecastResults
 
 interface WeatherRepository {
 
@@ -10,9 +10,11 @@ interface WeatherRepository {
         airQuality: Boolean
     ): CurrentWeatherResults
 
-    /*suspend fun getCurrentWeatherLocation(
+    suspend fun getForecast(
         location: String,
-        airQuality: Boolean
-    ): CurrentWeatherLocationResults*/
+        days: Int,
+        airQuality: Boolean,
+        alerts: Boolean
+    ): ForecastResults
 
 }

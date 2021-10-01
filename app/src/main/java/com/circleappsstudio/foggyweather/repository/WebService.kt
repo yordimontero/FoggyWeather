@@ -2,7 +2,7 @@ package com.circleappsstudio.foggyweather.repository
 
 import com.circleappsstudio.foggyweather.application.AppConstants
 import com.circleappsstudio.foggyweather.data.model.CurrentWeatherResults
-//import com.circleappsstudio.foggyweather.data.model.CurrentWeatherLocationResults
+import com.circleappsstudio.foggyweather.data.model.ForecastResults
 import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -21,15 +21,19 @@ interface WebService {
         airQuality: Boolean
     ): CurrentWeatherResults
 
-    /*@GET("current.json")
-    suspend fun getCurrentWeatherLocation(
+    @GET("forecast.json")
+    suspend fun getForecast(
         @Query("key")
         apiKey: String,
         @Query("q")
         location: String,
+        @Query("days")
+        days: Int,
         @Query("aqi")
-        airQuality: Boolean
-    ): CurrentWeatherLocationResults*/
+        airQuality: Boolean,
+        @Query("alerts")
+        alerts: Boolean
+    ): ForecastResults
 
 }
 

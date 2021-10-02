@@ -1,5 +1,6 @@
 package com.circleappsstudio.foggyweather.ui.current
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -42,6 +43,7 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
         getForecast("Grecia", 1, false, false)
 
     }
+
 
     private fun getCurrentWeatherObserver(location: String, airQuality: Boolean) {
 
@@ -154,6 +156,5 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
         })
 
     }
-
 
 }

@@ -4,7 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/fragment_current_weather.xml" value="0.33" />
+        <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/forecast_item_view.xml" value="0.5" />
+        <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/fragment_current_weather.xml" value="0.25" />
       </map>
     </option>
   </component>

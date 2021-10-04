@@ -35,10 +35,21 @@ data class Forecast(
 
 data class ForecastDay(
     val date: String = "",
-    val day: Day
+    val day: Day,
+    val hour: List<Hour> = listOf()
 )
 
 data class Day(
     val maxtemp_c: Float = 0.0F,
     val mintemp_c: Float = 0.0F
+)
+
+data class Hour(
+    val time: String = "",
+    val temp_c: String = "",
+    val condition: Condition
+)
+
+data class Condition(
+    val icon: String = ""
 )

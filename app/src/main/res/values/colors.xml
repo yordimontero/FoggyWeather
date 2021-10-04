@@ -14,5 +14,6 @@
     <color name="green">#6D9773</color>
     <color name="black_95">#121212</color>
     <color name="gray_card">#414141</color>
+    <color name="dark_gray_card">#313131</color>
 
 </resources>

@@ -13,5 +13,6 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="android:textColorSecondary">@color/neomorph_shadow_color</item>
+        <item name="android:textColorHint">@color/dark_gray_card</item>
     </style>
 </resources>

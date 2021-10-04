@@ -1,6 +1,5 @@
 package com.circleappsstudio.foggyweather.ui.current
 
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,14 +10,14 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.circleappsstudio.foggyweather.R
 import com.circleappsstudio.foggyweather.application.AppConstants
-import com.circleappsstudio.foggyweather.core.Result
-import com.circleappsstudio.foggyweather.data.model.ForecastDay
+import com.circleappsstudio.foggyweather.core.*
 import com.circleappsstudio.foggyweather.data.remote.WeatherRemoteDataSource
 import com.circleappsstudio.foggyweather.databinding.FragmentCurrentWeatherBinding
 import com.circleappsstudio.foggyweather.presenter.WeatherViewModel
 import com.circleappsstudio.foggyweather.presenter.WeatherViewModelFactory
 import com.circleappsstudio.foggyweather.repository.RetrofitClient
 import com.circleappsstudio.foggyweather.repository.WeatherRepositoryImpl
+import com.circleappsstudio.foggyweather.ui.current.adapter.ForecastAdapter
 
 class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
 
@@ -80,7 +79,7 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
 
                     binding.txtFeelsLike.text = "${resultEmitted.data.current.feelslike_c}°C"
 
-                    binding.txtLastUpdate.text = resultEmitted.data.current.last_updated
+                    binding.txtLastUpdate.text = splitDate(resultEmitted.data.current.last_updated)
 
                 }
 
@@ -134,6 +133,27 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
                             binding.txtMaxTemp.text = "${forecastDay.day.maxtemp_c}°C"
                             binding.txtMinTemp.text = "${forecastDay.day.mintemp_c}°C"
                         }
+
+                    }
+
+                    val currentHour = getCurrentHour(requireContext())
+
+                    val splitHour24 = splitHour(currentHour, 0)
+                    val splitHour12 = splitHour(currentHour, 1)
+
+                    val forecastRecyclerViewPosition = if (checkHourFormat(requireContext())) {
+                        getCurrentForecastCard(splitHour24, requireContext())
+                    } else {
+                        getCurrentForecastCard(splitHour12, requireContext())
+                    }
+
+                    resultEmitted.data.forecast.forecastday.forEachIndexed { index, forecastDay ->
+
+                        binding.rvForecast.adapter = ForecastAdapter(
+                            forecastDay.hour
+                        )
+
+                        binding.rvForecast.scrollToPosition(forecastRecyclerViewPosition)
 
                     }
 

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal">
+
+    <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:neomorph_corner_radius="16dp"
+        app:neomorph_elevation="8dp"
+        app:neomorph_background_color="?android:textColorSecondary"
+        app:neomorph_highlight_color="?android:textColorSecondary"
+        app:neomorph_shadow_color="?android:textColorHint"
+        app:neomorph_shadow_type="outer"
+        app:neomorph_view_type="rectangular">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/txt_hour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="00:00"
+                android:textSize="16sp"
+                app:drawableStartCompat="@drawable/ic_hour"
+                android:drawableTint="@color/green"/>
+
+            <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:neomorph_corner_radius="16dp"
+                app:neomorph_elevation="4dp"
+                app:neomorph_background_color="?android:textColorHint"
+                app:neomorph_highlight_color="?android:textColorSecondary"
+                app:neomorph_shadow_color="?android:textColorHint"
+                app:neomorph_shadow_type="outer"
+                app:neomorph_view_type="circular">
+
+                <ImageView
+                    android:id="@+id/img_icon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="4dp"
+                    tools:src="@drawable/ic_cloud"
+                    tools:tint="@color/black"/>
+
+            </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txt_temperature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="16"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="°C"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
+
+</LinearLayout>

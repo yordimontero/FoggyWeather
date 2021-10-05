@@ -1,6 +1,7 @@
 package com.circleappsstudio.foggyweather.data.remote
 
 import com.circleappsstudio.foggyweather.application.AppConstants
+import com.circleappsstudio.foggyweather.data.model.AstronomyResults
 import com.circleappsstudio.foggyweather.data.model.CurrentWeatherResults
 import com.circleappsstudio.foggyweather.data.model.ForecastResults
 import com.circleappsstudio.foggyweather.repository.WebService
@@ -35,6 +36,19 @@ class WeatherRemoteDataSource(private val webService: WebService) {
             days,
             airQuality,
             alerts
+        )
+
+    }
+
+    suspend fun getAstronomy(
+        location: String,
+        date: String
+    ): AstronomyResults = withContext(Dispatchers.IO) {
+
+        webService.getAstronomy(
+            AppConstants.API_KEY,
+            location,
+            date
         )
 
     }

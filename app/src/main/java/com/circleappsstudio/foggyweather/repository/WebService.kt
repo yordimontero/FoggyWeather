@@ -1,6 +1,7 @@
 package com.circleappsstudio.foggyweather.repository
 
 import com.circleappsstudio.foggyweather.application.AppConstants
+import com.circleappsstudio.foggyweather.data.model.AstronomyResults
 import com.circleappsstudio.foggyweather.data.model.CurrentWeatherResults
 import com.circleappsstudio.foggyweather.data.model.ForecastResults
 import com.google.gson.GsonBuilder
@@ -34,6 +35,16 @@ interface WebService {
         @Query("alerts")
         alerts: Boolean
     ): ForecastResults
+
+    @GET("astronomy.json")
+    suspend fun getAstronomy(
+        @Query("key")
+        apiKey: String,
+        @Query("q")
+        location: String,
+        @Query("dt")
+        date: String
+    ): AstronomyResults
 
 }
 

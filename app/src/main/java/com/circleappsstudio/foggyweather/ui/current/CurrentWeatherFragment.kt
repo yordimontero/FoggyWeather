@@ -18,6 +18,7 @@ import com.circleappsstudio.foggyweather.presenter.WeatherViewModelFactory
 import com.circleappsstudio.foggyweather.repository.RetrofitClient
 import com.circleappsstudio.foggyweather.repository.WeatherRepositoryImpl
 import com.circleappsstudio.foggyweather.ui.current.adapter.ForecastAdapter
+import java.util.*
 
 class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
 
@@ -33,13 +34,20 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
         )
     }
 
+    private val currentDate by lazy {
+        formatDate(Calendar.getInstance().time)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentCurrentWeatherBinding.bind(view)
 
         getCurrentWeatherObserver("Grecia", false)
-        getForecast("Grecia", 1, false, false)
+        getForecastObserver("Grecia", 1, false, false)
+        getAstronomyObserver("Grecia", currentDate)
+
+        Log.wtf("TAG", currentDate)
 
     }
 
@@ -55,11 +63,7 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
 
                 is Result.Loading -> {
 
-                    Toast.makeText(
-                        requireContext(),
-                        "Loading...",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    binding.progressBar.visibility = View.VISIBLE
 
                 }
 
@@ -81,6 +85,8 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
 
                     binding.txtLastUpdate.text = splitDate(resultEmitted.data.current.last_updated)
 
+                    binding.progressBar.visibility = View.GONE
+
                 }
 
                 is Result.Failure -> {
@@ -91,6 +97,8 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
                         Toast.LENGTH_SHORT
                     ).show()
 
+                    binding.progressBar.visibility = View.GONE
+
                 }
 
             }
@@ -99,7 +107,7 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
 
     }
 
-    private fun getForecast(
+    private fun getForecastObserver(
         location: String,
         days: Int,
         airQuality: Boolean,
@@ -116,13 +124,7 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
             when (resultEmitted) {
 
                 is Result.Loading -> {
-
-                    Toast.makeText(
-                        requireContext(),
-                        "Loading...",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
+                    binding.progressBar.visibility = View.VISIBLE
                 }
 
                 is Result.Success -> {
@@ -136,16 +138,11 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
 
                     }
 
-                    val currentHour = getCurrentHour(requireContext())
+                    val currentHour = getCurrentHourFormatted(requireContext())
 
-                    val splitHour24 = splitHour(currentHour, 0)
-                    val splitHour12 = splitHour(currentHour, 1)
-
-                    val forecastRecyclerViewPosition = if (checkHourFormat(requireContext())) {
-                        getCurrentForecastCard(splitHour24, requireContext())
-                    } else {
-                        getCurrentForecastCard(splitHour12, requireContext())
-                    }
+                    val forecastRecyclerViewPosition = getCurrentForecastCard(
+                        currentHour, requireContext()
+                    )
 
                     resultEmitted.data.forecast.forecastday.forEachIndexed { index, forecastDay ->
 
@@ -157,6 +154,8 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
 
                     }
 
+                    binding.progressBar.visibility = View.GONE
+
                 }
 
                 is Result.Failure -> {
@@ -167,13 +166,62 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
                         Toast.LENGTH_SHORT
                     ).show()
 
-                    Log.wtf("TAG", resultEmitted.exception.message.toString())
+                    binding.progressBar.visibility = View.GONE
 
                 }
 
             }
 
         })
+
+    }
+
+    private fun getAstronomyObserver(
+        location: String,
+        date: String
+    ) {
+
+        viewModel.fetchAstronomy(location, date)
+            .observe(viewLifecycleOwner, Observer { resultEmitted ->
+
+                when (resultEmitted) {
+
+                    is Result.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+
+                    is Result.Success -> {
+
+                        binding.txtSunrise.text = resultEmitted.data.astronomy.astro.sunrise
+                        binding.txtSunset.text = resultEmitted.data.astronomy.astro.sunset
+
+                        binding.txtMoonrise.text = resultEmitted.data.astronomy.astro.moonrise
+                        binding.txtMoonset.text = resultEmitted.data.astronomy.astro.moonset
+
+                        binding.txtMoonPhase.text = resultEmitted.data.astronomy.astro.moon_phase
+                        binding.txtMoonIllumination.text = resultEmitted.data.astronomy.astro.moon_illumination
+
+                        binding.progressBar.visibility = View.GONE
+
+                    }
+
+                    is Result.Failure -> {
+
+                        Toast.makeText(
+                            requireContext(),
+                            "Something went wrong: ${resultEmitted.exception.message.toString()}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        Log.wtf("TAG", resultEmitted.exception.message.toString())
+
+                        binding.progressBar.visibility = View.GONE
+
+                    }
+
+                }
+
+            })
 
     }
 

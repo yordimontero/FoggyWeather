@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.current.CurrentWeatherFragment">
+
+    <RelativeLayout
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -225,42 +239,291 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:orientation="horizontal"/>
+                android:orientation="horizontal"
+                tools:listitem="@layout/forecast_item_view"/>
 
             <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
-                android:visibility="gone"
-                android:id="@+id/neomorphFrameLayout6"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/neomorphFrameLayout3"
-                app:neomorph_background_color="@color/neomorph_background_color"
                 app:neomorph_corner_radius="16dp"
                 app:neomorph_elevation="8dp"
-                app:neomorph_highlight_color="@color/neomorph_highlight_color"
-                app:neomorph_shadow_color="@color/neomorph_shadow_color"
-                app:neomorph_shadow_type="inner"
-                app:neomorph_view_type="rectangular">
+                app:neomorph_background_color="?android:textColorSecondary"
+                app:neomorph_highlight_color="?android:textColorSecondary"
+                app:neomorph_shadow_color="?android:textColorHint"
+                app:neomorph_shadow_type="outer"
+                app:neomorph_view_type="rectangular"
+                android:layout_gravity="center">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginEnd="10dp"
+                        android:gravity="center">
+
+                        <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:neomorph_corner_radius="16dp"
+                            app:neomorph_elevation="4dp"
+                            app:neomorph_background_color="?android:textColorHint"
+                            app:neomorph_highlight_color="?android:textColorSecondary"
+                            app:neomorph_shadow_color="?android:textColorHint"
+                            app:neomorph_shadow_type="outer"
+                            app:neomorph_view_type="circular">
+
+                            <ImageView
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:src="@drawable/sunrise"
+                                android:layout_margin="6dp"/>
+
+                        </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sunrise"
+                            android:textSize="18sp"
+                            android:gravity="center"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/txt_sunrise"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="05:26 AM"
+                            android:textSize="18sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="10dp"
+                        android:gravity="center">
+
+                        <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:neomorph_corner_radius="16dp"
+                            app:neomorph_elevation="4dp"
+                            app:neomorph_background_color="?android:textColorHint"
+                            app:neomorph_highlight_color="?android:textColorSecondary"
+                            app:neomorph_shadow_color="?android:textColorHint"
+                            app:neomorph_shadow_type="outer"
+                            app:neomorph_view_type="circular">
+
+                            <ImageView
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:src="@drawable/sunset"
+                                android:layout_margin="6dp"/>
+
+                        </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sunset"
+                            android:textSize="18sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/txt_sunset"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="05:25 PM"
+                            android:textSize="18sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
+
+            <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:neomorph_corner_radius="16dp"
+                app:neomorph_elevation="8dp"
+                app:neomorph_background_color="?android:textColorSecondary"
+                app:neomorph_highlight_color="?android:textColorSecondary"
+                app:neomorph_shadow_color="?android:textColorHint"
+                app:neomorph_shadow_type="outer"
+                app:neomorph_view_type="rectangular"
+                android:layout_gravity="center">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="8dp">
 
-                    <TextView
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_marginBottom="10dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginEnd="10dp"
+                            android:gravity="center">
+
+                            <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:neomorph_corner_radius="16dp"
+                                app:neomorph_elevation="4dp"
+                                app:neomorph_background_color="?android:textColorHint"
+                                app:neomorph_highlight_color="?android:textColorSecondary"
+                                app:neomorph_shadow_color="?android:textColorHint"
+                                app:neomorph_shadow_type="outer"
+                                app:neomorph_view_type="circular">
+
+                                <ImageView
+                                    android:layout_width="35dp"
+                                    android:layout_height="35dp"
+                                    android:src="@drawable/moonrise"
+                                    android:layout_margin="6dp"/>
+
+                            </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Moonrise"
+                                android:textSize="18sp"
+                                android:textStyle="bold"/>
+
+                            <TextView
+                                android:id="@+id/txt_moonrise"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:text="05:26 AM"
+                                android:textSize="18sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginStart="10dp"
+                            android:gravity="center">
+
+                            <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:neomorph_corner_radius="16dp"
+                                app:neomorph_elevation="4dp"
+                                app:neomorph_background_color="?android:textColorHint"
+                                app:neomorph_highlight_color="?android:textColorSecondary"
+                                app:neomorph_shadow_color="?android:textColorHint"
+                                app:neomorph_shadow_type="outer"
+                                app:neomorph_view_type="circular">
+
+                                <ImageView
+                                    android:layout_width="35dp"
+                                    android:layout_height="35dp"
+                                    android:src="@drawable/moonset"
+                                    android:layout_margin="6dp"/>
+
+                            </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Moonset"
+                                android:textSize="18sp"
+                                android:textStyle="bold"/>
+
+                            <TextView
+                                android:id="@+id/txt_moonset"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:text="05:25 PM"
+                                android:textSize="18sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Sunrise"
-                        android:textSize="18sp" />
+                        app:neomorph_corner_radius="16dp"
+                        app:neomorph_elevation="4dp"
+                        app:neomorph_background_color="?android:textColorHint"
+                        app:neomorph_highlight_color="?android:textColorSecondary"
+                        app:neomorph_shadow_color="?android:textColorHint"
+                        app:neomorph_shadow_type="outer"
+                        app:neomorph_view_type="circular">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/moon_phase"
+                            android:layout_margin="6dp"/>
+
+                    </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Moon Phase:"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:layout_marginEnd="5dp"/>
+
+                        <TextView
+                            android:id="@+id/txt_moon_phase"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="New Moon"
+                            android:textSize="18sp" />
+
+                    </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_hour"
-                        android:text="19°C"
+                        android:text="Illumination:"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginEnd="5dp"/>
+
+                    <TextView
+                        android:id="@+id/txt_moon_illumination"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="0"
                         android:textSize="18sp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -369,4 +632,4 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

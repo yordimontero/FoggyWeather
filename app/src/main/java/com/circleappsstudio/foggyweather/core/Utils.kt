@@ -2,6 +2,7 @@ package com.circleappsstudio.foggyweather.core
 
 import android.content.Context
 import android.text.format.DateFormat
+import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -12,12 +13,12 @@ fun splitDate(date: String): String {
     return splitDate[1]
 }
 
-fun splitHour(date: String, position: Int): String {
-    val splitHour = date.split(":")
+fun splitHour(hour: String, position: Int): String {
+    val splitHour = hour.split(":")
     return splitHour[position]
 }
 
-fun getCurrentHour(context: Context): String {
+fun getCurrentHourFormatted(context: Context): String {
 
     val formatter12h = SimpleDateFormat("hh:mm a", Locale.US)
     val formatter24h = SimpleDateFormat("HH:mm", Locale.US)
@@ -31,13 +32,43 @@ fun getCurrentHour(context: Context): String {
 
 }
 
+fun getCurrentHour24(context: Context): String {
+
+    val formatter24h = SimpleDateFormat("HH:mm", Locale.US)
+    val currentHour = Calendar.getInstance().time
+
+    return formatter24h.format(currentHour)
+
+}
+
+fun formatHour(hour: String, minute: String, context: Context): String {
+
+    val formatter12h = SimpleDateFormat("hh:mm a", Locale.US)
+    val formatter24h = SimpleDateFormat("HH:mm", Locale.US)
+    val calendar = Calendar.getInstance()
+
+    calendar.set(Calendar.HOUR_OF_DAY, hour.toInt())
+    calendar.set(Calendar.MINUTE, minute.toInt())
+
+    val hourParsed: String = if (DateFormat.is24HourFormat(context)) {
+        formatter24h.format(calendar.time)
+    } else {
+        formatter12h.format(calendar.time)
+    }
+
+    return hourParsed
+
+}
+
 fun getCurrentForecastCard(currentHour: String, context: Context): Int {
 
     var value = 0
 
+    val splitHour24 = splitHour(currentHour, 0)
+
     if (DateFormat.is24HourFormat(context)) {
 
-        when (currentHour.toInt()) {
+        when (splitHour24.toInt()) {
             0 -> value = 0
             1 -> value = 1
             2 -> value = 2
@@ -68,83 +99,91 @@ fun getCurrentForecastCard(currentHour: String, context: Context): Int {
 
     } else {
 
-        // Bug.
-
-        if (currentHour.contains("1 AM")) {
+        if (currentHour.startsWith("01") && currentHour.endsWith("AM")) {
             value = 1
         }
-        if (currentHour.contains("2 AM")) {
+        if (currentHour.startsWith("02") && currentHour.endsWith("AM")) {
             value = 2
         }
-        if (currentHour.contains("3 AM")) {
+        if (currentHour.startsWith("03") && currentHour.endsWith("AM")) {
             value = 3
         }
-        if (currentHour.contains("4 AM")) {
+        if (currentHour.startsWith("04") && currentHour.endsWith("AM")) {
             value = 4
         }
-        if (currentHour.contains("5 AM")) {
+        if (currentHour.startsWith("05") && currentHour.endsWith("AM")) {
             value = 5
         }
-        if (currentHour.contains("6 AM")) {
+        if (currentHour.startsWith("06") && currentHour.endsWith("AM")) {
             value = 6
         }
-        if (currentHour.contains("7 AM")) {
+        if (currentHour.startsWith("07") && currentHour.endsWith("AM")) {
             value = 7
         }
-        if (currentHour.contains("8 AM")) {
+        if (currentHour.startsWith("08") && currentHour.endsWith("AM")) {
             value = 8
         }
-        if (currentHour.contains("9 AM")) {
+        if (currentHour.startsWith("09") && currentHour.endsWith("AM")) {
             value = 9
         }
-        if (currentHour.contains("10 AM")) {
+        if (currentHour.startsWith("10") && currentHour.endsWith("AM")) {
             value = 10
         }
-        if (currentHour.contains("11 AM")) {
+        if (currentHour.startsWith("11") && currentHour.endsWith("AM")) {
             value = 11
         }
-        if (currentHour.contains("12 PM")) {
+        if (currentHour.startsWith("12") && currentHour.endsWith("PM")) {
             value = 12
         }
-        if (currentHour.contains("1 PM")) {
+        if (currentHour.startsWith("01") && currentHour.endsWith("PM")) {
             value = 13
         }
-        if (currentHour.contains("2 PM")) {
+        if (currentHour.startsWith("02") && currentHour.endsWith("PM")) {
             value = 14
         }
-        if (currentHour.contains("3 PM")) {
+        if (currentHour.startsWith("03") && currentHour.endsWith("PM")) {
             value = 15
         }
-        if (currentHour.contains("4 PM")) {
+        if (currentHour.startsWith("04") && currentHour.endsWith("PM")) {
             value = 16
         }
-        if (currentHour.contains("5 PM")) {
+        if (currentHour.startsWith("05") && currentHour.endsWith("PM")) {
             value = 17
         }
-        if (currentHour.contains("6 PM")) {
+        if (currentHour.startsWith("06") && currentHour.endsWith("PM")) {
             value = 18
         }
-        if (currentHour.contains("7 PM")) {
+        if (currentHour.startsWith("07") && currentHour.endsWith("PM")) {
             value = 19
         }
-        if (currentHour.contains("8 PM")) {
+        if (currentHour.startsWith("08") && currentHour.endsWith("PM")) {
             value = 20
         }
-        if (currentHour.contains("9 PM")) {
+        if (currentHour.startsWith("09") && currentHour.endsWith("PM")) {
             value = 21
         }
-        if (currentHour.contains("10 PM")) {
+        if (currentHour.startsWith("10") && currentHour.endsWith("PM")) {
             value = 22
         }
-        if (currentHour.contains("11 PM")) {
+        if (currentHour.startsWith("11") && currentHour.endsWith("PM")) {
             value = 23
         }
-        if (currentHour.contains("12 AM")) {
+        if (currentHour.startsWith("12") && currentHour.endsWith("AM")) {
             value = 24
         }
 
     }
 
     return value
+
+}
+
+fun formatDate(date: Date): String {
+
+    val dateFormat = SimpleDateFormat(
+        "yyyy-MM-dd", Locale.ENGLISH
+    )
+
+    return dateFormat.format(date)
 
 }

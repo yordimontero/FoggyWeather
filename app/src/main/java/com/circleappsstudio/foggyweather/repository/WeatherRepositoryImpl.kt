@@ -1,5 +1,6 @@
 package com.circleappsstudio.foggyweather.repository
 
+import com.circleappsstudio.foggyweather.data.model.AstronomyResults
 import com.circleappsstudio.foggyweather.data.model.CurrentWeatherResults
 import com.circleappsstudio.foggyweather.data.model.ForecastResults
 import com.circleappsstudio.foggyweather.data.remote.WeatherRemoteDataSource
@@ -22,4 +23,11 @@ class WeatherRepositoryImpl(
         location, days, airQuality, alerts
     )
 
+    override suspend fun getAstronomy(
+        location: String,
+        date: String
+    ): AstronomyResults = dataSource.getAstronomy(
+        location,
+        date
+    )
 }

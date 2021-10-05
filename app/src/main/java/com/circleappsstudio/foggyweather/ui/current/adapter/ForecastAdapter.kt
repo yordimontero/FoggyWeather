@@ -1,19 +1,24 @@
 package com.circleappsstudio.foggyweather.ui.current.adapter
 
 import android.content.Context
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.circleappsstudio.foggyweather.application.AppConstants
 import com.circleappsstudio.foggyweather.core.BaseViewHolder
+import com.circleappsstudio.foggyweather.core.formatHour
 import com.circleappsstudio.foggyweather.core.splitDate
+import com.circleappsstudio.foggyweather.core.splitHour
 import com.circleappsstudio.foggyweather.data.model.Hour
 import com.circleappsstudio.foggyweather.databinding.ForecastItemViewBinding
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ForecastAdapter(
     private val forecastByHourList: List<Hour>
-): RecyclerView.Adapter<BaseViewHolder<*>>() {
+) : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
 
@@ -42,11 +47,19 @@ class ForecastAdapter(
     private inner class ForecastViewHolder(
         val binding: ForecastItemViewBinding,
         val context: Context
-    ): BaseViewHolder<Hour>(binding.root) {
+    ) : BaseViewHolder<Hour>(binding.root) {
 
         override fun bind(item: Hour) {
 
-            binding.txtHour.text = splitDate(item.time)
+            val hour = splitDate(item.time)
+
+            val formattedHour = formatHour(
+                splitHour(hour, 0),
+                splitHour(hour, 1),
+                context
+            )
+
+            binding.txtHour.text = formattedHour
 
             Glide.with(context)
                 .load("${AppConstants.BASE_IMAGE_URL}${item.condition.icon}")

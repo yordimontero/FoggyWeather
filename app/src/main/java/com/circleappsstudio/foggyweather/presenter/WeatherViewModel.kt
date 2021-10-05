@@ -11,7 +11,7 @@ import java.lang.Exception
 
 class WeatherViewModel(
     private val repository: WeatherRepository
-): ViewModel() {
+) : ViewModel() {
 
     fun fetchCurrentWeather(
         location: String,
@@ -83,11 +83,42 @@ class WeatherViewModel(
 
     }
 
+    fun fetchAstronomy(
+        location: String,
+        date: String
+    ) = liveData(viewModelScope.coroutineContext + Dispatchers.Main) {
+
+        kotlin.runCatching {
+
+            emit(Result.Loading())
+
+            repository.getAstronomy(
+                location, date
+            )
+
+        }.onSuccess { astronomy ->
+
+            emit(Result.Success(astronomy))
+
+        }.onFailure { throwable ->
+
+            emit(
+                Result.Failure(
+                    Exception(
+                        throwable.message
+                    )
+                )
+            )
+
+        }
+
+    }
+
 }
 
 class WeatherViewModelFactory(
     private val repository: WeatherRepository
-): ViewModelProvider.Factory {
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>)
-    : T = WeatherViewModel(repository) as T
+            : T = WeatherViewModel(repository) as T
 }

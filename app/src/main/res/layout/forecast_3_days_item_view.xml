@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:neomorph_corner_radius="16dp"
+        app:neomorph_elevation="8dp"
+        app:neomorph_background_color="?android:textColorSecondary"
+        app:neomorph_highlight_color="?android:textColorSecondary"
+        app:neomorph_shadow_color="?android:textColorHint"
+        app:neomorph_shadow_type="outer"
+        app:neomorph_view_type="rectangular">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/txt_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="4dp"
+                    tools:text="2021-05-06"
+                    android:textSize="18sp"
+                    app:drawableStartCompat="@drawable/ic_day"
+                    app:drawableTint="@color/green"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/txt_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Moderate Rain"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+            </LinearLayout>
+
+            <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
+                android:id="@+id/neomorphFrameLayout3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/linearLayout3"
+                app:layout_constraintStart_toEndOf="@+id/linearLayout2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:neomorph_background_color="?android:textColorHint"
+                app:neomorph_corner_radius="16dp"
+                app:neomorph_elevation="4dp"
+                app:neomorph_highlight_color="?android:textColorSecondary"
+                app:neomorph_shadow_color="?android:textColorHint"
+                app:neomorph_shadow_type="outer"
+                app:neomorph_view_type="circular">
+
+                <ImageView
+                    android:id="@+id/img_icon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="8dp"
+                    tools:src="@drawable/ic_cloud"
+                    tools:tint="@color/black" />
+
+            </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@+id/neomorphFrameLayout3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/neomorphFrameLayout3">
+
+                <TextView
+                    android:id="@+id/txt_max_temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="24.9"
+                    android:textSize="18sp"
+                    app:drawableStartCompat="@drawable/ic_max"
+                    app:drawableTint="@color/green" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="°C"
+                    android:textSize="18sp"
+                    android:layout_marginEnd="5dp"/>
+
+                <TextView
+                    android:id="@+id/txt_min_temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="17"
+                    android:textSize="18sp"
+                    app:drawableStartCompat="@drawable/ic_min"
+                    app:drawableTint="@color/green"
+                    android:layout_marginStart="5dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="°C"
+                    android:textSize="18sp"
+                    android:layout_marginEnd="5dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
+
+</LinearLayout>

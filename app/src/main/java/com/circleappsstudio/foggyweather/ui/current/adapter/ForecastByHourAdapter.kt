@@ -16,7 +16,7 @@ import com.circleappsstudio.foggyweather.databinding.ForecastItemViewBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ForecastAdapter(
+class ForecastByHourAdapter(
     private val forecastByHourList: List<Hour>
 ) : RecyclerView.Adapter<BaseViewHolder<*>>() {
 

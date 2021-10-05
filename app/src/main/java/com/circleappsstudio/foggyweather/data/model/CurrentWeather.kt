@@ -25,7 +25,7 @@ data class CurrentWeatherResults(
 
 // Forecast:
 
-data class ForecastResults(
+/*data class ForecastResults(
     val forecast: Forecast
 )
 
@@ -52,4 +52,4 @@ data class Hour(
 
 data class Condition(
     val icon: String = ""
-)
+)*/

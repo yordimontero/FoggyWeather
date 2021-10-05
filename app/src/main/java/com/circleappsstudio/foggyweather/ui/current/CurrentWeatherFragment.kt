@@ -17,7 +17,8 @@ import com.circleappsstudio.foggyweather.presenter.WeatherViewModel
 import com.circleappsstudio.foggyweather.presenter.WeatherViewModelFactory
 import com.circleappsstudio.foggyweather.repository.RetrofitClient
 import com.circleappsstudio.foggyweather.repository.WeatherRepositoryImpl
-import com.circleappsstudio.foggyweather.ui.current.adapter.ForecastAdapter
+import com.circleappsstudio.foggyweather.ui.current.adapter.Forecast3DaysAdapter
+import com.circleappsstudio.foggyweather.ui.current.adapter.ForecastByHourAdapter
 import java.util.*
 
 class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
@@ -46,8 +47,7 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
         getCurrentWeatherObserver("Grecia", false)
         getForecastObserver("Grecia", 1, false, false)
         getAstronomyObserver("Grecia", currentDate)
-
-        Log.wtf("TAG", currentDate)
+        getForecast3DaysObserver(location = "Grecia", airQuality = false, alerts = false)
 
     }
 
@@ -83,7 +83,15 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
 
                     binding.txtFeelsLike.text = "${resultEmitted.data.current.feelslike_c}°C"
 
-                    binding.txtLastUpdate.text = splitDate(resultEmitted.data.current.last_updated)
+                    val hour = splitDate(resultEmitted.data.current.last_updated)
+
+                    val formattedHour = formatHour(
+                        splitHour(hour, 0),
+                        splitHour(hour, 1),
+                        requireContext()
+                    )
+
+                    binding.txtLastUpdate.text = formattedHour
 
                     binding.progressBar.visibility = View.GONE
 
@@ -146,7 +154,7 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
 
                     resultEmitted.data.forecast.forecastday.forEachIndexed { index, forecastDay ->
 
-                        binding.rvForecast.adapter = ForecastAdapter(
+                        binding.rvForecast.adapter = ForecastByHourAdapter(
                             forecastDay.hour
                         )
 
@@ -175,6 +183,62 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
         })
 
     }
+
+    private fun getForecast3DaysObserver(
+        location: String,
+        days: Int = 3,
+        airQuality: Boolean,
+        alerts: Boolean
+    ) {
+
+        viewModel.fetchForecast(
+            location,
+            days,
+            airQuality,
+            alerts
+        ).observe(viewLifecycleOwner, Observer { resultEmitted ->
+
+            when (resultEmitted) {
+
+                is Result.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+
+                is Result.Success -> {
+
+                    binding.rvForecast3Days.adapter = Forecast3DaysAdapter(resultEmitted.data.forecast.forecastday)
+
+                    resultEmitted.data.forecast.forecastday.forEachIndexed { index, forecastDay ->
+
+                        Log.wtf("TAG", "Date: ${forecastDay.date}\n" +
+                                "Max: ${forecastDay.day.maxtemp_c}°C\n" +
+                                "${forecastDay.day.mintemp_c}°C\n" +
+                                "Condition: ${forecastDay.day.condition.text}")
+
+                    }
+
+                    binding.progressBar.visibility = View.GONE
+
+                }
+
+                is Result.Failure -> {
+
+                    Toast.makeText(
+                        requireContext(),
+                        "Something went wrong: ${resultEmitted.exception.message.toString()}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    binding.progressBar.visibility = View.GONE
+
+                }
+
+            }
+
+        })
+
+    }
+
 
     private fun getAstronomyObserver(
         location: String,

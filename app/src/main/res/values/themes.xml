@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.FoggyWeather" parent="Theme.MaterialComponents.DayNight">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryVariant">@color/black</item>
+        <item name="colorPrimary">@color/neomorph_background_color</item>
+        <item name="colorPrimaryVariant">@color/dark_gray_card</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -12,7 +12,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-        <item name="android:textColorSecondary">@color/neomorph_shadow_color</item>
+        <item name="android:textColorSecondary">@color/neomorph_background_color</item>
         <item name="android:textColorHint">@color/dark_gray_card</item>
     </style>
 </resources>

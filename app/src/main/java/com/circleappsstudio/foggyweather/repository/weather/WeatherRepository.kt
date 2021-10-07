@@ -1,4 +1,4 @@
-package com.circleappsstudio.foggyweather.repository
+package com.circleappsstudio.foggyweather.repository.weather
 
 import com.circleappsstudio.foggyweather.data.model.AstronomyResults
 import com.circleappsstudio.foggyweather.data.model.CurrentWeatherResults

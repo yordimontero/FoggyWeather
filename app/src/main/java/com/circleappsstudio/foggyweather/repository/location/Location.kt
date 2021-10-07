@@ -3,59 +3,17 @@ package com.circleappsstudio.foggyweather.repository.location
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.location.Address
-import android.location.Geocoder
-import android.location.Location
-import android.util.Log
 import com.circleappsstudio.foggyweather.core.checkLocationPermissions
-import com.circleappsstudio.foggyweather.core.requestLocationPermissions
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.tasks.Task
 import kotlinx.coroutines.tasks.await
-import java.io.IOException
-import java.util.*
 
 class Location {
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
-    /*@SuppressLint("MissingPermission")
-    suspend fun getLocation(context: Context, activity: Activity): String {
-
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
-
-        var latitude: Double
-        var longitude: Double
-
-        var city = ""
-
-        if (checkLocationPermissions(context)) {
-
-            val task = fusedLocationProviderClient.lastLocation
-
-            task.addOnSuccessListener { location ->
-
-                if (location != null) {
-                    latitude = location.latitude
-                    longitude = location.longitude
-                    city = getCity(context, latitude, longitude)
-                    Log.wtf("TAG", "Latitude: $latitude, Longitude: $longitude")
-                    //city = getCity(context, 40.730610, -73.935242)
-                }
-
-            }.await()
-
-        } else {
-            requestLocationPermissions(context, activity)
-        }
-
-        return city
-
-    }*/
-
     @SuppressLint("MissingPermission")
-    suspend fun getLocation(context: Context, activity: Activity): List<String> {
+    suspend fun getLocation(context: Context): List<String> {
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
 
@@ -80,8 +38,6 @@ class Location {
 
             }.await()
 
-        } else {
-            requestLocationPermissions(context, activity)
         }
 
         return currentLocation

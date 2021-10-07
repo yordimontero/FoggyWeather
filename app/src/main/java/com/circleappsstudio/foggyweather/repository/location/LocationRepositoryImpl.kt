@@ -10,9 +10,9 @@ class LocationRepositoryImpl(
 ) : LocationRepository {
 
     override suspend fun getLocation(
-        context: Context, activity: Activity
+        context: Context
     ): List<String> = withContext(Dispatchers.IO) {
-        location.getLocation(context, activity)
+        location.getLocation(context)
     }
 
     /*override suspend fun getLocation(

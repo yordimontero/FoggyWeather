@@ -4,7 +4,7 @@ import com.circleappsstudio.foggyweather.application.AppConstants
 import com.circleappsstudio.foggyweather.data.model.AstronomyResults
 import com.circleappsstudio.foggyweather.data.model.CurrentWeatherResults
 import com.circleappsstudio.foggyweather.data.model.ForecastResults
-import com.circleappsstudio.foggyweather.repository.WebService
+import com.circleappsstudio.foggyweather.repository.weather.WebService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

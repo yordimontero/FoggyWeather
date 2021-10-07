@@ -1,6 +1,5 @@
 package com.circleappsstudio.foggyweather.presenter
 
-import android.app.Activity
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -16,15 +15,14 @@ class LocationViewModel(
 ): ViewModel() {
 
     fun fetchLocation(
-        context: Context,
-        activity: Activity
+        context: Context
     ) = liveData(viewModelScope.coroutineContext + Dispatchers.Main) {
 
         kotlin.runCatching {
 
             emit(Result.Loading())
 
-            repository.getLocation(context, activity)
+            repository.getLocation(context)
 
         }.onSuccess { location ->
             emit(Result.Success(location))

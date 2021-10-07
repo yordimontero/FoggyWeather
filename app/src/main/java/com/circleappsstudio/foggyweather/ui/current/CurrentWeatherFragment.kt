@@ -1,7 +1,6 @@
 package com.circleappsstudio.foggyweather.ui.current
 
 import android.Manifest
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -19,17 +18,13 @@ import com.circleappsstudio.foggyweather.presenter.LocationViewModel
 import com.circleappsstudio.foggyweather.presenter.LocationViewModelFactory
 import com.circleappsstudio.foggyweather.presenter.WeatherViewModel
 import com.circleappsstudio.foggyweather.presenter.WeatherViewModelFactory
-import com.circleappsstudio.foggyweather.repository.RetrofitClient
-import com.circleappsstudio.foggyweather.repository.WeatherRepositoryImpl
+import com.circleappsstudio.foggyweather.repository.weather.RetrofitClient
+import com.circleappsstudio.foggyweather.repository.weather.WeatherRepositoryImpl
 import com.circleappsstudio.foggyweather.repository.location.Location
 import com.circleappsstudio.foggyweather.repository.location.LocationRepositoryImpl
 import com.circleappsstudio.foggyweather.ui.current.adapter.Forecast3DaysAdapter
 import com.circleappsstudio.foggyweather.ui.current.adapter.ForecastByHourAdapter
 import java.util.*
-import androidx.core.app.ActivityCompat.requestPermissions
-
-
-
 
 class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
 
@@ -64,17 +59,13 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
 
         binding = FragmentCurrentWeatherBinding.bind(view)
 
-        if (checkLocationPermissions(requireContext())) {
-            getLocationObserver()
-        } else {
-            requestLocationPermissions(requireContext(), requireActivity())
-        }
+        requestLocationPermissions()
 
     }
 
     private fun getLocationObserver() {
 
-        locationViewModel.fetchLocation(requireContext(), requireActivity())
+        locationViewModel.fetchLocation(requireContext())
             .observe(viewLifecycleOwner, Observer { resultEmitted ->
 
                 when (resultEmitted) {
@@ -342,6 +333,17 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
 
     }
 
+    private fun requestLocationPermissions() {
+
+        requestPermissions(
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ), AppConstants.LOCATION_REQUEST_CODE
+        )
+
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -351,38 +353,16 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
 
         if (requestCode == AppConstants.LOCATION_REQUEST_CODE) {
 
-            requestPermissions(
-                arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ), AppConstants.LOCATION_REQUEST_CODE
-            )
-
-            Log.wtf("TAG", "1")
-
-            /*if (checkLocationPermissions(requireContext())) {
-                Toast.makeText(requireContext(), "Permission granted!", Toast.LENGTH_SHORT).show()
+            if (checkLocationPermissions(requireContext())) {
                 getLocationObserver()
             } else {
-                Toast.makeText(requireContext(), "Permission not granted!", Toast.LENGTH_SHORT).show()
-            }*/
+                Toast.makeText(requireContext(), "Location permission not granted!", Toast.LENGTH_SHORT).show()
+            }
 
         } else {
-            Log.wtf("TAG", "0")
+            Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT).show()
         }
 
-        /*when (requestCode) {
-            AppConstants.LOCATION_REQUEST_CODE -> {
-
-                if (checkLocationPermissions(requireContext())) {
-                    Toast.makeText(requireContext(), "Permission granted!", Toast.LENGTH_SHORT).show()
-                    getLocationObserver()
-                } else {
-                    Toast.makeText(requireContext(), "Permission not granted!", Toast.LENGTH_SHORT).show()
-                }
-
-            }
-        }*/
     }
 
 }

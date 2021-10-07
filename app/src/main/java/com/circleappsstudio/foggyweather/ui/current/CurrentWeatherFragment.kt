@@ -1,5 +1,7 @@
 package com.circleappsstudio.foggyweather.ui.current
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,13 +15,21 @@ import com.circleappsstudio.foggyweather.application.AppConstants
 import com.circleappsstudio.foggyweather.core.*
 import com.circleappsstudio.foggyweather.data.remote.WeatherRemoteDataSource
 import com.circleappsstudio.foggyweather.databinding.FragmentCurrentWeatherBinding
+import com.circleappsstudio.foggyweather.presenter.LocationViewModel
+import com.circleappsstudio.foggyweather.presenter.LocationViewModelFactory
 import com.circleappsstudio.foggyweather.presenter.WeatherViewModel
 import com.circleappsstudio.foggyweather.presenter.WeatherViewModelFactory
 import com.circleappsstudio.foggyweather.repository.RetrofitClient
 import com.circleappsstudio.foggyweather.repository.WeatherRepositoryImpl
+import com.circleappsstudio.foggyweather.repository.location.Location
+import com.circleappsstudio.foggyweather.repository.location.LocationRepositoryImpl
 import com.circleappsstudio.foggyweather.ui.current.adapter.Forecast3DaysAdapter
 import com.circleappsstudio.foggyweather.ui.current.adapter.ForecastByHourAdapter
 import java.util.*
+import androidx.core.app.ActivityCompat.requestPermissions
+
+
+
 
 class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
 
@@ -35,24 +45,76 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
         )
     }
 
+    private val locationViewModel by viewModels<LocationViewModel> {
+        LocationViewModelFactory(
+            LocationRepositoryImpl(
+                Location()
+            )
+        )
+    }
+
     private val currentDate by lazy {
         formatDate(Calendar.getInstance().time)
     }
+
+    private var cordenades: String = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentCurrentWeatherBinding.bind(view)
 
-        getCurrentWeatherObserver("Grecia", false)
-        getForecastObserver("Grecia", 1, false, false)
-        getAstronomyObserver("Grecia", currentDate)
-        getForecast3DaysObserver(location = "Grecia", airQuality = false, alerts = false)
+        if (checkLocationPermissions(requireContext())) {
+            getLocationObserver()
+        } else {
+            requestLocationPermissions(requireContext(), requireActivity())
+        }
 
     }
 
+    private fun getLocationObserver() {
 
-    private fun getCurrentWeatherObserver(location: String, airQuality: Boolean) {
+        locationViewModel.fetchLocation(requireContext(), requireActivity())
+            .observe(viewLifecycleOwner, Observer { resultEmitted ->
+
+                when (resultEmitted) {
+
+                    is Result.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+
+                    is Result.Success -> {
+
+                        cordenades = "${resultEmitted.data[0]},${resultEmitted.data[1]}"
+
+                        getCurrentWeatherObserver(location = cordenades)
+                        getForecastObserver(location = cordenades)
+                        getAstronomyObserver(location = cordenades, date = currentDate)
+                        getForecast3DaysObserver(location = cordenades)
+
+                        binding.progressBar.visibility = View.GONE
+
+                    }
+
+                    is Result.Failure -> {
+
+                        Toast.makeText(
+                            requireContext(),
+                            "Something went wrong: ${resultEmitted.exception.message.toString()}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        binding.progressBar.visibility = View.GONE
+
+                    }
+
+                }
+
+            })
+
+    }
+
+    private fun getCurrentWeatherObserver(location: String, airQuality: Boolean = false) {
 
         viewModel.fetchCurrentWeather(
             location,
@@ -62,9 +124,7 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
             when (resultEmitted) {
 
                 is Result.Loading -> {
-
                     binding.progressBar.visibility = View.VISIBLE
-
                 }
 
                 is Result.Success -> {
@@ -117,9 +177,9 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
 
     private fun getForecastObserver(
         location: String,
-        days: Int,
-        airQuality: Boolean,
-        alerts: Boolean
+        days: Int = 1,
+        airQuality: Boolean = false,
+        alerts: Boolean = false
     ) {
 
         viewModel.fetchForecast(
@@ -187,8 +247,8 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
     private fun getForecast3DaysObserver(
         location: String,
         days: Int = 3,
-        airQuality: Boolean,
-        alerts: Boolean
+        airQuality: Boolean = false,
+        alerts: Boolean = false
     ) {
 
         viewModel.fetchForecast(
@@ -206,16 +266,8 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
 
                 is Result.Success -> {
 
-                    binding.rvForecast3Days.adapter = Forecast3DaysAdapter(resultEmitted.data.forecast.forecastday)
-
-                    resultEmitted.data.forecast.forecastday.forEachIndexed { index, forecastDay ->
-
-                        Log.wtf("TAG", "Date: ${forecastDay.date}\n" +
-                                "Max: ${forecastDay.day.maxtemp_c}°C\n" +
-                                "${forecastDay.day.mintemp_c}°C\n" +
-                                "Condition: ${forecastDay.day.condition.text}")
-
-                    }
+                    binding.rvForecast3Days.adapter =
+                        Forecast3DaysAdapter(resultEmitted.data.forecast.forecastday)
 
                     binding.progressBar.visibility = View.GONE
 
@@ -263,7 +315,8 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
                         binding.txtMoonset.text = resultEmitted.data.astronomy.astro.moonset
 
                         binding.txtMoonPhase.text = resultEmitted.data.astronomy.astro.moon_phase
-                        binding.txtMoonIllumination.text = resultEmitted.data.astronomy.astro.moon_illumination
+                        binding.txtMoonIllumination.text =
+                            resultEmitted.data.astronomy.astro.moon_illumination
 
                         binding.progressBar.visibility = View.GONE
 
@@ -287,6 +340,49 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
 
             })
 
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == AppConstants.LOCATION_REQUEST_CODE) {
+
+            requestPermissions(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ), AppConstants.LOCATION_REQUEST_CODE
+            )
+
+            Log.wtf("TAG", "1")
+
+            /*if (checkLocationPermissions(requireContext())) {
+                Toast.makeText(requireContext(), "Permission granted!", Toast.LENGTH_SHORT).show()
+                getLocationObserver()
+            } else {
+                Toast.makeText(requireContext(), "Permission not granted!", Toast.LENGTH_SHORT).show()
+            }*/
+
+        } else {
+            Log.wtf("TAG", "0")
+        }
+
+        /*when (requestCode) {
+            AppConstants.LOCATION_REQUEST_CODE -> {
+
+                if (checkLocationPermissions(requireContext())) {
+                    Toast.makeText(requireContext(), "Permission granted!", Toast.LENGTH_SHORT).show()
+                    getLocationObserver()
+                } else {
+                    Toast.makeText(requireContext(), "Permission not granted!", Toast.LENGTH_SHORT).show()
+                }
+
+            }
+        }*/
     }
 
 }

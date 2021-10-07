@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import com.circleappsstudio.foggyweather.core.NTuple3
 import com.circleappsstudio.foggyweather.core.Result
 import com.circleappsstudio.foggyweather.repository.WeatherRepository
 import kotlinx.coroutines.Dispatchers

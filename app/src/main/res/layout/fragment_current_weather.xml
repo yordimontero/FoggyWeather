@@ -66,18 +66,57 @@
                     android:layout_height="match_parent"
                     android:padding="10dp">
 
-                    <TextView
-                        android:id="@+id/txt_location"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/linearLayout4"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:textSize="18sp"
-                        tools:text="Location"
-                        app:drawableStartCompat="@drawable/ic_location"
-                        android:drawableTint="@color/red"
+                        android:orientation="vertical"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:gravity="center"
+                        android:layout_marginTop="5dp">
+
+                        <TextView
+                            android:id="@+id/txt_location"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="18sp"
+                            tools:text="Location"
+                            app:drawableStartCompat="@drawable/ic_location"
+                            app:drawableTint="@color/red" />
+
+                        <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
+                            android:id="@+id/search_view_layout"
+                            android:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:neomorph_background_color="?android:textColorSecondary"
+                            app:neomorph_highlight_color="?android:textColorSecondary"
+                            app:neomorph_shadow_color="?android:textColorHint"
+                            app:neomorph_corner_radius="16dp"
+                            app:neomorph_elevation="8dp"
+                            app:neomorph_shadow_type="outer"
+                            app:neomorph_view_type="rectangular">
+
+                            <SearchView
+                                android:id="@+id/search_view"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:closeIcon="@drawable/ic_close"
+                                app:searchHintIcon="@drawable/ic_search"
+                                android:searchIcon="@drawable/ic_search"
+                                android:queryBackground="@android:color/transparent"
+                                android:theme="@style/Theme.FoggyWeather"
+                                android:textStyle="bold" />
+
+                        </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
+
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/txt_temperature"
@@ -86,11 +125,11 @@
                         android:layout_alignParentStart="true"
                         android:layout_alignParentBottom="true"
                         android:layout_marginStart="20dp"
-                        tools:text="22°C"
                         android:textSize="60sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/txt_location" />
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+                        tools:text="22°C" />
 
                     <ImageView
                         android:id="@+id/img_icon"
@@ -99,9 +138,9 @@
                         app:layout_constraintBottom_toTopOf="@+id/linearlayout1"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/txt_temperature"
-                        app:layout_constraintTop_toBottomOf="@+id/txt_location"
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
                         tools:src="@drawable/ic_cloud"
-                        tools:tint="@color/black"/>
+                        tools:tint="@color/black" />
 
                     <LinearLayout
                         android:id="@+id/linearlayout1"

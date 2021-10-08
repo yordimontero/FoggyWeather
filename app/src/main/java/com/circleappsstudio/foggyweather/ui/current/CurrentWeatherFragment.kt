@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -60,6 +61,10 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
         binding = FragmentCurrentWeatherBinding.bind(view)
 
         requestLocationPermissions()
+
+        showOrHideSearchView()
+
+        setupSearchView()
 
     }
 
@@ -330,6 +335,63 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
                 }
 
             })
+
+    }
+
+    private fun showOrHideSearchView() {
+
+        binding.txtLocation.setOnClickListener {
+
+            if (binding.searchViewLayout.visibility == View.GONE) {
+                showSearchView()
+            } else {
+                hideSearchView()
+            }
+
+        }
+
+    }
+
+    private fun showSearchView() {
+        binding.searchViewLayout.visibility = View.VISIBLE
+    }
+
+    private fun hideSearchView() {
+        binding.searchViewLayout.visibility = View.GONE
+    }
+
+    private fun setupSearchView() {
+
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextSubmit(text: String?): Boolean {
+
+                text?.let {
+
+                    getCurrentWeatherObserver(location = it)
+                    getForecastObserver(location = it)
+                    getAstronomyObserver(location = it, date = currentDate)
+                    getForecast3DaysObserver(location = it)
+
+                    hideSearchView()
+
+                }
+
+                return false
+            }
+
+            override fun onQueryTextChange(text: String?): Boolean {
+
+                /*if (text!! == "...") {
+                    // Do some magic.
+                } else {
+                    // Do some magic.
+                }*/
+
+                return false
+            }
+
+        })
 
     }
 

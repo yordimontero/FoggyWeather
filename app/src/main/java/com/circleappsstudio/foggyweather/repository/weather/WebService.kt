@@ -1,9 +1,7 @@
 package com.circleappsstudio.foggyweather.repository.weather
 
 import com.circleappsstudio.foggyweather.application.AppConstants
-import com.circleappsstudio.foggyweather.data.model.AstronomyResults
-import com.circleappsstudio.foggyweather.data.model.CurrentWeatherResults
-import com.circleappsstudio.foggyweather.data.model.ForecastResults
+import com.circleappsstudio.foggyweather.data.model.*
 import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -45,6 +43,14 @@ interface WebService {
         @Query("dt")
         date: String
     ): AstronomyResults
+
+    @GET("search.json")
+    suspend fun getAutocompleteResults(
+        @Query("key")
+        apiKey: String,
+        @Query("q")
+        location: String
+    ): LocationsResults
 
 }
 

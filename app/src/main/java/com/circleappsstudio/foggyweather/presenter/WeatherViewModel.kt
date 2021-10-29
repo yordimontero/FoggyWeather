@@ -114,6 +114,33 @@ class WeatherViewModel(
 
     }
 
+    fun fetchAutocompleteResults(
+        location: String
+    ) = liveData(viewModelScope.coroutineContext + Dispatchers.Main) {
+
+        kotlin.runCatching {
+
+            emit(Result.Loading())
+            repository.getAutocompleteResults(location)
+
+        }.onSuccess { locations ->
+
+            emit(Result.Success(locations))
+
+        }.onFailure { throwable ->
+
+            emit(
+                Result.Failure(
+                    Exception(
+                        throwable.message
+                    )
+                )
+            )
+
+        }
+
+    }
+
 }
 
 class WeatherViewModelFactory(

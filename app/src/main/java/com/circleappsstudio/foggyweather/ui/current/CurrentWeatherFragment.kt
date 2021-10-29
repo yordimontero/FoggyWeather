@@ -66,6 +66,52 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
 
         setupSearchView()
 
+        getAutocompleteResults("Grecia")
+
+    }
+
+    private fun getAutocompleteResults(
+        location: String
+    ) {
+
+        viewModel.fetchAutocompleteResults(
+            location
+        ).observe(
+            viewLifecycleOwner, Observer { resultEmitted ->
+
+                when (resultEmitted) {
+
+                    is Result.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+
+                    is Result.Success -> {
+
+                        // Perform action...
+
+                        binding.progressBar.visibility = View.GONE
+
+                    }
+
+                    is Result.Failure -> {
+
+                        Log.wtf("TAG", resultEmitted.exception.message.toString())
+
+                        Toast.makeText(
+                            requireContext(),
+                            "Something went wrong: ${resultEmitted.exception.message.toString()}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        binding.progressBar.visibility = View.GONE
+
+                    }
+
+                }
+
+            }
+        )
+
     }
 
     private fun getLocationObserver() {
@@ -386,6 +432,10 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
                     // Do some magic.
                 } else {
                     // Do some magic.
+                }*/
+
+                /*text?.let {
+                    getAutocompleteResults(it)
                 }*/
 
                 return false

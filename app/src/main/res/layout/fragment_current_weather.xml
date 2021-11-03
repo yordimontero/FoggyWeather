@@ -88,7 +88,7 @@
 
                         <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
                             android:id="@+id/search_view_layout"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -102,17 +102,32 @@
                             app:neomorph_shadow_type="outer"
                             app:neomorph_view_type="rectangular">
 
-                            <SearchView
-                                android:id="@+id/search_view"
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
-                                android:closeIcon="@drawable/ic_close"
-                                app:searchHintIcon="@drawable/ic_search"
-                                android:searchIcon="@drawable/ic_search"
-                                android:queryBackground="@android:color/transparent"
-                                android:theme="@style/Theme.FoggyWeather"
-                                android:textStyle="bold" />
+                                android:orientation="vertical">
+
+                                <SearchView
+                                    android:id="@+id/search_view"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:closeIcon="@drawable/ic_close"
+                                    app:searchHintIcon="@drawable/ic_search"
+                                    android:searchIcon="@drawable/ic_search"
+                                    android:queryBackground="@android:color/transparent"
+                                    android:theme="@style/Theme.FoggyWeather"
+                                    android:textStyle="bold" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/rv_autocomplete"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="100dp"
+                                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                    android:orientation="vertical"
+                                    tools:listitem="@layout/autocomplete_item_view"/>
+
+                            </LinearLayout>
 
                         </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
 

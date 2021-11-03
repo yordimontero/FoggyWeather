@@ -50,7 +50,7 @@ interface WebService {
         apiKey: String,
         @Query("q")
         location: String
-    ): LocationsResults
+    ): List<Location>
 
 }
 

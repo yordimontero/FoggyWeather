@@ -23,6 +23,7 @@ import com.circleappsstudio.foggyweather.repository.weather.RetrofitClient
 import com.circleappsstudio.foggyweather.repository.weather.WeatherRepositoryImpl
 import com.circleappsstudio.foggyweather.repository.location.Location
 import com.circleappsstudio.foggyweather.repository.location.LocationRepositoryImpl
+import com.circleappsstudio.foggyweather.ui.current.adapter.AutocompleteAdapter
 import com.circleappsstudio.foggyweather.ui.current.adapter.Forecast3DaysAdapter
 import com.circleappsstudio.foggyweather.ui.current.adapter.ForecastByHourAdapter
 import java.util.*
@@ -66,7 +67,7 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
 
         setupSearchView()
 
-        getAutocompleteResults("Grecia")
+        //getAutocompleteResults("Grecia")
 
     }
 
@@ -82,14 +83,22 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
                 when (resultEmitted) {
 
                     is Result.Loading -> {
-                        binding.progressBar.visibility = View.VISIBLE
+                        //binding.progressBar.visibility = View.VISIBLE
                     }
 
                     is Result.Success -> {
 
                         // Perform action...
 
-                        binding.progressBar.visibility = View.GONE
+                        binding.rvAutocomplete.adapter = AutocompleteAdapter(
+                            resultEmitted.data
+                        )
+
+                        /*resultEmitted.data.forEachIndexed { index, location ->
+                            Log.wtf("TAG", "${location.name}")
+                        }*/
+
+                        //binding.progressBar.visibility = View.GONE
 
                     }
 
@@ -414,6 +423,8 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
 
                 text?.let {
 
+                    //getAutocompleteResults(it)
+
                     getCurrentWeatherObserver(location = it)
                     getForecastObserver(location = it)
                     getAstronomyObserver(location = it, date = currentDate)
@@ -434,9 +445,9 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
                     // Do some magic.
                 }*/
 
-                /*text?.let {
+                text?.let {
                     getAutocompleteResults(it)
-                }*/
+                }
 
                 return false
             }

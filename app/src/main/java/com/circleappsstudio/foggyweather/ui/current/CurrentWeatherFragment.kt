@@ -9,10 +9,12 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.bumptech.glide.Glide
 import com.circleappsstudio.foggyweather.R
 import com.circleappsstudio.foggyweather.application.AppConstants
 import com.circleappsstudio.foggyweather.core.*
+import com.circleappsstudio.foggyweather.data.model.Locations
 import com.circleappsstudio.foggyweather.data.remote.WeatherRemoteDataSource
 import com.circleappsstudio.foggyweather.databinding.FragmentCurrentWeatherBinding
 import com.circleappsstudio.foggyweather.presenter.LocationViewModel
@@ -28,7 +30,7 @@ import com.circleappsstudio.foggyweather.ui.current.adapter.Forecast3DaysAdapter
 import com.circleappsstudio.foggyweather.ui.current.adapter.ForecastByHourAdapter
 import java.util.*
 
-class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
+class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather), AutocompleteAdapter.OnLocationClickListener {
 
     private lateinit var binding: FragmentCurrentWeatherBinding
 
@@ -67,6 +69,8 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
 
         setupSearchView()
 
+        setupRecyclerView()
+
         //getAutocompleteResults("Grecia")
 
     }
@@ -91,7 +95,8 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
                         // Perform action...
 
                         binding.rvAutocomplete.adapter = AutocompleteAdapter(
-                            resultEmitted.data
+                            resultEmitted.data,
+                            this
                         )
 
                         /*resultEmitted.data.forEachIndexed { index, location ->
@@ -415,6 +420,25 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
         binding.searchViewLayout.visibility = View.GONE
     }
 
+    private fun showSearchRecyclerView() {
+        binding.rvAutocomplete.visibility = View.VISIBLE
+    }
+
+    private fun hideSearchRecyclerView() {
+        binding.rvAutocomplete.visibility = View.GONE
+    }
+
+    private fun setupRecyclerView() {
+
+        binding.rvAutocomplete.addItemDecoration(
+            DividerItemDecoration(
+                requireContext(),
+                DividerItemDecoration.VERTICAL
+            )
+        )
+
+    }
+
     private fun setupSearchView() {
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -446,13 +470,30 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
                 }*/
 
                 text?.let {
-                    getAutocompleteResults(it)
+
+                    if (it.isEmpty()) {
+
+                        hideSearchRecyclerView()
+
+                    } else {
+
+                        showSearchRecyclerView()
+                        getAutocompleteResults(it)
+
+                    }
+
+
                 }
 
                 return false
             }
 
         })
+
+        binding.searchView.setOnCloseListener {
+            hideSearchView()
+            false
+        }
 
     }
 
@@ -486,6 +527,10 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
             Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT).show()
         }
 
+    }
+
+    override fun onLocationClick(locations: Locations) {
+        binding.searchView.setQuery(locations.name, true)
     }
 
 }

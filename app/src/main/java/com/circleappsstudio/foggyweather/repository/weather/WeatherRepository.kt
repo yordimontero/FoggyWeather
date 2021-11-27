@@ -23,6 +23,6 @@ interface WeatherRepository {
 
     suspend fun getAutocompleteResults(
         location: String
-    ): List<Location>
+    ): List<Locations>
 
 }

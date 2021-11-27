@@ -7,16 +7,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
-        android:layout_width="match_parent"
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:neomorph_corner_radius="16dp"
-        app:neomorph_elevation="8dp"
-        app:neomorph_background_color="?android:textColorSecondary"
-        app:neomorph_highlight_color="?android:textColorSecondary"
-        app:neomorph_shadow_color="?android:textColorHint"
-        app:neomorph_shadow_type="outer"
-        app:neomorph_view_type="rectangular">
+        app:cardCornerRadius="20dp"
+        app:cardElevation="8dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,21 +51,13 @@
 
             </LinearLayout>
 
-            <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
-                android:id="@+id/neomorphFrameLayout3"
+            <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/linearLayout3"
-                app:layout_constraintStart_toEndOf="@+id/linearLayout2"
-                app:layout_constraintTop_toTopOf="parent"
-                app:neomorph_background_color="?android:textColorHint"
-                app:neomorph_corner_radius="16dp"
-                app:neomorph_elevation="4dp"
-                app:neomorph_highlight_color="?android:textColorSecondary"
-                app:neomorph_shadow_color="?android:textColorHint"
-                app:neomorph_shadow_type="outer"
-                app:neomorph_view_type="circular">
+                app:cardCornerRadius="40dp"
+                app:cardElevation="8dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="true">
 
                 <ImageView
                     android:id="@+id/img_icon"
@@ -78,7 +67,7 @@
                     tools:src="@drawable/ic_cloud"
                     tools:tint="@color/black" />
 
-            </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
+            </androidx.cardview.widget.CardView>
 
             <LinearLayout
                 android:id="@+id/linearLayout3"
@@ -126,6 +115,6 @@
 
         </LinearLayout>
 
-    </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>

@@ -8,163 +8,144 @@
     android:orientation="vertical"
     tools:context=".ui.current.CurrentWeatherFragment">
 
-    <RelativeLayout
-        android:id="@+id/progress_bar"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/green"
+        android:orientation="vertical" />
+
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
-
-        <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:neomorph_corner_radius="16dp"
-            app:neomorph_elevation="4dp"
-            app:neomorph_background_color="?android:textColorSecondary"
-            app:neomorph_highlight_color="?android:textColorSecondary"
-            app:neomorph_shadow_color="?android:textColorHint"
-            app:neomorph_shadow_type="outer"
-            app:neomorph_view_type="circular"
-            android:layout_centerInParent="true">
-
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:indeterminateTint="@color/green"/>
-
-        </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
-
-    </RelativeLayout>
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_marginTop="-15dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="8dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="false">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
-                android:id="@+id/neomorphFrameLayout2"
+            <RelativeLayout
+                android:id="@+id/progress_bar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="8dp"
+                    app:cardPreventCornerOverlap="true"
+                    app:cardUseCompatPadding="true"
+                    android:layout_centerInParent="true">
+
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:indeterminateTint="@color/green" />
+
+                </androidx.cardview.widget.CardView>
+
+            </RelativeLayout>
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:neomorph_background_color="?android:textColorSecondary"
-                app:neomorph_highlight_color="?android:textColorSecondary"
-                app:neomorph_shadow_color="?android:textColorHint"
-                app:neomorph_corner_radius="16dp"
-                app:neomorph_elevation="8dp"
-                app:neomorph_shadow_type="outer"
-                app:neomorph_view_type="rectangular">
+                app:cardCornerRadius="20dp"
+                app:cardElevation="8dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true"
+                android:visibility="visible">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="10dp">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="18dp">
+
+                    <TextView
+                        android:id="@+id/txt_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textSize="18sp"
+                        app:drawableStartCompat="@drawable/ic_location"
+                        app:drawableTint="@color/red"
+                        tools:text="Location" />
 
                     <LinearLayout
-                        android:id="@+id/linearLayout4"
+                        android:id="@+id/search_view_layout"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:gravity="center"
-                        android:layout_marginTop="5dp">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/txt_location"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="18sp"
-                            tools:text="Location"
-                            app:drawableStartCompat="@drawable/ic_location"
-                            app:drawableTint="@color/red" />
-
-                        <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
-                            android:id="@+id/search_view_layout"
-                            android:visibility="visible"
+                        <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:neomorph_background_color="?android:textColorSecondary"
-                            app:neomorph_highlight_color="?android:textColorSecondary"
-                            app:neomorph_shadow_color="?android:textColorHint"
-                            app:neomorph_corner_radius="16dp"
-                            app:neomorph_elevation="8dp"
-                            app:neomorph_shadow_type="outer"
-                            app:neomorph_view_type="rectangular">
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="8dp"
+                            app:cardPreventCornerOverlap="true"
+                            app:cardUseCompatPadding="true"
+                            android:visibility="visible">
 
-                            <LinearLayout
+                            <SearchView
+                                android:id="@+id/search_view"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical">
+                                android:closeIcon="@drawable/ic_close"
+                                android:queryBackground="@android:color/transparent"
+                                android:searchIcon="@drawable/ic_search"
+                                android:textStyle="bold"
+                                android:theme="@style/Theme.FoggyWeather"
+                                app:searchHintIcon="@drawable/ic_search" />
 
-                                <SearchView
-                                    android:id="@+id/search_view"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="5dp"
-                                    android:closeIcon="@drawable/ic_close"
-                                    app:searchHintIcon="@drawable/ic_search"
-                                    android:searchIcon="@drawable/ic_search"
-                                    android:queryBackground="@android:color/transparent"
-                                    android:theme="@style/Theme.FoggyWeather"
-                                    android:textStyle="bold" />
+                        </androidx.cardview.widget.CardView>
 
-                                <androidx.recyclerview.widget.RecyclerView
-                                    android:id="@+id/rv_autocomplete"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="100dp"
-                                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                                    android:orientation="vertical"
-                                    tools:listitem="@layout/autocomplete_item_view"/>
-
-                            </LinearLayout>
-
-                        </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_autocomplete"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:orientation="vertical"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            tools:listitem="@layout/autocomplete_item_view" />
 
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/txt_temperature"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginStart="20dp"
-                        android:textSize="60sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
-                        tools:text="22°C" />
+                        android:orientation="horizontal">
 
-                    <ImageView
-                        android:id="@+id/img_icon"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        app:layout_constraintBottom_toTopOf="@+id/linearlayout1"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/txt_temperature"
-                        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
-                        tools:src="@drawable/ic_cloud"
-                        tools:tint="@color/black" />
+                        <TextView
+                            android:id="@+id/txt_temperature"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:gravity="center"
+                            android:textSize="60sp"
+                            android:textStyle="bold"
+                            tools:text="22°C" />
+
+                        <ImageView
+                            android:id="@+id/img_icon"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            tools:src="@drawable/ic_cloud"
+                            tools:tint="@color/black" />
+
+                    </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/linearlayout1"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/txt_temperature">
+                        android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/textView2"
@@ -172,7 +153,7 @@
                             android:layout_height="wrap_content"
                             android:text="Condition:"
                             android:textSize="18sp"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/txt_condition"
@@ -184,253 +165,116 @@
 
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/textView3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Feels like:"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="@+id/linearlayout1"
-                        app:layout_constraintTop_toBottomOf="@+id/linearlayout1" />
-
-                    <TextView
-                        android:id="@+id/txt_feels_like"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:textSize="18sp"
-                        tools:text="30"
-                        app:layout_constraintBottom_toTopOf="@+id/neomorphFrameLayout"
-                        app:layout_constraintStart_toEndOf="@+id/textView3"
-                        app:layout_constraintTop_toTopOf="@+id/textView3"/>
-
-                    <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
-                        android:id="@+id/neomorphFrameLayout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="@+id/textView3"
-                        app:layout_constraintTop_toBottomOf="@+id/textView3"
-                        app:neomorph_background_color="@color/green"
-                        app:neomorph_highlight_color="?android:textColorSecondary"
-                        app:neomorph_shadow_color="@color/green"
-                        app:neomorph_corner_radius="8dp"
-                        app:neomorph_elevation="8dp"
-                        app:neomorph_shadow_type="outer"
-                        app:neomorph_view_type="rectangular">
-
-                        <TextView
-                            android:id="@+id/txt_max_temp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_max"
-                            android:padding="8dp"
-                            tools:text="24.9°C"
-                            android:textSize="22sp"
-                            android:textStyle="bold"/>
-
-                    </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
-
-                    <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
-                        android:id="@+id/neomorphFrameLayout4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/neomorphFrameLayout"
-                        app:layout_constraintTop_toTopOf="@+id/neomorphFrameLayout"
-                        app:neomorph_background_color="@color/green"
-                        app:neomorph_highlight_color="?android:textColorSecondary"
-                        app:neomorph_shadow_color="@color/green"
-                        app:neomorph_corner_radius="8dp"
-                        app:neomorph_elevation="8dp"
-                        app:neomorph_shadow_type="outer"
-                        app:neomorph_view_type="rectangular">
-
-                        <TextView
-                            android:id="@+id/txt_min_temp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_min"
-                            android:padding="8dp"
-                            tools:text="18.3°C"
-                            android:textSize="22sp"
-                            android:textStyle="bold" />
-
-                    </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="weatherapi.com"
-                        app:drawableStartCompat="@drawable/ic_sun"
-                        android:drawableTint="@color/red"
-                        android:gravity="center"
-                        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/linearLayout" />
-
                     <LinearLayout
-                        android:id="@+id/linearLayout"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:orientation="horizontal"
-                        app:layout_constraintBottom_toBottomOf="parent"
-
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/neomorphFrameLayout">
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/textView8"
+                            android:id="@+id/textView3"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="Last updated:"
-                            android:textSize="14sp" />
+                            android:layout_height="wrap_content"
+                            android:text="Feels like:"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="@+id/linearlayout1"
+                            app:layout_constraintTop_toBottomOf="@+id/linearlayout1" />
 
                         <TextView
-                            android:id="@+id/txt_last_update"
+                            android:id="@+id/txt_feels_like"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:gravity="center"
-                            android:textSize="14sp"
-                            tools:text="15:00" />
+                            android:textSize="18sp"
+                            tools:text="30" />
 
                     </LinearLayout>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Today's Forecast:"
-                android:textSize="22sp"
-                android:layout_marginStart="10dp"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_forecast"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:orientation="horizontal"
-                tools:listitem="@layout/forecast_item_view"/>
-
-            <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:neomorph_corner_radius="16dp"
-                app:neomorph_elevation="8dp"
-                app:neomorph_background_color="?android:textColorSecondary"
-                app:neomorph_highlight_color="?android:textColorSecondary"
-                app:neomorph_shadow_color="?android:textColorHint"
-                app:neomorph_shadow_type="outer"
-                app:neomorph_view_type="rectangular"
-                android:layout_gravity="center">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="8dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Sunrise and Sunset:"
-                        android:textSize="18sp"
-                        android:layout_marginStart="10dp"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center">
+                        android:orientation="horizontal">
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_marginEnd="10dp"
-                            android:gravity="center">
-
-                            <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:neomorph_corner_radius="16dp"
-                                app:neomorph_elevation="4dp"
-                                app:neomorph_background_color="?android:textColorHint"
-                                app:neomorph_highlight_color="?android:textColorSecondary"
-                                app:neomorph_shadow_color="?android:textColorHint"
-                                app:neomorph_shadow_type="outer"
-                                app:neomorph_view_type="circular">
-
-                                <ImageView
-                                    android:layout_width="35dp"
-                                    android:layout_height="35dp"
-                                    android:src="@drawable/sunrise"
-                                    android:layout_margin="6dp"/>
-
-                            </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
+                            android:layout_weight="1"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="8dp"
+                            app:cardPreventCornerOverlap="true"
+                            app:cardUseCompatPadding="true">
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:id="@+id/txt_max_temp"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Sunrise"
-                                android:textSize="18sp"
                                 android:gravity="center"
-                                android:textStyle="bold"/>
+                                android:padding="8dp"
+                                android:textSize="22sp"
+                                android:textStyle="bold"
+                                app:drawableStartCompat="@drawable/ic_max"
+                                tools:text="24.9°C" />
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="8dp"
+                            app:cardPreventCornerOverlap="true"
+                            app:cardUseCompatPadding="true">
 
                             <TextView
-                                android:id="@+id/txt_sunrise"
-                                android:layout_width="wrap_content"
+                                android:id="@+id/txt_min_temp"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                tools:text="05:26 AM"
-                                android:textSize="18sp" />
+                                android:gravity="center"
+                                android:padding="8dp"
+                                android:textSize="22sp"
+                                android:textStyle="bold"
+                                app:drawableStartCompat="@drawable/ic_min"
+                                tools:text="18.3°C" />
 
-                        </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="weatherapi.com"
+                            android:textSize="14sp"
+                            app:drawableStartCompat="@drawable/ic_sun"
+                            app:drawableTint="@color/red" />
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_marginStart="10dp"
-                            android:gravity="center">
-
-                            <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:neomorph_corner_radius="16dp"
-                                app:neomorph_elevation="4dp"
-                                app:neomorph_background_color="?android:textColorHint"
-                                app:neomorph_highlight_color="?android:textColorSecondary"
-                                app:neomorph_shadow_color="?android:textColorHint"
-                                app:neomorph_shadow_type="outer"
-                                app:neomorph_view_type="circular">
-
-                                <ImageView
-                                    android:layout_width="35dp"
-                                    android:layout_height="35dp"
-                                    android:src="@drawable/sunset"
-                                    android:layout_margin="6dp"/>
-
-                            </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
+                            android:gravity="end"
+                            android:orientation="horizontal">
 
                             <TextView
+                                android:id="@+id/textView8"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Sunset"
-                                android:textSize="18sp"
-                                android:textStyle="bold"/>
+                                android:layout_height="match_parent"
+                                android:text="Last updated:"
+                                android:textSize="14sp" />
 
                             <TextView
-                                android:id="@+id/txt_sunset"
+                                android:id="@+id/txt_last_update"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                tools:text="05:25 PM"
-                                android:textSize="18sp" />
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="1dp"
+                                android:textSize="14sp"
+                                tools:text="15:00" />
 
                         </LinearLayout>
 
@@ -438,19 +282,13 @@
 
                 </LinearLayout>
 
-            </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
+            </androidx.cardview.widget.CardView>
 
-            <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
+
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:neomorph_corner_radius="16dp"
-                app:neomorph_elevation="8dp"
-                app:neomorph_background_color="?android:textColorSecondary"
-                app:neomorph_highlight_color="?android:textColorSecondary"
-                app:neomorph_shadow_color="?android:textColorHint"
-                app:neomorph_shadow_type="outer"
-                app:neomorph_view_type="rectangular"
-                android:layout_gravity="center">
+                android:layout_height="match_parent"
+                android:fillViewport="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -461,206 +299,355 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Moonrise and Moonset:"
-                        android:textSize="18sp"
-                        android:layout_marginStart="10dp"/>
+                        android:layout_marginStart="10dp"
+                        android:text="• Today's Forecast:"
+                        android:textSize="22sp"
+                        android:layout_marginTop="8dp"/>
 
-                    <LinearLayout
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_forecast"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:gravity="center"
-                        android:layout_marginBottom="10dp">
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/forecast_item_view" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="8dp"
+                        app:cardPreventCornerOverlap="true"
+                        app:cardUseCompatPadding="true">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:layout_marginEnd="10dp"
-                            android:gravity="center">
-
-                            <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:neomorph_corner_radius="16dp"
-                                app:neomorph_elevation="4dp"
-                                app:neomorph_background_color="?android:textColorHint"
-                                app:neomorph_highlight_color="?android:textColorSecondary"
-                                app:neomorph_shadow_color="?android:textColorHint"
-                                app:neomorph_shadow_type="outer"
-                                app:neomorph_view_type="circular">
-
-                                <ImageView
-                                    android:layout_width="35dp"
-                                    android:layout_height="35dp"
-                                    android:src="@drawable/moonrise"
-                                    android:layout_margin="6dp"/>
-
-                            </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
+                            android:padding="8dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Moonrise"
-                                android:textSize="18sp"
-                                android:textStyle="bold"/>
-
-                            <TextView
-                                android:id="@+id/txt_moonrise"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                tools:text="05:26 AM"
+                                android:layout_marginStart="10dp"
+                                android:text="Sunrise and Sunset:"
                                 android:textSize="18sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="10dp"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <androidx.cardview.widget.CardView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        app:cardCornerRadius="20dp"
+                                        app:cardElevation="8dp"
+                                        app:cardPreventCornerOverlap="false"
+                                        app:cardUseCompatPadding="true">
+
+                                        <ImageView
+                                            android:layout_width="35dp"
+                                            android:layout_height="35dp"
+                                            android:layout_gravity="center"
+                                            android:layout_margin="6dp"
+                                            android:src="@drawable/sunrise" />
+
+                                    </androidx.cardview.widget.CardView>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:text="Sunrise"
+                                        android:textSize="18sp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/txt_sunrise"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="18sp"
+                                        tools:text="05:26 AM" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <androidx.cardview.widget.CardView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        app:cardCornerRadius="20dp"
+                                        app:cardElevation="8dp"
+                                        app:cardPreventCornerOverlap="false"
+                                        app:cardUseCompatPadding="true">
+
+                                        <ImageView
+                                            android:layout_width="35dp"
+                                            android:layout_height="35dp"
+                                            android:layout_gravity="center"
+                                            android:layout_margin="6dp"
+                                            android:src="@drawable/sunset" />
+
+                                    </androidx.cardview.widget.CardView>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Sunset"
+                                        android:textSize="18sp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/txt_sunset"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="18sp"
+                                        tools:text="05:25 PM" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="8dp"
+                        app:cardPreventCornerOverlap="true"
+                        app:cardUseCompatPadding="true">
+
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:layout_marginStart="10dp"
-                            android:gravity="center">
-
-                            <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:neomorph_corner_radius="16dp"
-                                app:neomorph_elevation="4dp"
-                                app:neomorph_background_color="?android:textColorHint"
-                                app:neomorph_highlight_color="?android:textColorSecondary"
-                                app:neomorph_shadow_color="?android:textColorHint"
-                                app:neomorph_shadow_type="outer"
-                                app:neomorph_view_type="circular">
-
-                                <ImageView
-                                    android:layout_width="35dp"
-                                    android:layout_height="35dp"
-                                    android:src="@drawable/moonset"
-                                    android:layout_margin="6dp"/>
-
-                            </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
+                            android:padding="8dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Moonset"
-                                android:textSize="18sp"
-                                android:textStyle="bold"/>
-
-                            <TextView
-                                android:id="@+id/txt_moonset"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                tools:text="05:25 PM"
+                                android:layout_marginStart="10dp"
+                                android:text="Moonrise and Moonset:"
                                 android:textSize="18sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="10dp"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <androidx.cardview.widget.CardView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        app:cardCornerRadius="20dp"
+                                        app:cardElevation="8dp"
+                                        app:cardPreventCornerOverlap="false"
+                                        app:cardUseCompatPadding="true">
+
+                                        <ImageView
+                                            android:layout_width="35dp"
+                                            android:layout_height="35dp"
+                                            android:layout_gravity="center"
+                                            android:layout_margin="6dp"
+                                            android:src="@drawable/moonrise" />
+
+                                    </androidx.cardview.widget.CardView>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Moonrise"
+                                        android:textSize="18sp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/txt_moonrise"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="18sp"
+                                        tools:text="05:26 AM" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <androidx.cardview.widget.CardView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        app:cardCornerRadius="20dp"
+                                        app:cardElevation="8dp"
+                                        app:cardPreventCornerOverlap="false"
+                                        app:cardUseCompatPadding="true">
+
+                                        <ImageView
+                                            android:layout_width="35dp"
+                                            android:layout_height="35dp"
+                                            android:layout_gravity="center"
+                                            android:layout_margin="6dp"
+                                            android:src="@drawable/moonset" />
+
+                                    </androidx.cardview.widget.CardView>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Moonset"
+                                        android:textSize="18sp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/txt_moonset"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="18sp"
+                                        tools:text="05:25 PM" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:cardCornerRadius="20dp"
+                                    app:cardElevation="8dp"
+                                    app:cardPreventCornerOverlap="true"
+                                    app:cardUseCompatPadding="true">
+
+                                    <ImageView
+                                        android:layout_width="35dp"
+                                        android:layout_height="35dp"
+                                        android:layout_gravity="center"
+                                        android:layout_margin="6dp"
+                                        android:src="@drawable/moon_phase" />
+
+                                </androidx.cardview.widget.CardView>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="5dp"
+                                        android:text="Moon Phase:"
+                                        android:textSize="18sp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/txt_moon_phase"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="18sp"
+                                        tools:text="New Moon" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="5dp"
+                                        android:text="Illumination:"
+                                        android:textSize="18sp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/txt_moon_illumination"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="18sp"
+                                        tools:text="0" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
-                    </LinearLayout>
+                    </androidx.cardview.widget.CardView>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
                         android:orientation="vertical"
-                        android:gravity="center">
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/neomorphFrameLayout6">
 
-                        <com.chinodev.androidneomorphframelayout.NeomorphFrameLayout
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:neomorph_corner_radius="16dp"
-                            app:neomorph_elevation="4dp"
-                            app:neomorph_background_color="?android:textColorHint"
-                            app:neomorph_highlight_color="?android:textColorSecondary"
-                            app:neomorph_shadow_color="?android:textColorHint"
-                            app:neomorph_shadow_type="outer"
-                            app:neomorph_view_type="circular">
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="8dp"
+                            android:text="• 3-Days Forecast:"
+                            android:textSize="22sp" />
 
-                            <ImageView
-                                android:layout_width="35dp"
-                                android:layout_height="35dp"
-                                android:src="@drawable/moon_phase"
-                                android:layout_margin="6dp"/>
-
-                        </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_forecast_3_days"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Moon Phase:"
-                                android:textSize="18sp"
-                                android:textStyle="bold"
-                                android:layout_marginEnd="5dp"/>
-
-                            <TextView
-                                android:id="@+id/txt_moon_phase"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                tools:text="New Moon"
-                                android:textSize="18sp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Illumination:"
-                                android:textSize="18sp"
-                                android:textStyle="bold"
-                                android:layout_marginEnd="5dp"/>
-
-                            <TextView
-                                android:id="@+id/txt_moon_illumination"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                tools:text="0"
-                                android:textSize="18sp" />
-
-                        </LinearLayout>
+                            android:orientation="horizontal"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            tools:listitem="@layout/forecast_3_days_item_view" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
-            </com.chinodev.androidneomorphframelayout.NeomorphFrameLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/neomorphFrameLayout6">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="3-Days Forecast:"
-                    android:textSize="22sp"
-                    android:layout_marginStart="10dp"/>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_forecast_3_days"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:orientation="horizontal"
-                    tools:listitem="@layout/forecast_3_days_item_view"/>
-
-            </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
 
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="-20dp" />
 
 </LinearLayout>

@@ -31,7 +31,7 @@ class WeatherRepositoryImpl(
 
     override suspend fun getAutocompleteResults(
         location: String
-    ): List<Location> = dataSource.getAutocompleteResults(
+    ): List<Locations> = dataSource.getAutocompleteResults(
         location
     )
 }

@@ -53,7 +53,7 @@ class WeatherRemoteDataSource(private val webService: WebService) {
 
     suspend fun getAutocompleteResults(
         location: String
-    ): List<Location> = withContext(Dispatchers.IO) {
+    ): List<Locations> = withContext(Dispatchers.IO) {
 
         webService.getAutocompleteResults(
             AppConstants.API_KEY,

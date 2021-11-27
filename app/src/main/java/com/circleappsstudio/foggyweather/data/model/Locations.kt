@@ -1,5 +1,5 @@
 package com.circleappsstudio.foggyweather.data.model
 
-data class Location(
+data class Locations(
     val name: String = ""
 )

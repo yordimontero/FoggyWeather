@@ -4,12 +4,17 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.circleappsstudio.foggyweather.core.BaseViewHolder
-import com.circleappsstudio.foggyweather.data.model.Location
+import com.circleappsstudio.foggyweather.data.model.Locations
 import com.circleappsstudio.foggyweather.databinding.AutocompleteItemViewBinding
 
 class AutocompleteAdapter(
-    val autocompleteList: List<Location>
+    private val autocompleteList: List<Locations>,
+    private val itemClickListener: OnLocationClickListener
 ): RecyclerView.Adapter<BaseViewHolder<*>>() {
+
+    interface OnLocationClickListener {
+        fun onLocationClick(locations: Locations)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
 
@@ -37,10 +42,16 @@ class AutocompleteAdapter(
 
     private inner class AutocompleteViewHolder(
         val binding: AutocompleteItemViewBinding
-    ): BaseViewHolder<Location>(binding.root) {
+    ): BaseViewHolder<Locations>(binding.root) {
 
-        override fun bind(item: Location) {
+        override fun bind(item: Locations) {
+
             binding.txtSearchItem.text = item.name
+
+            binding.txtSearchItem.setOnClickListener {
+                itemClickListener.onLocationClick(item)
+            }
+
         }
 
     }

@@ -10,4 +10,9 @@
         android:name="com.circleappsstudio.foggyweather.ui.current.CurrentWeatherFragment"
         android:label="fragment_current_weather"
         tools:layout="@layout/fragment_current_weather" />
+    <fragment
+        android:id="@+id/moreFragment"
+        android:name="com.circleappsstudio.foggyweather.ui.more.MoreFragment"
+        android:label="fragment_more"
+        tools:layout="@layout/fragment_more" />
 </navigation>

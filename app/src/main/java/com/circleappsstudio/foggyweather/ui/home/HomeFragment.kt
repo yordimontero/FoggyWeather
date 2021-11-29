@@ -17,10 +17,7 @@ import com.circleappsstudio.foggyweather.core.*
 import com.circleappsstudio.foggyweather.data.model.Locations
 import com.circleappsstudio.foggyweather.data.remote.WeatherRemoteDataSource
 import com.circleappsstudio.foggyweather.databinding.FragmentHomeBinding
-import com.circleappsstudio.foggyweather.presenter.LocationViewModel
-import com.circleappsstudio.foggyweather.presenter.LocationViewModelFactory
-import com.circleappsstudio.foggyweather.presenter.WeatherViewModel
-import com.circleappsstudio.foggyweather.presenter.WeatherViewModelFactory
+import com.circleappsstudio.foggyweather.presenter.*
 import com.circleappsstudio.foggyweather.repository.weather.RetrofitClient
 import com.circleappsstudio.foggyweather.repository.weather.WeatherRepositoryImpl
 import com.circleappsstudio.foggyweather.repository.location.Location
@@ -34,7 +31,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
 
     private lateinit var binding: FragmentHomeBinding
 
-    private val viewModel by viewModels<WeatherViewModel> {
+    private val weatherViewModel by viewModels<WeatherViewModel> {
         WeatherViewModelFactory(
             WeatherRepositoryImpl(
                 WeatherRemoteDataSource(
@@ -52,6 +49,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
         )
     }
 
+    private val internetCheckViewModel by viewModels<InternetCheckViewModel> {
+        InternetCheckViewModelFactory()
+    }
+
     private val currentDate by lazy {
         formatDate(Calendar.getInstance().time)
     }
@@ -63,15 +64,47 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
 
         binding = FragmentHomeBinding.bind(view)
 
-        requestLocationPermissions()
-
+        setupSearchView()
+        setupRecyclerView()
         showOrHideSearchView()
 
-        setupSearchView()
+        requestLocationPermissions()
 
-        setupRecyclerView()
+    }
 
-        //getAutocompleteResults("Grecia")
+    private fun checkInternetObserver() {
+
+        internetCheckViewModel.checkInternet()
+            .observe(viewLifecycleOwner, Observer { resultEmitted ->
+
+                when (resultEmitted) {
+
+                    is Result.Loading -> {}
+
+                    is Result.Success -> {
+
+                        // Perform action:
+
+                        if (resultEmitted.data) {
+                            getLocationObserver()
+                        } else {
+
+                            Toast.makeText(
+                                requireContext(),
+                                "No internet access!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                        }
+
+                    }
+
+                    is Result.Failure -> {}
+
+                }
+
+            }
+        )
 
     }
 
@@ -79,7 +112,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
         location: String
     ) {
 
-        viewModel.fetchAutocompleteResults(
+        weatherViewModel.fetchAutocompleteResults(
             location
         ).observe(
             viewLifecycleOwner, Observer { resultEmitted ->
@@ -174,7 +207,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
 
     private fun getCurrentWeatherObserver(location: String, airQuality: Boolean = false) {
 
-        viewModel.fetchCurrentWeather(
+        weatherViewModel.fetchCurrentWeather(
             location,
             airQuality
         ).observe(viewLifecycleOwner, Observer { resultEmitted ->
@@ -240,7 +273,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
         alerts: Boolean = false
     ) {
 
-        viewModel.fetchForecast(
+        weatherViewModel.fetchForecast(
             location,
             days,
             airQuality,
@@ -309,7 +342,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
         alerts: Boolean = false
     ) {
 
-        viewModel.fetchForecast(
+        weatherViewModel.fetchForecast(
             location,
             days,
             airQuality,
@@ -355,7 +388,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
         date: String
     ) {
 
-        viewModel.fetchAstronomy(location, date)
+        weatherViewModel.fetchAstronomy(location, date)
             .observe(viewLifecycleOwner, Observer { resultEmitted ->
 
                 when (resultEmitted) {
@@ -520,9 +553,15 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
         if (requestCode == AppConstants.LOCATION_REQUEST_CODE) {
 
             if (checkLocationPermissions(requireContext())) {
-                getLocationObserver()
+                //Toast.makeText(requireContext(), "HERE!!!", Toast.LENGTH_SHORT).show()
+                //getLocationObserver()
+                checkInternetObserver()
             } else {
-                Toast.makeText(requireContext(), "Location permission not granted!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Location permission not granted!",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
         } else {

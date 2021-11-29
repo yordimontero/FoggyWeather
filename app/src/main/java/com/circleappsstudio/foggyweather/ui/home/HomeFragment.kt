@@ -154,9 +154,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
 
                     is Result.Failure -> {
 
+                        Log.wtf("TAG", "Something went wrong: ${resultEmitted.exception.message}")
+
                         Toast.makeText(
                             requireContext(),
-                            "Something went wrong: ${resultEmitted.exception.message.toString()}",
+                            "Something went wrong: ${resultEmitted.exception.message}",
                             Toast.LENGTH_SHORT
                         ).show()
 

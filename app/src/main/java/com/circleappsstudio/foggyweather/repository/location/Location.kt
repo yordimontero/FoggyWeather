@@ -1,42 +1,101 @@
 package com.circleappsstudio.foggyweather.repository.location
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import com.circleappsstudio.foggyweather.core.checkLocationPermissions
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withContext
+import kotlin.coroutines.resume
 
 class Location {
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var huaweiFusedLocationProviderClient: com.huawei.hms.location.FusedLocationProviderClient
 
+    @ExperimentalCoroutinesApi
     @SuppressLint("MissingPermission")
     suspend fun getLocation(context: Context): List<String> {
-
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
 
         var latitude = ""
         var longitude = ""
 
         val currentLocation = mutableListOf<String>()
 
-        if (checkLocationPermissions(context)) {
+        withContext(Dispatchers.IO) {
 
-            val task = fusedLocationProviderClient.lastLocation
+            suspendCancellableCoroutine<MutableList<String>> { coroutine ->
 
-            task.addOnSuccessListener { location ->
+                if (GoogleApiAvailability.getInstance()
+                        .isGooglePlayServicesAvailable(context) == ConnectionResult.SUCCESS
+                ) {
+                    //Google Play services are available
 
-                if (location != null) {
-                    latitude = location.latitude.toString()
-                    longitude = location.longitude.toString()
+                    fusedLocationProviderClient =
+                        LocationServices.getFusedLocationProviderClient(context)
 
-                    currentLocation.add(latitude)
-                    currentLocation.add(longitude)
+                    if (checkLocationPermissions(context)) {
+
+                        val task = fusedLocationProviderClient.lastLocation
+
+                        task.addOnSuccessListener { location ->
+
+                            if (location != null) {
+                                latitude = location.latitude.toString()
+                                longitude = location.longitude.toString()
+
+                                currentLocation.add(latitude)
+                                currentLocation.add(longitude)
+
+                                coroutine.resume(currentLocation)
+
+                            } else {
+                                coroutine.cancel()
+                            }
+
+                        }
+
+                    }
+
+                } else {
+                    //Google Play services are not available on this device
+
+                    huaweiFusedLocationProviderClient =
+                        com.huawei.hms.location.LocationServices.getFusedLocationProviderClient(
+                            context
+                        )
+
+                    if (checkLocationPermissions(context)) {
+
+                        val task = huaweiFusedLocationProviderClient.lastLocation
+
+                        task.addOnSuccessListener { location ->
+
+                            if (location != null) {
+                                latitude = location.latitude.toString()
+                                longitude = location.longitude.toString()
+
+                                currentLocation.add(latitude)
+                                currentLocation.add(longitude)
+
+                                coroutine.resume(currentLocation)
+
+                            } else {
+                                coroutine.cancel()
+                            }
+
+                        }
+
+                    }
+
                 }
 
-            }.await()
+            }
 
         }
 

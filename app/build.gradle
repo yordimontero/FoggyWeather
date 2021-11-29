@@ -4,13 +4,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.circleappsstudio.foggyweather"
         minSdkVersion 23
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
 
@@ -66,6 +66,9 @@ dependencies {
 
     // FusedLocationProvider:
     implementation 'com.google.android.gms:play-services-location:18.0.0'
+
+    // HuaweiFusedLocationProvider:
+    implementation 'com.huawei.hms:location:4.0.3.301'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

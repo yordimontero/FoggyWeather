@@ -1,4 +1,4 @@
-package com.circleappsstudio.foggyweather.ui.current
+package com.circleappsstudio.foggyweather.ui.home
 
 import android.Manifest
 import android.os.Bundle
@@ -16,7 +16,7 @@ import com.circleappsstudio.foggyweather.application.AppConstants
 import com.circleappsstudio.foggyweather.core.*
 import com.circleappsstudio.foggyweather.data.model.Locations
 import com.circleappsstudio.foggyweather.data.remote.WeatherRemoteDataSource
-import com.circleappsstudio.foggyweather.databinding.FragmentCurrentWeatherBinding
+import com.circleappsstudio.foggyweather.databinding.FragmentHomeBinding
 import com.circleappsstudio.foggyweather.presenter.LocationViewModel
 import com.circleappsstudio.foggyweather.presenter.LocationViewModelFactory
 import com.circleappsstudio.foggyweather.presenter.WeatherViewModel
@@ -25,14 +25,14 @@ import com.circleappsstudio.foggyweather.repository.weather.RetrofitClient
 import com.circleappsstudio.foggyweather.repository.weather.WeatherRepositoryImpl
 import com.circleappsstudio.foggyweather.repository.location.Location
 import com.circleappsstudio.foggyweather.repository.location.LocationRepositoryImpl
-import com.circleappsstudio.foggyweather.ui.current.adapter.AutocompleteAdapter
-import com.circleappsstudio.foggyweather.ui.current.adapter.Forecast3DaysAdapter
-import com.circleappsstudio.foggyweather.ui.current.adapter.ForecastByHourAdapter
+import com.circleappsstudio.foggyweather.ui.home.adapter.AutocompleteAdapter
+import com.circleappsstudio.foggyweather.ui.home.adapter.Forecast3DaysAdapter
+import com.circleappsstudio.foggyweather.ui.home.adapter.ForecastByHourAdapter
 import java.util.*
 
-class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather), AutocompleteAdapter.OnLocationClickListener {
+class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLocationClickListener {
 
-    private lateinit var binding: FragmentCurrentWeatherBinding
+    private lateinit var binding: FragmentHomeBinding
 
     private val viewModel by viewModels<WeatherViewModel> {
         WeatherViewModelFactory(
@@ -61,7 +61,7 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather), Auto
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding = FragmentCurrentWeatherBinding.bind(view)
+        binding = FragmentHomeBinding.bind(view)
 
         requestLocationPermissions()
 

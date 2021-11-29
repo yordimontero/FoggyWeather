@@ -1,7 +1,6 @@
-package com.circleappsstudio.foggyweather.ui.current.adapter
+package com.circleappsstudio.foggyweather.ui.home.adapter
 
 import android.content.Context
-import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -13,8 +12,6 @@ import com.circleappsstudio.foggyweather.core.splitDate
 import com.circleappsstudio.foggyweather.core.splitHour
 import com.circleappsstudio.foggyweather.data.model.Hour
 import com.circleappsstudio.foggyweather.databinding.ForecastItemViewBinding
-import java.text.SimpleDateFormat
-import java.util.*
 
 class ForecastByHourAdapter(
     private val forecastByHourList: List<Hour>

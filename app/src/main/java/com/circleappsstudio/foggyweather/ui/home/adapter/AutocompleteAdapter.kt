@@ -1,4 +1,4 @@
-package com.circleappsstudio.foggyweather.ui.current.adapter
+package com.circleappsstudio.foggyweather.ui.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

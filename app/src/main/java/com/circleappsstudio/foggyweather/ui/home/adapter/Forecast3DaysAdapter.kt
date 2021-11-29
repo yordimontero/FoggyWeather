@@ -1,4 +1,4 @@
-package com.circleappsstudio.foggyweather.ui.current.adapter
+package com.circleappsstudio.foggyweather.ui.home.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.circleappsstudio.foggyweather.application.AppConstants
 import com.circleappsstudio.foggyweather.core.BaseViewHolder
-import com.circleappsstudio.foggyweather.data.model.Forecast
 import com.circleappsstudio.foggyweather.data.model.ForecastDay
 import com.circleappsstudio.foggyweather.databinding.Forecast3DaysItemViewBinding
 

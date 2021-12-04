@@ -10,6 +10,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/CustomDarkLightModeSecondaryBackground"
         app:cardCornerRadius="20dp"
         app:cardElevation="8dp"
         app:cardPreventCornerOverlap="true"
@@ -54,6 +55,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/CustomDarkLightModeSecondaryBackground"
                 app:cardCornerRadius="40dp"
                 app:cardElevation="8dp"
                 app:cardPreventCornerOverlap="false"

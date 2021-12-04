@@ -8,11 +8,13 @@
         <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/activity_splash_screen.xml" value="0.2" />
         <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/autocomplete_item_view.xml" value="0.33" />
+        <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/custom_internet_check_dialog.xml" value="0.25" />
+        <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/custom_internet_dialog.xml" value="0.16574074074074074" />
         <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/forecast_3_days_item_view.xml" value="0.33" />
         <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/forecast_item_view.xml" value="0.5" />
         <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/fragment_current_weather.xml" value="0.22" />
-        <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/fragment_home.xml" value="0.16574074074074074" />
-        <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/fragment_more.xml" value="0.25" />
+        <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/fragment_home.xml" value="0.33" />
+        <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/fragment_more.xml" value="0.1984375" />
         <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/menu/bottom_nav_menu.xml" value="0.20260416666666667" />
       </map>
     </option>

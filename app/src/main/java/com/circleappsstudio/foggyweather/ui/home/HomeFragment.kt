@@ -27,7 +27,8 @@ import com.circleappsstudio.foggyweather.ui.home.adapter.Forecast3DaysAdapter
 import com.circleappsstudio.foggyweather.ui.home.adapter.ForecastByHourAdapter
 import java.util.*
 
-class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLocationClickListener {
+class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLocationClickListener,
+    OnInternetCheckDialogButtonClickListener {
 
     private lateinit var binding: FragmentHomeBinding
 
@@ -79,27 +80,23 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
 
                 when (resultEmitted) {
 
-                    is Result.Loading -> {}
+                    is Result.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
 
                     is Result.Success -> {
-
-                        // Perform action:
 
                         if (resultEmitted.data) {
                             getLocationObserver()
                         } else {
-
-                            Toast.makeText(
-                                requireContext(),
-                                "No internet access!",
-                                Toast.LENGTH_SHORT
-                            ).show()
-
+                            showNetworkCheckDialog()
                         }
 
                     }
 
-                    is Result.Failure -> {}
+                    is Result.Failure -> {
+                        showNetworkCheckDialog()
+                    }
 
                 }
 
@@ -132,23 +129,17 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
                             this
                         )
 
-                        /*resultEmitted.data.forEachIndexed { index, location ->
-                            Log.wtf("TAG", "${location.name}")
-                        }*/
-
-                        //binding.progressBar.visibility = View.GONE
-
                     }
 
                     is Result.Failure -> {
 
-                        Log.wtf("TAG", resultEmitted.exception.message.toString())
-
-                        Toast.makeText(
+                        /*Toast.makeText(
                             requireContext(),
                             "Something went wrong: ${resultEmitted.exception.message.toString()}",
                             Toast.LENGTH_SHORT
-                        ).show()
+                        ).show()*/
+
+                        showNetworkCheckDialog()
 
                         binding.progressBar.visibility = View.GONE
 
@@ -177,11 +168,9 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
                         cordenades = "${resultEmitted.data[0]},${resultEmitted.data[1]}"
 
                         getCurrentWeatherObserver(location = cordenades)
-                        getForecastObserver(location = cordenades)
-                        getAstronomyObserver(location = cordenades, date = currentDate)
-                        getForecast3DaysObserver(location = cordenades)
-
-                        binding.progressBar.visibility = View.GONE
+                        //getForecastObserver(location = cordenades)
+                        //getAstronomyObserver(location = cordenades, date = currentDate)
+                        //getForecast3DaysObserver(location = cordenades)
 
                     }
 
@@ -244,17 +233,19 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
 
                     binding.txtLastUpdate.text = formattedHour
 
-                    binding.progressBar.visibility = View.GONE
+                    getForecastObserver(location = cordenades)
 
                 }
 
                 is Result.Failure -> {
 
-                    Toast.makeText(
+                    /*Toast.makeText(
                         requireContext(),
                         "Something went wrong: ${resultEmitted.exception.message.toString()}",
                         Toast.LENGTH_SHORT
-                    ).show()
+                    ).show()*/
+
+                    showNetworkCheckDialog()
 
                     binding.progressBar.visibility = View.GONE
 
@@ -313,17 +304,19 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
 
                     }
 
-                    binding.progressBar.visibility = View.GONE
+                    getAstronomyObserver(location = cordenades, date = currentDate)
 
                 }
 
                 is Result.Failure -> {
 
-                    Toast.makeText(
+                    /*Toast.makeText(
                         requireContext(),
                         "Something went wrong: ${resultEmitted.exception.message.toString()}",
                         Toast.LENGTH_SHORT
-                    ).show()
+                    ).show()*/
+
+                    showNetworkCheckDialog()
 
                     binding.progressBar.visibility = View.GONE
 
@@ -366,11 +359,13 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
 
                 is Result.Failure -> {
 
-                    Toast.makeText(
+                    /*Toast.makeText(
                         requireContext(),
                         "Something went wrong: ${resultEmitted.exception.message.toString()}",
                         Toast.LENGTH_SHORT
-                    ).show()
+                    ).show()*/
+
+                    showNetworkCheckDialog()
 
                     binding.progressBar.visibility = View.GONE
 
@@ -409,19 +404,19 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
                         binding.txtMoonIllumination.text =
                             resultEmitted.data.astronomy.astro.moon_illumination
 
-                        binding.progressBar.visibility = View.GONE
+                        getForecast3DaysObserver(location = cordenades)
 
                     }
 
                     is Result.Failure -> {
 
-                        Toast.makeText(
+                        /*Toast.makeText(
                             requireContext(),
                             "Something went wrong: ${resultEmitted.exception.message.toString()}",
                             Toast.LENGTH_SHORT
-                        ).show()
+                        ).show()*/
 
-                        Log.wtf("TAG", resultEmitted.exception.message.toString())
+                        showNetworkCheckDialog()
 
                         binding.progressBar.visibility = View.GONE
 
@@ -485,9 +480,9 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
                     //getAutocompleteResults(it)
 
                     getCurrentWeatherObserver(location = it)
-                    getForecastObserver(location = it)
-                    getAstronomyObserver(location = it, date = currentDate)
-                    getForecast3DaysObserver(location = it)
+                    //getForecastObserver(location = it)
+                    //getAstronomyObserver(location = it, date = currentDate)
+                    //getForecast3DaysObserver(location = it)
 
                     hideSearchView()
 
@@ -534,6 +529,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
 
     private fun requestLocationPermissions() {
 
+        binding.progressBar.visibility = View.VISIBLE
+
         requestPermissions(
             arrayOf(
                 Manifest.permission.ACCESS_FINE_LOCATION,
@@ -553,8 +550,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
         if (requestCode == AppConstants.LOCATION_REQUEST_CODE) {
 
             if (checkLocationPermissions(requireContext())) {
-                //Toast.makeText(requireContext(), "HERE!!!", Toast.LENGTH_SHORT).show()
-                //getLocationObserver()
                 checkInternetObserver()
             } else {
                 Toast.makeText(
@@ -562,16 +557,32 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
                     "Location permission not granted!",
                     Toast.LENGTH_SHORT
                 ).show()
+                binding.progressBar.visibility = View.GONE
             }
 
         } else {
             Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT).show()
+            binding.progressBar.visibility = View.GONE
         }
+
+    }
+
+    private fun showNetworkCheckDialog() {
+
+        showInternetCheckDialog(
+            requireActivity(),
+            requireContext(),
+            this
+        )
 
     }
 
     override fun onLocationClick(locations: Locations) {
         binding.searchView.setQuery(locations.name, true)
+    }
+
+    override fun internetCheckDialogPositiveButtonClicked() {
+        checkInternetObserver()
     }
 
 }

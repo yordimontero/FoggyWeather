@@ -8,12 +8,14 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="soft_white">#EAF1EA</color>
+    <color name="soft_white">#F2FBFF</color>
     <color name="red">#EB5056</color>
     <color name="orange">#D38401</color>
     <color name="dark">#2D322B</color>
     <color name="green">#6D9773</color>
-    <color name="primary_dark_mode">#121212</color>
+    <color name="primary_dark_mode">#1E1E45</color>
     <color name="secondary_dark_mode">#181818</color>
+    <color name="dark_blue">#10103A</color>
+    <color name="light_blue">#4794E7</color>
 
 </resources>

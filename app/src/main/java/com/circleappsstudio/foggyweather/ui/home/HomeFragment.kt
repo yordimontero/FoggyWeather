@@ -339,7 +339,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
                     binding.rvForecast3Days.adapter =
                         Forecast3DaysAdapter(resultEmitted.data.forecast.forecastday)
 
-                    binding.pullToRefresh.isRefreshing = false
+                    //binding.pullToRefresh.isRefreshing = false
                     binding.progressBar.visibility = View.GONE
 
                 }
@@ -518,6 +518,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
 
         binding.pullToRefresh.setOnRefreshListener {
             requestLocationPermissions()
+            binding.pullToRefresh.isRefreshing = false
         }
 
     }

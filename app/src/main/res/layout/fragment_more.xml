@@ -1,27 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    style="@style/CustomDarkLightModeBackgroundLayout"
     tools:context=".ui.more.MoreFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="@color/green"
-        android:orientation="vertical" />
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        style="@style/CustomDarkLightModeBackground"
-        android:layout_marginTop="-15dp"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="8dp"
-        app:cardPreventCornerOverlap="true"
-        app:cardUseCompatPadding="false">
+        android:orientation="vertical">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -39,7 +30,7 @@
                     android:id="@+id/btn_facebook"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/CustomDarkLightModeSecondaryBackground"
+                    style="@style/CustomDarkLightModeBackground"
                     android:layout_margin="10dp"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="8dp"
@@ -61,7 +52,7 @@
                             <androidx.cardview.widget.CardView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                style="@style/CustomDarkLightModeSecondaryBackground"
+                                style="@style/CustomDarkLightModeBackground"
                                 android:layout_margin="8dp"
                                 android:layout_marginStart="10dp"
                                 app:cardCornerRadius="40dp"
@@ -95,7 +86,7 @@
                     android:id="@+id/btn_twitter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/CustomDarkLightModeSecondaryBackground"
+                    style="@style/CustomDarkLightModeBackground"
                     android:layout_margin="10dp"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="8dp"
@@ -117,7 +108,7 @@
                             <androidx.cardview.widget.CardView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                style="@style/CustomDarkLightModeSecondaryBackground"
+                                style="@style/CustomDarkLightModeBackground"
                                 android:layout_margin="8dp"
                                 android:layout_marginStart="10dp"
                                 app:cardCornerRadius="40dp"
@@ -151,7 +142,7 @@
                     android:id="@+id/btn_send_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/CustomDarkLightModeSecondaryBackground"
+                    style="@style/CustomDarkLightModeBackground"
                     android:layout_margin="10dp"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="8dp"
@@ -173,7 +164,7 @@
                             <androidx.cardview.widget.CardView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                style="@style/CustomDarkLightModeSecondaryBackground"
+                                style="@style/CustomDarkLightModeBackground"
                                 android:layout_margin="8dp"
                                 android:layout_marginStart="10dp"
                                 app:cardCornerRadius="40dp"
@@ -207,7 +198,7 @@
                     android:id="@+id/btn_web_page"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/CustomDarkLightModeSecondaryBackground"
+                    style="@style/CustomDarkLightModeBackground"
                     android:layout_margin="10dp"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="8dp"
@@ -229,7 +220,7 @@
                             <androidx.cardview.widget.CardView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                style="@style/CustomDarkLightModeSecondaryBackground"
+                                style="@style/CustomDarkLightModeBackground"
                                 android:layout_margin="8dp"
                                 android:layout_marginStart="10dp"
                                 app:cardCornerRadius="40dp"
@@ -263,7 +254,7 @@
                     android:id="@+id/btn_privacy_policy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/CustomDarkLightModeSecondaryBackground"
+                    style="@style/CustomDarkLightModeBackground"
                     android:layout_margin="10dp"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="8dp"
@@ -285,7 +276,7 @@
                             <androidx.cardview.widget.CardView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                style="@style/CustomDarkLightModeSecondaryBackground"
+                                style="@style/CustomDarkLightModeBackground"
                                 android:layout_margin="8dp"
                                 android:layout_marginStart="10dp"
                                 app:cardCornerRadius="40dp"
@@ -320,7 +311,7 @@
                     android:id="@+id/btn_rate_app"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/CustomDarkLightModeSecondaryBackground"
+                    style="@style/CustomDarkLightModeBackground"
                     android:layout_margin="10dp"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="8dp"
@@ -342,7 +333,7 @@
                             <androidx.cardview.widget.CardView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                style="@style/CustomDarkLightModeSecondaryBackground"
+                                style="@style/CustomDarkLightModeBackground"
                                 android:layout_margin="8dp"
                                 android:layout_marginStart="10dp"
                                 app:cardCornerRadius="40dp"
@@ -377,7 +368,7 @@
                     android:id="@+id/btn_more_apps"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/CustomDarkLightModeSecondaryBackground"
+                    style="@style/CustomDarkLightModeBackground"
                     android:layout_margin="10dp"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="8dp"
@@ -399,7 +390,7 @@
                             <androidx.cardview.widget.CardView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                style="@style/CustomDarkLightModeSecondaryBackground"
+                                style="@style/CustomDarkLightModeBackground"
                                 android:layout_margin="8dp"
                                 android:layout_marginStart="10dp"
                                 app:cardCornerRadius="40dp"
@@ -433,13 +424,6 @@
 
         </androidx.core.widget.NestedScrollView>
 
-    </androidx.cardview.widget.CardView>
+    </LinearLayout>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        style="@style/CustomDarkLightModeSecondaryBackground"
-        android:layout_marginTop="-20dp" />
-
-</LinearLayout>
+</androidx.cardview.widget.CardView>

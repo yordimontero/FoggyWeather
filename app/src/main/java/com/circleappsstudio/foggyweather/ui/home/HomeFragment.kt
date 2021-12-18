@@ -53,6 +53,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
         setupSearchView()
         setupRecyclerView()
         showOrHideSearchView()
+        pullToRefresh()
 
         requestLocationPermissions()
 
@@ -338,6 +339,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
                     binding.rvForecast3Days.adapter =
                         Forecast3DaysAdapter(resultEmitted.data.forecast.forecastday)
 
+                    binding.pullToRefresh.isRefreshing = false
                     binding.progressBar.visibility = View.GONE
 
                 }
@@ -508,6 +510,14 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
         binding.searchView.setOnCloseListener {
             hideSearchView()
             false
+        }
+
+    }
+
+    private fun pullToRefresh() {
+
+        binding.pullToRefresh.setOnRefreshListener {
+            requestLocationPermissions()
         }
 
     }

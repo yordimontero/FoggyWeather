@@ -1,4 +1,4 @@
-package com.circleappsstudio.foggyweather.core
+package com.circleappsstudio.foggyweather.core.permissions
 
 import android.content.Context
 import android.content.pm.PackageManager

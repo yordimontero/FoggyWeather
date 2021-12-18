@@ -2,7 +2,7 @@ package com.circleappsstudio.foggyweather.repository.location
 
 import android.annotation.SuppressLint
 import android.content.Context
-import com.circleappsstudio.foggyweather.core.checkLocationPermissions
+import com.circleappsstudio.foggyweather.core.permissions.checkLocationPermissions
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -11,9 +11,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 import kotlin.coroutines.resume
 
-class Location {
+class Location @Inject constructor() {
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var huaweiFusedLocationProviderClient: com.huawei.hms.location.FusedLocationProviderClient

@@ -1,7 +1,5 @@
 package com.circleappsstudio.foggyweather.data.model
 
-// Current Weather:
-
 data class CurrentWeather(
     val name: String = "",
     val region: String = "",

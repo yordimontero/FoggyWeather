@@ -1,4 +1,4 @@
-package com.circleappsstudio.foggyweather.core
+package com.circleappsstudio.foggyweather.application
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope

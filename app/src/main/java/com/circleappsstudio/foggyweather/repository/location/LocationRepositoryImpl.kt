@@ -1,11 +1,11 @@
 package com.circleappsstudio.foggyweather.repository.location
 
-import android.app.Activity
 import android.content.Context
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class LocationRepositoryImpl(
+class LocationRepositoryImpl @Inject constructor(
     private val location: Location
 ) : LocationRepository {
 
@@ -14,11 +14,5 @@ class LocationRepositoryImpl(
     ): List<String> = withContext(Dispatchers.IO) {
         location.getLocation(context)
     }
-
-    /*override suspend fun getLocation(
-        context: Context, activity: Activity
-    ): String = withContext(Dispatchers.IO) {
-        location.getLocation(context, activity)
-    }*/
 
 }

@@ -2,15 +2,17 @@ package com.circleappsstudio.foggyweather.presenter
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.circleappsstudio.foggyweather.core.Result
 import com.circleappsstudio.foggyweather.repository.location.LocationRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import java.lang.Exception
+import javax.inject.Inject
 
-class LocationViewModel(
+@HiltViewModel
+class LocationViewModel @Inject constructor(
     private val repository: LocationRepository
 ): ViewModel() {
 
@@ -39,14 +41,5 @@ class LocationViewModel(
         }
 
     }
-
-}
-
-class LocationViewModelFactory(
-    val repository: LocationRepository
-): ViewModelProvider.Factory {
-
-    override fun <T : ViewModel?> create(modelClass: Class<T>)
-    : T = LocationViewModel(repository) as T
 
 }

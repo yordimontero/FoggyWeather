@@ -1,8 +1,7 @@
-package com.circleappsstudio.foggyweather.core
+package com.circleappsstudio.foggyweather.core.time
 
 import android.content.Context
 import android.text.format.DateFormat
-import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.*
 

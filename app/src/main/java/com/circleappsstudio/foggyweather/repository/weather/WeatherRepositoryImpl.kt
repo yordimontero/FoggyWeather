@@ -2,8 +2,10 @@ package com.circleappsstudio.foggyweather.repository.weather
 
 import com.circleappsstudio.foggyweather.data.model.*
 import com.circleappsstudio.foggyweather.data.remote.WeatherRemoteDataSource
+import com.circleappsstudio.foggyweather.data.remote.WeatherRemoteDataSourceImpl
+import javax.inject.Inject
 
-class WeatherRepositoryImpl(
+class WeatherRepositoryImpl @Inject constructor(
     private val dataSource: WeatherRemoteDataSource
 ): WeatherRepository {
 

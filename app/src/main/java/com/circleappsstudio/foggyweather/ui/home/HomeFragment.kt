@@ -14,45 +14,30 @@ import com.bumptech.glide.Glide
 import com.circleappsstudio.foggyweather.R
 import com.circleappsstudio.foggyweather.application.AppConstants
 import com.circleappsstudio.foggyweather.core.*
+import com.circleappsstudio.foggyweather.core.permissions.checkLocationPermissions
+import com.circleappsstudio.foggyweather.core.time.*
+import com.circleappsstudio.foggyweather.core.uiutils.customdialogs.OnInternetCheckDialogButtonClickListener
+import com.circleappsstudio.foggyweather.core.uiutils.customdialogs.showInternetCheckDialog
 import com.circleappsstudio.foggyweather.data.model.Locations
-import com.circleappsstudio.foggyweather.data.remote.WeatherRemoteDataSource
 import com.circleappsstudio.foggyweather.databinding.FragmentHomeBinding
 import com.circleappsstudio.foggyweather.presenter.*
-import com.circleappsstudio.foggyweather.repository.weather.RetrofitClient
-import com.circleappsstudio.foggyweather.repository.weather.WeatherRepositoryImpl
-import com.circleappsstudio.foggyweather.repository.location.Location
-import com.circleappsstudio.foggyweather.repository.location.LocationRepositoryImpl
 import com.circleappsstudio.foggyweather.ui.home.adapter.AutocompleteAdapter
 import com.circleappsstudio.foggyweather.ui.home.adapter.Forecast3DaysAdapter
 import com.circleappsstudio.foggyweather.ui.home.adapter.ForecastByHourAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
+@AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLocationClickListener,
     OnInternetCheckDialogButtonClickListener {
 
     private lateinit var binding: FragmentHomeBinding
 
-    private val weatherViewModel by viewModels<WeatherViewModel> {
-        WeatherViewModelFactory(
-            WeatherRepositoryImpl(
-                WeatherRemoteDataSource(
-                    RetrofitClient.webService
-                )
-            )
-        )
-    }
+    private val weatherViewModel by viewModels<WeatherViewModel>()
 
-    private val locationViewModel by viewModels<LocationViewModel> {
-        LocationViewModelFactory(
-            LocationRepositoryImpl(
-                Location()
-            )
-        )
-    }
+    private val locationViewModel by viewModels<LocationViewModel>()
 
-    private val internetCheckViewModel by viewModels<InternetCheckViewModel> {
-        InternetCheckViewModelFactory()
-    }
+    private val internetCheckViewModel by viewModels<InternetCheckViewModel>()
 
     private val currentDate by lazy {
         formatDate(Calendar.getInstance().time)

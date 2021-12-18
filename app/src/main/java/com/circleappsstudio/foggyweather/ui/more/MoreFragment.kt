@@ -7,7 +7,9 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.circleappsstudio.foggyweather.R
 import com.circleappsstudio.foggyweather.databinding.FragmentMoreBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MoreFragment : Fragment(R.layout.fragment_more) {
 
     private lateinit var binding: FragmentMoreBinding

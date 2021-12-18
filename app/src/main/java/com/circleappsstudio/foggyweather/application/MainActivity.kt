@@ -1,4 +1,4 @@
-package com.circleappsstudio.foggyweather.ui
+package com.circleappsstudio.foggyweather.application
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -9,7 +9,9 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.circleappsstudio.foggyweather.R
 import com.circleappsstudio.foggyweather.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var navHostFragment: NavHostFragment

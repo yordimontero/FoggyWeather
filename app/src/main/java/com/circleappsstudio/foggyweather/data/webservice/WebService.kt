@@ -1,10 +1,6 @@
-package com.circleappsstudio.foggyweather.repository.weather
+package com.circleappsstudio.foggyweather.data.webservice
 
-import com.circleappsstudio.foggyweather.application.AppConstants
 import com.circleappsstudio.foggyweather.data.model.*
-import com.google.gson.GsonBuilder
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -51,19 +47,5 @@ interface WebService {
         @Query("q")
         location: String
     ): List<Locations>
-
-}
-
-object RetrofitClient {
-
-    val webService: WebService by lazy {
-        Retrofit.Builder()
-            .baseUrl(AppConstants.BASE_URL)
-            .addConverterFactory(
-                GsonConverterFactory.create(
-                    GsonBuilder().create()
-                )
-            ).build().create(WebService::class.java)
-    }
 
 }

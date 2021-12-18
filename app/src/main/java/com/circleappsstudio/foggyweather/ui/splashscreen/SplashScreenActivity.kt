@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import com.circleappsstudio.foggyweather.R
-import com.circleappsstudio.foggyweather.ui.MainActivity
+import com.circleappsstudio.foggyweather.application.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SplashScreenActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,16 +1,17 @@
 package com.circleappsstudio.foggyweather.presenter
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
-import com.circleappsstudio.foggyweather.core.InternetCheck
 import com.circleappsstudio.foggyweather.core.Result
 import com.circleappsstudio.foggyweather.repository.weather.WeatherRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import java.lang.Exception
+import javax.inject.Inject
 
-class WeatherViewModel(
+@HiltViewModel
+class WeatherViewModel @Inject constructor(
     private val repository: WeatherRepository
 ) : ViewModel() {
 
@@ -142,11 +143,4 @@ class WeatherViewModel(
 
     }
 
-}
-
-class WeatherViewModelFactory(
-    private val repository: WeatherRepository
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>)
-            : T = WeatherViewModel(repository) as T
 }

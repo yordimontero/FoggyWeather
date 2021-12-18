@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.circleappsstudio.foggyweather.application.AppConstants
 import com.circleappsstudio.foggyweather.core.BaseViewHolder
-import com.circleappsstudio.foggyweather.core.formatHour
-import com.circleappsstudio.foggyweather.core.splitDate
-import com.circleappsstudio.foggyweather.core.splitHour
+import com.circleappsstudio.foggyweather.core.time.formatHour
+import com.circleappsstudio.foggyweather.core.time.splitDate
+import com.circleappsstudio.foggyweather.core.time.splitHour
 import com.circleappsstudio.foggyweather.data.model.Hour
 import com.circleappsstudio.foggyweather.databinding.ForecastItemViewBinding
 

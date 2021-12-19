@@ -55,14 +55,102 @@
                     android:orientation="vertical"
                     android:padding="18dp">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:fontFamily="sans-serif-light"
+                            android:gravity="center"
+                            android:text="weatherapi.com"
+                            android:textSize="14sp"
+                            app:drawableStartCompat="@drawable/ic_cloud"
+                            app:drawableTint="@color/light_blue"
+                            android:drawablePadding="5dp"
+                            android:layout_marginBottom="15dp"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:id="@+id/img_icon"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                tools:src="@drawable/ic_cloud"
+                                tools:tint="@color/black"
+                                android:scaleType="centerCrop"/>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_marginStart="5dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="start"
+                                    android:fontFamily="sans-serif-light"
+                                    android:text="Today"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txt_current_date"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="sans-serif-light"
+                                    android:textSize="16sp"
+                                    tools:text="Sat, 3 Aug" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/txt_temperature"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:fontFamily="sans-serif-light"
+                                android:textSize="80sp"
+                                android:textStyle="bold"
+                                tools:text="22" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:fontFamily="sans-serif-light"
+                                android:textSize="35sp"
+                                android:text="°C"
+                                android:gravity="top"
+                                android:layout_marginTop="12dp"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
                     <TextView
                         android:id="@+id/txt_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:textStyle="bold"
                         android:layout_gravity="center"
-                        android:textSize="18sp"
-                        app:drawableStartCompat="@drawable/ic_location"
-                        app:drawableTint="@color/light_blue"
+                        android:textSize="15sp"
                         tools:text="Location" />
 
                     <LinearLayout
@@ -109,39 +197,18 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/txt_temperature"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:gravity="center"
-                            android:textSize="60sp"
-                            android:textStyle="bold"
-                            tools:text="22°C" />
-
-                        <ImageView
-                            android:id="@+id/img_icon"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            tools:src="@drawable/ic_cloud"
-                            tools:tint="@color/black" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp">
 
                         <TextView
                             android:id="@+id/textView2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
                             android:text="Condition:"
-                            android:textSize="18sp"
+                            android:textSize="15sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -149,22 +216,27 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:textSize="18sp"
+                            android:fontFamily="sans-serif-light"
+                            android:textSize="15sp"
                             tools:text="Partly Cloud" />
 
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            android:text="•"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="5dp"/>
 
                         <TextView
                             android:id="@+id/textView3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
                             android:text="Feels like:"
-                            android:textSize="18sp"
+                            android:textSize="15sp"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="@+id/linearlayout1"
                             app:layout_constraintTop_toBottomOf="@+id/linearlayout1" />
@@ -173,8 +245,9 @@
                             android:id="@+id/txt_feels_like"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
                             android:layout_marginStart="5dp"
-                            android:textSize="18sp"
+                            android:textSize="15sp"
                             tools:text="30" />
 
                     </LinearLayout>
@@ -198,9 +271,10 @@
                                 android:id="@+id/txt_max_temp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif-light"
                                 android:gravity="center"
                                 android:padding="8dp"
-                                android:textSize="22sp"
+                                android:textSize="20sp"
                                 android:textStyle="bold"
                                 app:drawableStartCompat="@drawable/ic_max"
                                 tools:text="24.9°C" />
@@ -221,9 +295,10 @@
                                 android:id="@+id/txt_min_temp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif-light"
                                 android:gravity="center"
                                 android:padding="8dp"
-                                android:textSize="22sp"
+                                android:textSize="20sp"
                                 android:textStyle="bold"
                                 app:drawableStartCompat="@drawable/ic_min"
                                 tools:text="18.3°C" />
@@ -237,27 +312,17 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="weatherapi.com"
-                            android:textSize="14sp"
-                            app:drawableStartCompat="@drawable/ic_cloud"
-                            app:drawableTint="@color/red"
-                            android:drawablePadding="2dp"/>
-
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="end"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:gravity="center">
 
                             <TextView
-                                android:id="@+id/textView8"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:text="Last updated:"
+                                android:fontFamily="sans-serif-light"
+                                android:text="• Last updated:"
                                 android:gravity="center"
                                 android:textSize="14sp" />
 
@@ -265,6 +330,7 @@
                                 android:id="@+id/txt_last_update"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
+                                android:fontFamily="sans-serif-light"
                                 android:gravity="center"
                                 android:layout_marginStart="1dp"
                                 android:textSize="14sp"
@@ -290,9 +356,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
                             android:layout_marginStart="10dp"
                             android:text="• Today's Forecast:"
-                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            android:textSize="18sp"
                             android:layout_marginTop="8dp"/>
 
                         <androidx.recyclerview.widget.RecyclerView

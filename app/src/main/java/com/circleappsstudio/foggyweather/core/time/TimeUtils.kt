@@ -186,3 +186,13 @@ fun formatDate(date: Date): String {
     return dateFormat.format(date)
 
 }
+
+fun getDateWithMonthName(date: Date): String {
+
+    val dateFormat = SimpleDateFormat(
+        "EEE, d MMM", Locale.ENGLISH
+    )
+
+    return dateFormat.format(date)
+
+}

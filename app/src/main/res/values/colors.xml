@@ -17,5 +17,6 @@
     <color name="secondary_dark_mode">#181818</color>
     <color name="dark_blue">#10103A</color>
     <color name="light_blue">#4794E7</color>
+    <color name="lavender">#DEEAF7</color>
 
 </resources>

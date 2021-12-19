@@ -16,8 +16,8 @@ import com.circleappsstudio.foggyweather.application.AppConstants
 import com.circleappsstudio.foggyweather.core.*
 import com.circleappsstudio.foggyweather.core.permissions.checkLocationPermissions
 import com.circleappsstudio.foggyweather.core.time.*
-import com.circleappsstudio.foggyweather.core.uiutils.customdialogs.OnInternetCheckDialogButtonClickListener
-import com.circleappsstudio.foggyweather.core.uiutils.customdialogs.showInternetCheckDialog
+import com.circleappsstudio.foggyweather.core.ui.customdialogs.OnInternetCheckDialogButtonClickListener
+import com.circleappsstudio.foggyweather.core.ui.customdialogs.showInternetCheckDialog
 import com.circleappsstudio.foggyweather.data.model.Locations
 import com.circleappsstudio.foggyweather.databinding.FragmentHomeBinding
 import com.circleappsstudio.foggyweather.presenter.*
@@ -43,12 +43,18 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
         formatDate(Calendar.getInstance().time)
     }
 
+    private val currentDateWithMothName by lazy {
+        getDateWithMonthName(Calendar.getInstance().time)
+    }
+
     private var cordenades: String = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentHomeBinding.bind(view)
+
+        binding.txtCurrentDate.text = currentDateWithMothName
 
         setupSearchView()
         setupRecyclerView()
@@ -198,7 +204,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
                     binding.txtLocation.text =
                         "${resultEmitted.data.location.name}, ${resultEmitted.data.location.region}"
 
-                    binding.txtTemperature.text = "${resultEmitted.data.current.temp_c}°C"
+                    binding.txtTemperature.text = "${resultEmitted.data.current.temp_c}"
 
                     Glide.with(requireContext())
                         .load("${AppConstants.BASE_IMAGE_URL}${resultEmitted.data.current.condition.icon}")
@@ -283,7 +289,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
                     resultEmitted.data.forecast.forecastday.forEachIndexed { index, forecastDay ->
 
                         binding.rvForecast.adapter = ForecastByHourAdapter(
-                            forecastDay.hour
+                            forecastDay.hour,
+                            forecastRecyclerViewPosition
                         )
 
                         binding.rvForecast.scrollToPosition(forecastRecyclerViewPosition)

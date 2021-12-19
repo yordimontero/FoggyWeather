@@ -1,4 +1,4 @@
-package com.circleappsstudio.foggyweather.core.uiutils.customdialogs
+package com.circleappsstudio.foggyweather.core.ui.customdialogs
 
 import android.app.Activity
 import android.app.AlertDialog

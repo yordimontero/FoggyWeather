@@ -11,12 +11,14 @@ import com.circleappsstudio.foggyweather.core.time.formatHour
 import com.circleappsstudio.foggyweather.core.time.splitDate
 import com.circleappsstudio.foggyweather.core.time.splitHour
 import com.circleappsstudio.foggyweather.core.ui.changeForecastByHourCardViewColor
+import com.circleappsstudio.foggyweather.core.ui.changeForecastByHourUnselectedCardViewColor
 import com.circleappsstudio.foggyweather.data.model.Hour
 import com.circleappsstudio.foggyweather.databinding.ForecastItemViewBinding
 
 class ForecastByHourAdapter(
     private val forecastByHourList: List<Hour>,
-    private val currentHour: Int
+    private var currentHour: String,
+    private val context: Context
 ) : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
@@ -35,7 +37,36 @@ class ForecastByHourAdapter(
 
         when (holder) {
             is ForecastViewHolder -> {
+
                 holder.bind(forecastByHourList[position])
+
+                val hour = splitDate(forecastByHourList[position].time)
+                val splitHour = splitHour(hour, 0).toInt()
+
+                if (currentHour.toInt() == splitHour) {
+
+                    changeForecastByHourCardViewColor(
+                        context = context,
+                        primaryCardView = holder.binding.primaryCardView,
+                        secondaryCardView = holder.binding.secondaryCardView,
+                        hour = holder.binding.txtHour,
+                        temperature = holder.binding.txtTemperature,
+                        grades = holder.binding.txtGrades
+                    )
+
+                } else {
+
+                    changeForecastByHourUnselectedCardViewColor(
+                        context = context,
+                        primaryCardView = holder.binding.primaryCardView,
+                        secondaryCardView = holder.binding.secondaryCardView,
+                        hour = holder.binding.txtHour,
+                        temperature = holder.binding.txtTemperature,
+                        grades = holder.binding.txtGrades
+                    )
+
+                }
+
             }
         }
 
@@ -51,17 +82,6 @@ class ForecastByHourAdapter(
         override fun bind(item: Hour) {
 
             val hour = splitDate(item.time)
-
-            changeForecastByHourCardViewColor(
-                context = context,
-                splitHour = splitHour(hour, 0),
-                currentHour = currentHour.toString(),
-                primaryCardView = binding.primaryCardView,
-                secondaryCardView = binding.secondaryCardView,
-                hour = binding.txtHour,
-                temperature = binding.txtTemperature,
-                grades = binding.txtGrades
-            )
 
             val formattedHour = formatHour(
                 splitHour(hour, 0),

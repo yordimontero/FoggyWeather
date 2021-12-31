@@ -93,7 +93,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
                 }
 
             }
-        )
+            )
 
     }
 
@@ -290,7 +290,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
 
                         binding.rvForecast.adapter = ForecastByHourAdapter(
                             forecastDay.hour,
-                            forecastRecyclerViewPosition
+                            forecastRecyclerViewPosition.toString(),
+                            requireContext()
                         )
 
                         binding.rvForecast.scrollToPosition(forecastRecyclerViewPosition)

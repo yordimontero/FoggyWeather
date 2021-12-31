@@ -9,8 +9,6 @@ import com.circleappsstudio.foggyweather.R
 
 fun changeForecastByHourCardViewColor(
     context: Context,
-    splitHour: String,
-    currentHour: String,
     primaryCardView: CardView,
     secondaryCardView: CardView,
     hour: TextView,
@@ -22,49 +20,24 @@ fun changeForecastByHourCardViewColor(
         context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
     ) {
         Configuration.UI_MODE_NIGHT_YES -> {
-
-            if (splitHour == currentHour) {
-
-                forecastByHourDarkCardView(
-                    context, primaryCardView, secondaryCardView, hour, temperature, grades
-                )
-
-            }
-
-
+            forecastByHourSelectedDarkCardView(
+                context, primaryCardView, secondaryCardView, hour, temperature, grades
+            )
         }
         Configuration.UI_MODE_NIGHT_NO ->  {
-
-            if (splitHour == currentHour) {
-
-                forecastByHourLightCardView(
-                    context, primaryCardView, secondaryCardView, hour, temperature, grades
-                )
-
-            }
-
+            forecastByHourSelectedLightCardView(
+                context, primaryCardView, secondaryCardView, hour, temperature, grades
+            )
         }
         Configuration.UI_MODE_NIGHT_UNDEFINED -> {
-
-            if (splitHour == currentHour) {
-
-                forecastByHourLightCardView(
-                    context, primaryCardView, secondaryCardView, hour, temperature, grades
-                )
-
-            }
-
+            forecastByHourSelectedLightCardView(
+                context, primaryCardView, secondaryCardView, hour, temperature, grades
+            )
         }
         else -> {
-
-            if (splitHour == currentHour) {
-
-                forecastByHourLightCardView(
-                    context, primaryCardView, secondaryCardView, hour, temperature, grades
-                )
-
-            }
-
+            forecastByHourSelectedLightCardView(
+                context, primaryCardView, secondaryCardView, hour, temperature, grades
+            )
         }
 
     }
@@ -72,7 +45,45 @@ fun changeForecastByHourCardViewColor(
 
 }
 
-fun forecastByHourLightCardView(
+fun changeForecastByHourUnselectedCardViewColor(
+    context: Context,
+    primaryCardView: CardView,
+    secondaryCardView: CardView,
+    hour: TextView,
+    temperature: TextView,
+    grades: TextView
+) {
+
+    when (
+        context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+    ) {
+        Configuration.UI_MODE_NIGHT_YES -> {
+            forecastByHourUnselectedDarkCardView(
+                context, primaryCardView, secondaryCardView, hour, temperature, grades
+            )
+        }
+        Configuration.UI_MODE_NIGHT_NO ->  {
+            forecastByHourUnselectedLightCardView(
+                context, primaryCardView, secondaryCardView, hour, temperature, grades
+            )
+        }
+        Configuration.UI_MODE_NIGHT_UNDEFINED -> {
+            forecastByHourUnselectedLightCardView(
+                context, primaryCardView, secondaryCardView, hour, temperature, grades
+            )
+        }
+        else -> {
+            forecastByHourUnselectedLightCardView(
+                context, primaryCardView, secondaryCardView, hour, temperature, grades
+            )
+        }
+
+    }
+
+
+}
+
+fun forecastByHourSelectedLightCardView(
     context: Context,
     primaryCardView: CardView,
     secondaryCardView: CardView,
@@ -82,11 +93,11 @@ fun forecastByHourLightCardView(
 ) {
 
     primaryCardView.setCardBackgroundColor(
-        ContextCompat.getColor(context, R.color.dark_blue)
+        ContextCompat.getColor(context, R.color.light_dark_blue_primary)
     )
 
     secondaryCardView.setCardBackgroundColor(
-        ContextCompat.getColor(context, R.color.primary_dark_mode)
+        ContextCompat.getColor(context, R.color.light_dark_blue_secondary)
     )
 
     hour.setTextColor(
@@ -103,7 +114,7 @@ fun forecastByHourLightCardView(
 
 }
 
-fun forecastByHourDarkCardView(
+fun forecastByHourSelectedDarkCardView(
     context: Context,
     primaryCardView: CardView,
     secondaryCardView: CardView,
@@ -130,6 +141,68 @@ fun forecastByHourDarkCardView(
 
     grades.setTextColor(
         ContextCompat.getColor(context, R.color.primary_dark_mode)
+    )
+
+}
+
+fun forecastByHourUnselectedLightCardView(
+    context: Context,
+    primaryCardView: CardView,
+    secondaryCardView: CardView,
+    hour: TextView,
+    temperature: TextView,
+    grades: TextView
+) {
+
+    primaryCardView.setCardBackgroundColor(
+        ContextCompat.getColor(context, R.color.white)
+    )
+
+    secondaryCardView.setCardBackgroundColor(
+        ContextCompat.getColor(context, R.color.lavender)
+    )
+
+    hour.setTextColor(
+        ContextCompat.getColor(context, R.color.light_mode_text_color)
+    )
+
+    temperature.setTextColor(
+        ContextCompat.getColor(context, R.color.light_mode_text_color)
+    )
+
+    grades.setTextColor(
+        ContextCompat.getColor(context, R.color.light_mode_text_color)
+    )
+
+}
+
+fun forecastByHourUnselectedDarkCardView(
+    context: Context,
+    primaryCardView: CardView,
+    secondaryCardView: CardView,
+    hour: TextView,
+    temperature: TextView,
+    grades: TextView
+) {
+
+    primaryCardView.setCardBackgroundColor(
+        ContextCompat.getColor(context, R.color.primary_dark_mode)
+    )
+
+    secondaryCardView.setCardBackgroundColor(
+        ContextCompat.getColor(context, R.color.dark_blue)
+    )
+
+    hour.setTextColor(
+        ContextCompat.getColor(context, R.color.soft_white)
+    )
+
+    temperature.setTextColor(
+        ContextCompat.getColor(context, R.color.soft_white)
+    )
+
+    grades.setTextColor(
+        ContextCompat.getColor(context, R.color.soft_white)
     )
 
 }

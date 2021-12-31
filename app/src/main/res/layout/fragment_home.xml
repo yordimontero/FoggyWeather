@@ -49,299 +49,6 @@
 
                 </RelativeLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="18dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:fontFamily="sans-serif-light"
-                            android:gravity="center"
-                            android:text="weatherapi.com"
-                            android:textSize="14sp"
-                            app:drawableStartCompat="@drawable/ic_cloud"
-                            app:drawableTint="@color/light_blue"
-                            android:drawablePadding="5dp"
-                            android:layout_marginBottom="15dp"/>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center">
-
-                            <ImageView
-                                android:id="@+id/img_icon"
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
-                                tools:src="@drawable/ic_cloud"
-                                tools:tint="@color/black"
-                                android:scaleType="centerCrop"/>
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:layout_marginStart="5dp">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="start"
-                                    android:fontFamily="sans-serif-light"
-                                    android:text="Today"
-                                    android:textSize="24sp"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:id="@+id/txt_current_date"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:fontFamily="sans-serif-light"
-                                    android:textSize="16sp"
-                                    tools:text="Sat, 3 Aug" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center">
-
-                            <TextView
-                                android:id="@+id/txt_temperature"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:fontFamily="sans-serif-light"
-                                android:textSize="80sp"
-                                android:textStyle="bold"
-                                tools:text="22" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:fontFamily="sans-serif-light"
-                                android:textSize="35sp"
-                                android:text="°C"
-                                android:gravity="top"
-                                android:layout_marginTop="12dp"/>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/txt_location"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-light"
-                        android:textStyle="bold"
-                        android:layout_gravity="center"
-                        android:textSize="15sp"
-                        tools:text="Location" />
-
-                    <LinearLayout
-                        android:id="@+id/search_view_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            style="@style/CustomDarkLightModeSecondaryBackground"
-                            app:cardCornerRadius="20dp"
-                            app:cardElevation="8dp"
-                            app:cardPreventCornerOverlap="true"
-                            app:cardUseCompatPadding="true"
-                            android:visibility="visible">
-
-                            <SearchView
-                                android:id="@+id/search_view"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:closeIcon="@drawable/ic_close"
-                                android:queryBackground="@android:color/transparent"
-                                android:searchIcon="@drawable/ic_search"
-                                android:textStyle="bold"
-                                android:theme="@style/Theme.FoggyWeather"
-                                app:searchHintIcon="@drawable/ic_search" />
-
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_autocomplete"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone"
-                            android:orientation="vertical"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                            tools:listitem="@layout/autocomplete_item_view" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginBottom="15dp">
-
-                        <TextView
-                            android:id="@+id/textView2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
-                            android:text="Condition:"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/txt_condition"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:fontFamily="sans-serif-light"
-                            android:textSize="15sp"
-                            tools:text="Partly Cloud" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
-                            android:text="•"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginEnd="5dp"/>
-
-                        <TextView
-                            android:id="@+id/textView3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
-                            android:text="Feels like:"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            app:layout_constraintStart_toStartOf="@+id/linearlayout1"
-                            app:layout_constraintTop_toBottomOf="@+id/linearlayout1" />
-
-                        <TextView
-                            android:id="@+id/txt_feels_like"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
-                            android:layout_marginStart="5dp"
-                            android:textSize="15sp"
-                            tools:text="30" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            style="@style/CustomDarkLightModeBackground"
-                            android:layout_weight="1"
-                            app:cardCornerRadius="20dp"
-                            app:cardElevation="8dp"
-                            app:cardPreventCornerOverlap="true"
-                            app:cardUseCompatPadding="true">
-
-                            <TextView
-                                android:id="@+id/txt_max_temp"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif-light"
-                                android:gravity="center"
-                                android:padding="8dp"
-                                android:textSize="20sp"
-                                android:textStyle="bold"
-                                app:drawableStartCompat="@drawable/ic_max"
-                                tools:text="24.9°C" />
-
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            style="@style/CustomDarkLightModeBackground"
-                            android:layout_weight="1"
-                            app:cardCornerRadius="20dp"
-                            app:cardElevation="8dp"
-                            app:cardPreventCornerOverlap="true"
-                            app:cardUseCompatPadding="true">
-
-                            <TextView
-                                android:id="@+id/txt_min_temp"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif-light"
-                                android:gravity="center"
-                                android:padding="8dp"
-                                android:textSize="20sp"
-                                android:textStyle="bold"
-                                app:drawableStartCompat="@drawable/ic_min"
-                                tools:text="18.3°C" />
-
-                        </androidx.cardview.widget.CardView>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:fontFamily="sans-serif-light"
-                                android:text="• Last updated:"
-                                android:gravity="center"
-                                android:textSize="14sp" />
-
-                            <TextView
-                                android:id="@+id/txt_last_update"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:fontFamily="sans-serif-light"
-                                android:gravity="center"
-                                android:layout_marginStart="1dp"
-                                android:textSize="14sp"
-                                tools:text="15:00" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
                 <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -351,354 +58,664 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="8dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
-                            android:layout_marginStart="10dp"
-                            android:text="• Today's Forecast:"
-                            android:textStyle="bold"
-                            android:textSize="18sp"
-                            android:layout_marginTop="8dp"/>
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_forecast"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                            tools:listitem="@layout/forecast_item_view" />
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            style="@style/CustomDarkLightModeBackground"
-                            app:cardCornerRadius="20dp"
-                            app:cardElevation="8dp"
-                            app:cardPreventCornerOverlap="true"
-                            app:cardUseCompatPadding="true">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:padding="8dp">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="10dp"
-                                    android:text="Sunrise and Sunset:"
-                                    android:textSize="18sp" />
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:orientation="horizontal">
-
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginEnd="10dp"
-                                        android:gravity="center"
-                                        android:orientation="vertical">
-
-                                        <androidx.cardview.widget.CardView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            style="@style/CustomDarkLightModeBackgroundLayout"
-                                            app:cardCornerRadius="20dp"
-                                            app:cardElevation="8dp"
-                                            app:cardPreventCornerOverlap="false"
-                                            app:cardUseCompatPadding="true">
-
-                                            <ImageView
-                                                android:layout_width="35dp"
-                                                android:layout_height="35dp"
-                                                android:layout_gravity="center"
-                                                android:layout_margin="6dp"
-                                                android:src="@drawable/sunrise" />
-
-                                        </androidx.cardview.widget.CardView>
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:gravity="center"
-                                            android:text="Sunrise"
-                                            android:textSize="18sp"
-                                            android:textStyle="bold" />
-
-                                        <TextView
-                                            android:id="@+id/txt_sunrise"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:textSize="18sp"
-                                            tools:text="05:26 AM" />
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="10dp"
-                                        android:gravity="center"
-                                        android:orientation="vertical">
-
-                                        <androidx.cardview.widget.CardView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            style="@style/CustomDarkLightModeBackgroundLayout"
-                                            app:cardCornerRadius="20dp"
-                                            app:cardElevation="8dp"
-                                            app:cardPreventCornerOverlap="false"
-                                            app:cardUseCompatPadding="true">
-
-                                            <ImageView
-                                                android:layout_width="35dp"
-                                                android:layout_height="35dp"
-                                                android:layout_gravity="center"
-                                                android:layout_margin="6dp"
-                                                android:src="@drawable/sunset" />
-
-                                        </androidx.cardview.widget.CardView>
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="Sunset"
-                                            android:textSize="18sp"
-                                            android:textStyle="bold" />
-
-                                        <TextView
-                                            android:id="@+id/txt_sunset"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:textSize="18sp"
-                                            tools:text="05:25 PM" />
-
-                                    </LinearLayout>
-
-                                </LinearLayout>
-
-                            </LinearLayout>
-
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            style="@style/CustomDarkLightModeBackground"
-                            app:cardCornerRadius="20dp"
-                            app:cardElevation="8dp"
-                            app:cardPreventCornerOverlap="true"
-                            app:cardUseCompatPadding="true">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:padding="8dp">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="10dp"
-                                    android:text="Moonrise and Moonset:"
-                                    android:textSize="18sp" />
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="10dp"
-                                    android:gravity="center"
-                                    android:orientation="horizontal">
-
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginEnd="10dp"
-                                        android:gravity="center"
-                                        android:orientation="vertical">
-
-                                        <androidx.cardview.widget.CardView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            style="@style/CustomDarkLightModeBackgroundLayout"
-                                            app:cardCornerRadius="20dp"
-                                            app:cardElevation="8dp"
-                                            app:cardPreventCornerOverlap="false"
-                                            app:cardUseCompatPadding="true">
-
-                                            <ImageView
-                                                android:layout_width="35dp"
-                                                android:layout_height="35dp"
-                                                android:layout_gravity="center"
-                                                android:layout_margin="6dp"
-                                                android:src="@drawable/moonrise" />
-
-                                        </androidx.cardview.widget.CardView>
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="Moonrise"
-                                            android:textSize="18sp"
-                                            android:textStyle="bold" />
-
-                                        <TextView
-                                            android:id="@+id/txt_moonrise"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:textSize="18sp"
-                                            tools:text="05:26 AM" />
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="10dp"
-                                        android:gravity="center"
-                                        android:orientation="vertical">
-
-                                        <androidx.cardview.widget.CardView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            style="@style/CustomDarkLightModeBackgroundLayout"
-                                            app:cardCornerRadius="20dp"
-                                            app:cardElevation="8dp"
-                                            app:cardPreventCornerOverlap="false"
-                                            app:cardUseCompatPadding="true">
-
-                                            <ImageView
-                                                android:layout_width="35dp"
-                                                android:layout_height="35dp"
-                                                android:layout_gravity="center"
-                                                android:layout_margin="6dp"
-                                                android:src="@drawable/moonset" />
-
-                                        </androidx.cardview.widget.CardView>
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="Moonset"
-                                            android:textSize="18sp"
-                                            android:textStyle="bold" />
-
-                                        <TextView
-                                            android:id="@+id/txt_moonset"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:textSize="18sp"
-                                            tools:text="05:25 PM" />
-
-                                    </LinearLayout>
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:orientation="vertical">
-
-                                    <androidx.cardview.widget.CardView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        style="@style/CustomDarkLightModeBackgroundLayout"
-                                        app:cardCornerRadius="20dp"
-                                        app:cardElevation="8dp"
-                                        app:cardPreventCornerOverlap="true"
-                                        app:cardUseCompatPadding="true">
-
-                                        <ImageView
-                                            android:layout_width="35dp"
-                                            android:layout_height="35dp"
-                                            android:layout_gravity="center"
-                                            android:layout_margin="6dp"
-                                            android:src="@drawable/moon_phase" />
-
-                                    </androidx.cardview.widget.CardView>
-
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal">
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginEnd="5dp"
-                                            android:text="Moon Phase:"
-                                            android:textSize="18sp"
-                                            android:textStyle="bold" />
-
-                                        <TextView
-                                            android:id="@+id/txt_moon_phase"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:textSize="18sp"
-                                            tools:text="New Moon" />
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal">
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginEnd="5dp"
-                                            android:text="Illumination:"
-                                            android:textSize="18sp"
-                                            android:textStyle="bold" />
-
-                                        <TextView
-                                            android:id="@+id/txt_moon_illumination"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:textSize="18sp"
-                                            tools:text="0" />
-
-                                    </LinearLayout>
-
-                                </LinearLayout>
-
-                            </LinearLayout>
-
-                        </androidx.cardview.widget.CardView>
+                        android:padding="10dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
                             android:orientation="vertical"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/neomorphFrameLayout6">
+                            android:gravity="center">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:fontFamily="sans-serif-light"
+                                android:gravity="center"
+                                android:text="weatherapi.com"
+                                android:textSize="14sp"
+                                app:drawableStartCompat="@drawable/ic_cloud"
+                                app:drawableTint="@color/light_blue"
+                                android:drawablePadding="5dp"
+                                android:layout_marginBottom="15dp"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:id="@+id/img_icon"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    tools:src="@drawable/ic_cloud"
+                                    tools:tint="@color/black"
+                                    android:scaleType="centerCrop"/>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_marginStart="5dp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="start"
+                                        android:fontFamily="sans-serif-light"
+                                        android:text="Today"
+                                        android:textSize="24sp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/txt_current_date"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:fontFamily="sans-serif-light"
+                                        android:textSize="16sp"
+                                        tools:text="Sat, 3 Aug" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center">
+
+                                <TextView
+                                    android:id="@+id/txt_temperature"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:fontFamily="sans-serif-light"
+                                    android:textSize="80sp"
+                                    android:textStyle="bold"
+                                    tools:text="22" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:fontFamily="sans-serif-light"
+                                    android:textSize="35sp"
+                                    android:text="°C"
+                                    android:gravity="top"
+                                    android:layout_marginTop="12dp"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/txt_location"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:textSize="15sp"
+                            tools:text="Location" />
+
+                        <LinearLayout
+                            android:id="@+id/search_view_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                style="@style/CustomDarkLightModeSecondaryBackground"
+                                app:cardCornerRadius="20dp"
+                                app:cardElevation="8dp"
+                                app:cardPreventCornerOverlap="true"
+                                app:cardUseCompatPadding="true"
+                                android:visibility="visible">
+
+                                <SearchView
+                                    android:id="@+id/search_view"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:closeIcon="@drawable/ic_close"
+                                    android:queryBackground="@android:color/transparent"
+                                    android:searchIcon="@drawable/ic_search"
+                                    android:textStyle="bold"
+                                    android:theme="@style/Theme.FoggyWeather"
+                                    app:searchHintIcon="@drawable/ic_search" />
+
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rv_autocomplete"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                android:orientation="vertical"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                tools:listitem="@layout/autocomplete_item_view" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="15dp">
+
+                            <TextView
+                                android:id="@+id/textView2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif-light"
+                                android:text="Condition:"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/txt_condition"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:fontFamily="sans-serif-light"
+                                android:textSize="15sp"
+                                tools:text="Partly Cloud" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif-light"
+                                android:text="•"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:layout_marginStart="5dp"
+                                android:layout_marginEnd="5dp"/>
+
+                            <TextView
+                                android:id="@+id/textView3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif-light"
+                                android:text="Feels like:"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                app:layout_constraintStart_toStartOf="@+id/linearlayout1"
+                                app:layout_constraintTop_toBottomOf="@+id/linearlayout1" />
+
+                            <TextView
+                                android:id="@+id/txt_feels_like"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif-light"
+                                android:layout_marginStart="5dp"
+                                android:textSize="15sp"
+                                tools:text="30" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                style="@style/CustomDarkLightModeBackground"
+                                android:layout_weight="1"
+                                app:cardCornerRadius="20dp"
+                                app:cardElevation="8dp"
+                                app:cardPreventCornerOverlap="true"
+                                app:cardUseCompatPadding="true">
+
+                                <TextView
+                                    android:id="@+id/txt_max_temp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="sans-serif-light"
+                                    android:gravity="center"
+                                    android:padding="8dp"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold"
+                                    app:drawableStartCompat="@drawable/ic_max"
+                                    tools:text="24.9°C" />
+
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                style="@style/CustomDarkLightModeBackground"
+                                android:layout_weight="1"
+                                app:cardCornerRadius="20dp"
+                                app:cardElevation="8dp"
+                                app:cardPreventCornerOverlap="true"
+                                app:cardUseCompatPadding="true">
+
+                                <TextView
+                                    android:id="@+id/txt_min_temp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="sans-serif-light"
+                                    android:gravity="center"
+                                    android:padding="8dp"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold"
+                                    app:drawableStartCompat="@drawable/ic_min"
+                                    tools:text="18.3°C" />
+
+                            </androidx.cardview.widget.CardView>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:fontFamily="sans-serif-light"
+                                    android:text="• Last updated:"
+                                    android:gravity="center"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:id="@+id/txt_last_update"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:fontFamily="sans-serif-light"
+                                    android:gravity="center"
+                                    android:layout_marginStart="1dp"
+                                    android:textSize="14sp"
+                                    tools:text="15:00" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif-light"
                                 android:layout_marginStart="10dp"
-                                android:layout_marginTop="8dp"
-                                android:text="• 3-Days Forecast:"
-                                android:textSize="22sp" />
+                                android:text="Today's Forecast:"
+                                android:textStyle="bold"
+                                android:textSize="18sp"
+                                android:layout_marginTop="8dp"/>
 
                             <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/rv_forecast_3_days"
+                                android:id="@+id/rv_forecast"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
                                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                                tools:listitem="@layout/forecast_3_days_item_view" />
+                                tools:listitem="@layout/forecast_item_view" />
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                style="@style/CustomDarkLightModeBackground"
+                                app:cardCornerRadius="20dp"
+                                app:cardElevation="8dp"
+                                app:cardPreventCornerOverlap="true"
+                                app:cardUseCompatPadding="true">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:padding="8dp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:text="Sunrise and Sunset:"
+                                        android:fontFamily="sans-serif-light"
+                                        android:textStyle="bold"
+                                        android:textSize="18sp" />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:orientation="horizontal">
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginEnd="10dp"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                            <androidx.cardview.widget.CardView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                style="@style/CustomDarkLightModeBackgroundLayout"
+                                                app:cardCornerRadius="20dp"
+                                                app:cardElevation="8dp"
+                                                app:cardPreventCornerOverlap="false"
+                                                app:cardUseCompatPadding="true">
+
+                                                <ImageView
+                                                    android:layout_width="35dp"
+                                                    android:layout_height="35dp"
+                                                    android:layout_gravity="center"
+                                                    android:layout_margin="6dp"
+                                                    android:src="@drawable/sunrise" />
+
+                                            </androidx.cardview.widget.CardView>
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center"
+                                                android:text="Sunrise"
+                                                android:textSize="16sp"
+                                                android:textStyle="bold"
+                                                android:fontFamily="sans-serif-light"/>
+
+                                            <TextView
+                                                android:id="@+id/txt_sunrise"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:textSize="16sp"
+                                                android:fontFamily="sans-serif-light"
+                                                tools:text="05:26 AM" />
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                            <androidx.cardview.widget.CardView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                style="@style/CustomDarkLightModeBackgroundLayout"
+                                                app:cardCornerRadius="20dp"
+                                                app:cardElevation="8dp"
+                                                app:cardPreventCornerOverlap="false"
+                                                app:cardUseCompatPadding="true">
+
+                                                <ImageView
+                                                    android:layout_width="35dp"
+                                                    android:layout_height="35dp"
+                                                    android:layout_gravity="center"
+                                                    android:layout_margin="6dp"
+                                                    android:src="@drawable/sunset" />
+
+                                            </androidx.cardview.widget.CardView>
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="Sunset"
+                                                android:textSize="16sp"
+                                                android:textStyle="bold"
+                                                android:fontFamily="sans-serif-light" />
+
+                                            <TextView
+                                                android:id="@+id/txt_sunset"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:textSize="16sp"
+                                                android:fontFamily="sans-serif-light"
+                                                tools:text="05:25 PM" />
+
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                style="@style/CustomDarkLightModeBackground"
+                                app:cardCornerRadius="20dp"
+                                app:cardElevation="8dp"
+                                app:cardPreventCornerOverlap="true"
+                                app:cardUseCompatPadding="true">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:padding="8dp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:text="Moonrise and Moonset:"
+                                        android:textSize="18sp"
+                                        android:textStyle="bold"
+                                        android:fontFamily="sans-serif-light" />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="10dp"
+                                        android:gravity="center"
+                                        android:orientation="horizontal">
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginEnd="10dp"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                            <androidx.cardview.widget.CardView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                style="@style/CustomDarkLightModeBackgroundLayout"
+                                                app:cardCornerRadius="20dp"
+                                                app:cardElevation="8dp"
+                                                app:cardPreventCornerOverlap="false"
+                                                app:cardUseCompatPadding="true">
+
+                                                <ImageView
+                                                    android:layout_width="35dp"
+                                                    android:layout_height="35dp"
+                                                    android:layout_gravity="center"
+                                                    android:layout_margin="6dp"
+                                                    android:src="@drawable/moonrise" />
+
+                                            </androidx.cardview.widget.CardView>
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="Moonrise"
+                                                android:textSize="16sp"
+                                                android:textStyle="bold"
+                                                android:fontFamily="sans-serif-light" />
+
+                                            <TextView
+                                                android:id="@+id/txt_moonrise"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:textSize="16sp"
+                                                android:fontFamily="sans-serif-light"
+                                                tools:text="05:26 AM" />
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                            <androidx.cardview.widget.CardView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                style="@style/CustomDarkLightModeBackgroundLayout"
+                                                app:cardCornerRadius="20dp"
+                                                app:cardElevation="8dp"
+                                                app:cardPreventCornerOverlap="false"
+                                                app:cardUseCompatPadding="true">
+
+                                                <ImageView
+                                                    android:layout_width="35dp"
+                                                    android:layout_height="35dp"
+                                                    android:layout_gravity="center"
+                                                    android:layout_margin="6dp"
+                                                    android:src="@drawable/moonset" />
+
+                                            </androidx.cardview.widget.CardView>
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="Moonset"
+                                                android:textSize="16sp"
+                                                android:textStyle="bold"
+                                                android:fontFamily="sans-serif-light" />
+
+                                            <TextView
+                                                android:id="@+id/txt_moonset"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:textSize="16sp"
+                                                android:fontFamily="sans-serif-light"
+                                                tools:text="05:25 PM" />
+
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:orientation="vertical">
+
+                                        <androidx.cardview.widget.CardView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            style="@style/CustomDarkLightModeBackgroundLayout"
+                                            app:cardCornerRadius="20dp"
+                                            app:cardElevation="8dp"
+                                            app:cardPreventCornerOverlap="true"
+                                            app:cardUseCompatPadding="true">
+
+                                            <ImageView
+                                                android:layout_width="35dp"
+                                                android:layout_height="35dp"
+                                                android:layout_gravity="center"
+                                                android:layout_margin="6dp"
+                                                android:src="@drawable/moon_phase" />
+
+                                        </androidx.cardview.widget.CardView>
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal">
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginEnd="5dp"
+                                                android:text="Moon Phase:"
+                                                android:textSize="16sp"
+                                                android:textStyle="bold"
+                                                android:fontFamily="sans-serif-light" />
+
+                                            <TextView
+                                                android:id="@+id/txt_moon_phase"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:textSize="16sp"
+                                                android:fontFamily="sans-serif-light"
+                                                tools:text="New Moon" />
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal">
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginEnd="5dp"
+                                                android:text="Illumination:"
+                                                android:textSize="16sp"
+                                                android:textStyle="bold"
+                                                android:fontFamily="sans-serif-light" />
+
+                                            <TextView
+                                                android:id="@+id/txt_moon_illumination"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:textSize="16sp"
+                                                android:fontFamily="sans-serif-light"
+                                                tools:text="0" />
+
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                            </androidx.cardview.widget.CardView>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:orientation="vertical"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/neomorphFrameLayout6">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginTop="8dp"
+                                    android:text="3-Days Forecast:"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold"
+                                    android:fontFamily="sans-serif-light" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/rv_forecast_3_days"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                    tools:listitem="@layout/forecast_3_days_item_view" />
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
@@ -709,7 +726,6 @@
             </LinearLayout>
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
 
     </LinearLayout>
 

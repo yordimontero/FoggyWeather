@@ -36,9 +36,8 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="4dp"
                     tools:text="2021-05-06"
-                    android:textSize="18sp"
-                    app:drawableStartCompat="@drawable/ic_day"
-                    app:drawableTint="@color/green"
+                    android:fontFamily="sans-serif-light"
+                    android:textSize="16sp"
                     android:textStyle="bold"/>
 
                 <TextView
@@ -46,9 +45,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="Moderate Rain"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView4" />
+                    android:fontFamily="sans-serif-light"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -85,15 +83,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="24.9"
-                    android:textSize="18sp"
-                    app:drawableStartCompat="@drawable/ic_max"
-                    app:drawableTint="@color/green" />
+                    android:fontFamily="sans-serif-light"
+                    android:textSize="16sp"
+                    app:drawableStartCompat="@drawable/ic_max" />
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:text="°C"
-                    android:textSize="18sp"
+                    android:fontFamily="sans-serif-light"
+                    android:textSize="13sp"
+                    android:layout_marginTop="2dp"
                     android:layout_marginEnd="5dp"/>
 
                 <TextView
@@ -101,17 +101,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="17"
-                    android:textSize="18sp"
+                    android:fontFamily="sans-serif-light"
+                    android:textSize="16sp"
                     app:drawableStartCompat="@drawable/ic_min"
-                    app:drawableTint="@color/green"
                     android:layout_marginStart="5dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:text="°C"
-                    android:textSize="18sp"
-                    android:layout_marginEnd="5dp"/>
+                    android:fontFamily="sans-serif-light"
+                    android:textSize="13sp"
+                    android:layout_marginTop="2dp"/>
 
             </LinearLayout>
 

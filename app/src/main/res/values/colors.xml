@@ -16,7 +16,10 @@
     <color name="primary_dark_mode">#1E1E45</color>
     <color name="secondary_dark_mode">#181818</color>
     <color name="dark_blue">#10103A</color>
+    <color name="light_dark_blue_primary">#31316E</color>
+    <color name="light_dark_blue_secondary">#45459A</color>
     <color name="light_blue">#4794E7</color>
     <color name="lavender">#DEEAF7</color>
+    <color name="light_mode_text_color">#6F7376</color>
 
 </resources>

@@ -17,9 +17,11 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.cardview.widget.CardView
+            style="@style/CustomDarkLightModeBackgroundLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            style="@style/CustomDarkLightModeBackgroundLayout">
+            app:cardCornerRadius="0dp"
+            app:cardElevation="0dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -81,7 +83,10 @@
         android:id="@+id/nav_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        style="@style/BottomNavigation"
         app:menu="@menu/bottom_nav_menu"
+        app:itemIconTint="@drawable/bottom_nav_colors"
+        app:itemTextColor="@drawable/bottom_nav_colors"
         app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

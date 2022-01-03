@@ -42,4 +42,10 @@
         <item name="cardBackgroundColor">@color/white</item>
     </style>
 
+    <style name="BottomNavigation" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:background">@color/soft_white</item>
+        <item name="itemIconTint">@color/light_dark_blue_secondary</item>
+        <item name="itemTextColor">@color/light_mode_text_color</item>
+    </style>
+
 </resources>

@@ -46,7 +46,8 @@ class AutocompleteAdapter(
 
         override fun bind(item: Locations) {
 
-            binding.txtSearchItem.text = item.name
+            //binding.txtSearchItem.text = item.name
+            binding.txtSearchItem.text = "${item.name}, ${item.region}, ${item.country}"
 
             binding.txtSearchItem.setOnClickListener {
                 itemClickListener.onLocationClick(item)

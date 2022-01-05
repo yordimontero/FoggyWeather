@@ -61,9 +61,9 @@
                                 app:cardUseCompatPadding="false">
 
                                 <ImageView
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:layout_margin="6dp"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_margin="8dp"
                                     android:src="@drawable/facebook_icon" />
 
                             </androidx.cardview.widget.CardView>
@@ -73,8 +73,9 @@
                                 android:layout_height="match_parent"
                                 android:gravity="center"
                                 android:text="Find us on Facebook!"
+                                android:fontFamily="sans-serif-light"
                                 android:textAlignment="center"
-                                android:textSize="18sp" />
+                                android:textSize="15sp" />
 
                         </LinearLayout>
 
@@ -117,9 +118,9 @@
                                 app:cardUseCompatPadding="false">
 
                                 <ImageView
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:layout_margin="6dp"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_margin="8dp"
                                     android:src="@drawable/twitter_icon" />
 
                             </androidx.cardview.widget.CardView>
@@ -129,8 +130,9 @@
                                 android:layout_height="match_parent"
                                 android:gravity="center"
                                 android:text="Find us on Twitter!"
+                                android:fontFamily="sans-serif-light"
                                 android:textAlignment="center"
-                                android:textSize="18sp" />
+                                android:textSize="15sp" />
 
                         </LinearLayout>
 
@@ -173,9 +175,9 @@
                                 app:cardUseCompatPadding="false">
 
                                 <ImageView
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:layout_margin="6dp"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_margin="8dp"
                                     android:src="@drawable/ic_support" />
 
                             </androidx.cardview.widget.CardView>
@@ -185,8 +187,9 @@
                                 android:layout_height="match_parent"
                                 android:gravity="center"
                                 android:text="Questions or suggestions? Contact us!"
+                                android:fontFamily="sans-serif-light"
                                 android:textAlignment="center"
-                                android:textSize="18sp" />
+                                android:textSize="15sp" />
 
                         </LinearLayout>
 
@@ -229,9 +232,9 @@
                                 app:cardUseCompatPadding="false">
 
                                 <ImageView
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:layout_margin="6dp"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_margin="8dp"
                                     android:src="@drawable/circle_apps_studio_icon" />
 
                             </androidx.cardview.widget.CardView>
@@ -241,8 +244,9 @@
                                 android:layout_height="match_parent"
                                 android:gravity="center"
                                 android:text="Visit our website!"
+                                android:fontFamily="sans-serif-light"
                                 android:textAlignment="center"
-                                android:textSize="18sp" />
+                                android:textSize="15sp" />
 
                         </LinearLayout>
 
@@ -285,11 +289,11 @@
                                 app:cardUseCompatPadding="false">
 
                                 <ImageView
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:layout_margin="6dp"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_margin="8dp"
                                     android:src="@drawable/ic_policy"
-                                    app:tint="@color/green" />
+                                    app:tint="@color/red" />
 
                             </androidx.cardview.widget.CardView>
 
@@ -298,8 +302,9 @@
                                 android:layout_height="match_parent"
                                 android:gravity="center"
                                 android:text="Privacy policy"
+                                android:fontFamily="sans-serif-light"
                                 android:textAlignment="center"
-                                android:textSize="18sp" />
+                                android:textSize="15sp" />
 
                         </LinearLayout>
 
@@ -342,9 +347,9 @@
                                 app:cardUseCompatPadding="false">
 
                                 <ImageView
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:layout_margin="6dp"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_margin="8dp"
                                     android:src="@drawable/ic_rate"
                                     app:tint="@color/orange" />
 
@@ -355,8 +360,9 @@
                                 android:layout_height="match_parent"
                                 android:gravity="center"
                                 android:text="Rate this app!"
+                                android:fontFamily="sans-serif-light"
                                 android:textAlignment="center"
-                                android:textSize="18sp" />
+                                android:textSize="15sp" />
 
                         </LinearLayout>
 
@@ -399,9 +405,9 @@
                                 app:cardUseCompatPadding="false">
 
                                 <ImageView
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:layout_margin="6dp"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_margin="8dp"
                                     android:src="@drawable/google_play_store_icon" />
 
                             </androidx.cardview.widget.CardView>
@@ -411,8 +417,9 @@
                                 android:layout_height="match_parent"
                                 android:gravity="center"
                                 android:text="Look out our others apps!"
+                                android:fontFamily="sans-serif-light"
                                 android:textAlignment="center"
-                                android:textSize="18sp" />
+                                android:textSize="15sp" />
 
                         </LinearLayout>
 

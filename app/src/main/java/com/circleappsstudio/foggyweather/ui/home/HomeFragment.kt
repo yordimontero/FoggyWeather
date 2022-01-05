@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
-import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -25,6 +24,7 @@ import com.circleappsstudio.foggyweather.ui.home.adapter.AutocompleteAdapter
 import com.circleappsstudio.foggyweather.ui.home.adapter.Forecast3DaysAdapter
 import com.circleappsstudio.foggyweather.ui.home.adapter.ForecastByHourAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.appcompat.widget.SearchView
 import java.util.*
 
 @AndroidEntryPoint
@@ -57,7 +57,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
         binding.txtCurrentDate.text = currentDateWithMothName
 
         setupSearchView()
-        setupRecyclerView()
+        //setupRecyclerView()
         showOrHideSearchView()
         pullToRefresh()
 
@@ -479,7 +479,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
                     //getAstronomyObserver(location = it, date = currentDate)
                     //getForecast3DaysObserver(location = it)
 
-                    hideSearchView()
+                    binding.searchView.setQuery("", false)
+                    binding.searchView.clearFocus()
 
                 }
 
@@ -582,7 +583,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
     }
 
     override fun onLocationClick(locations: Locations) {
-        binding.searchView.setQuery(locations.name, true)
+        //binding.searchView.setQuery(locations.name, true)
+        binding.searchView.setQuery("${locations.name}, ${locations.region}, ${locations.country}", true)
     }
 
     override fun internetCheckDialogPositiveButtonClicked() {

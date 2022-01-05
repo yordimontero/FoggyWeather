@@ -9,7 +9,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/CustomDarkLightModeBackground"
+        style="@style/CustomDarkLightModeBackgroundLayout"
         android:layout_margin="8dp"
         android:layout_marginStart="18dp"
         android:layout_marginEnd="18dp"
@@ -28,33 +28,22 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="140dp"
-                android:layout_height="140dp"
-                app:cardBackgroundColor="@color/red"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                app:cardCornerRadius="100dp"
-                app:cardElevation="8dp">
-
-                <ImageView
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:src="@drawable/ic_no_wifi"
-                    app:tint="@color/white"
-                    android:layout_gravity="center"/>
-
-            </androidx.cardview.widget.CardView>
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/network_error"
+                android:layout_gravity="center"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="8dp"
                 android:text="No internet connection!"
+                android:fontFamily="sans-serif-light"
                 android:textAlignment="center"
-                android:textSize="25sp"
+                android:textSize="22sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -63,14 +52,15 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
                 android:text="Check your network and try again"
+                android:fontFamily="sans-serif-light"
                 android:textAlignment="center"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/btn_try_again"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/green"
+                style="@style/CustomDarkLightModeBackground"
                 android:layout_margin="8dp"
                 android:layout_marginStart="18dp"
                 android:layout_marginEnd="18dp"
@@ -84,9 +74,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Try again"
+                    android:fontFamily="sans-serif-light"
                     android:textStyle="bold"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:layout_gravity="center"
                     android:layout_margin="10dp"/>
 

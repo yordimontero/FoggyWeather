@@ -1,7 +1,10 @@
 package com.circleappsstudio.foggyweather.core.ui
 
+import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
@@ -205,4 +208,10 @@ fun forecastByHourUnselectedDarkCardView(
         ContextCompat.getColor(context, R.color.soft_white)
     )
 
+}
+
+fun Context.hideKeyboard(context: Context, view: View) {
+    val imm: InputMethodManager = context.getSystemService(Activity.INPUT_METHOD_SERVICE)
+            as InputMethodManager
+    imm.hideSoftInputFromWindow(view.windowToken, 0)
 }

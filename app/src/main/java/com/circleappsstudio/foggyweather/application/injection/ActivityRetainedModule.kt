@@ -20,8 +20,6 @@ abstract class ActivityRetainedModule {
         repository: LocationRepositoryImpl
     ): LocationRepository
 
-
-
     @Binds
     abstract fun bindWeatherRepositoryImpl(
         useCase: WeatherRepositoryImpl

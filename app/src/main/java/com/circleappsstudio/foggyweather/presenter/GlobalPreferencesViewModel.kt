@@ -1,14 +1,22 @@
 package com.circleappsstudio.foggyweather.presenter
 
 import androidx.lifecycle.ViewModel
-import com.circleappsstudio.foggyweather.application.GlobalPreferencesImpl
+import com.circleappsstudio.foggyweather.application.GlobalPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class GlobalPreferencesViewModel @Inject constructor(
-    private val globalPreferences: GlobalPreferencesImpl
+    private val globalPreferences: GlobalPreferences
 ) : ViewModel() {
+
+    fun getRequestLocationPermissionsFirstAppLaunch(): Boolean {
+        return globalPreferences.getRequestLocationPermissionsFirstAppLaunch()
+    }
+
+    fun setRequestLocationPermissionsFirstAppLaunch() {
+        globalPreferences.setRequestLocationPermissionsFirstAppLaunch()
+    }
 
     fun getSearchedLocation(): String? {
         return globalPreferences.getSearchedLocation()

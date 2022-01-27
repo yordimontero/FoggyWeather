@@ -7,4 +7,5 @@ object AppConstants {
     const val LOCATION_REQUEST_CODE: Int = 101
     const val GLOBAL_PREFERENCE = "FoggyWeatherSharedPreferences"
     const val PREFERENCE_SEARCHED_LOCATION = "LocationSearched"
+    const val PREFERENCE_REQUEST_LOCATION_PERMISSION_FIRST_APP_LAUNCH = "RequestLocationPermissionFirstAppLaunch"
 }

@@ -2,9 +2,9 @@ package com.circleappsstudio.foggyweather.ui.home
 
 import android.Manifest
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
@@ -61,11 +61,21 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
 
         binding.txtCurrentDate.text = currentDateWithMothName
 
+        if (!getSearchedLocationPreference().isNullOrEmpty()) {
+            cordenades = getSearchedLocationPreference().toString()
+        }
+
+        Log.wtf("TAG", cordenades)
+
         setupSearchView()
 
         pullToRefresh()
 
-        requestLocationPermissions()
+        checkIfLocationPermissionsIsRequestedAlready()
+
+        requestLocationPermissionsToGetCurrentLocation()
+
+        checkIfLocationPermissionsIsGranted()
 
     }
 
@@ -81,6 +91,48 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
                     }
 
                     is Result.Success -> {
+
+                        if (getSearchedLocationPreference().isNullOrEmpty()) {
+                            cordenades = "${resultEmitted.data[0]},${resultEmitted.data[1]}"
+                            setSearchedLocationPreference(cordenades)
+                        } else {
+                            getSearchedLocationPreference().toString()
+                        }
+
+                        checkInternetToGetWeatherInfoObserver()
+
+                    }
+
+                    is Result.Failure -> {
+
+                        requireContext().showToast(
+                            requireContext(),
+                            "Something went wrong: ${resultEmitted.exception.message}"
+                        )
+
+                        hideMainProgressbar()
+
+                    }
+
+                }
+
+            })
+
+    }
+
+    /*private fun getLocationObserver() {
+
+        locationViewModel.fetchLocation(requireContext())
+            .observe(viewLifecycleOwner, Observer { resultEmitted ->
+
+                when (resultEmitted) {
+
+                    is Result.Loading -> {
+                        showMainProgressbar()
+                    }
+
+                    is Result.Success -> {
+
                         cordenades = "${resultEmitted.data[0]},${resultEmitted.data[1]}"
                         checkInternetToGetWeatherInfoObserver()
                     }
@@ -100,7 +152,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
 
             })
 
-    }
+    }*/
 
     private fun checkInternetToGetWeatherInfoObserver() {
 
@@ -149,7 +201,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
                 when (resultEmitted) {
 
                     is Result.Loading -> {
-                        showMainProgressbar()
+                        showRvAutocompleteProgressbar()
                     }
 
                     is Result.Success -> {
@@ -258,7 +310,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
                 when (resultEmitted) {
 
                     is Result.Loading -> {
-                        //showRvAutocompleteProgressbar()
+                        showRvAutocompleteProgressbar()
                     }
 
                     is Result.Success -> {
@@ -268,7 +320,13 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
                             this
                         )
 
-                        //hideRvAutocompleteProgressbar()
+                        if (resultEmitted.data.isNotEmpty()) {
+                            hideRequestCurrentLocation()
+                        } else {
+                            showRequestCurrentLocation()
+                        }
+
+                        hideRvAutocompleteProgressbar()
 
                     }
 
@@ -279,7 +337,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
                             "Something went wrong: ${resultEmitted.exception.message}"
                         )
 
-                        //hideRvAutocompleteProgressbar()
+                        hideRvAutocompleteProgressbar()
 
                     }
 
@@ -378,6 +436,23 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
 
     }
 
+    private fun getRequestLocationPermissionsFirstAppLaunch(): Boolean {
+        return globalPreferencesViewModel.getRequestLocationPermissionsFirstAppLaunch()
+    }
+
+    private fun setRequestLocationPermissionsFirstAppLaunch() {
+        globalPreferencesViewModel.setRequestLocationPermissionsFirstAppLaunch()
+    }
+
+    private fun checkIfLocationPermissionsIsRequestedAlready() {
+
+        if (!getRequestLocationPermissionsFirstAppLaunch()) {
+            requestLocationPermissionsFirstTime()
+            setRequestLocationPermissionsFirstAppLaunch()
+        }
+
+    }
+
     private fun getSearchedLocationPreference(): String? {
         return globalPreferencesViewModel.getSearchedLocation()
     }
@@ -434,6 +509,14 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
         binding.mainLayout.hide()
     }
 
+    private fun showRequestCurrentLocation() {
+        binding.txtRequestCurrentLocation.show()
+    }
+
+    private fun hideRequestCurrentLocation() {
+        binding.txtRequestCurrentLocation.hide()
+    }
+
     private fun saveSharedPreferenceIfLocationPermissionIsNotGranted(location: String) {
         if (!checkLocationPermissions(requireContext())) {
             setSearchedLocationPreference(location)
@@ -448,6 +531,16 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
 
     private fun setupSearchView() {
 
+        binding.searchView.setOnQueryTextFocusChangeListener { view, hasFocus ->
+
+            if (hasFocus) {
+                showRequestCurrentLocation()
+            } else {
+                hideRequestCurrentLocation()
+            }
+
+        }
+
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextSubmit(text: String?): Boolean {
@@ -457,7 +550,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
                     if (it.length >= 3) {
 
                         cordenades = it
-                        saveSharedPreferenceIfLocationPermissionIsNotGranted(cordenades)
+                        setSearchedLocationPreference(it)
                         checkInternetToGetWeatherInfoObserver()
 
                         clearSearchView()
@@ -482,6 +575,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
 
                 text?.let {
 
+                    if (!checkLocationPermissions(requireContext())) {
+                        showRequestCurrentLocation()
+                    } else {
+                        hideRequestCurrentLocation()
+                    }
+
                     if (it.isEmpty()) {
                         hideSearchRecyclerView()
                     } else {
@@ -502,15 +601,16 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
 
         binding.pullToRefresh.setOnRefreshListener {
             // TODO action:
-            requestLocationPermissions()
+            requestLocationPermissionsFirstTime()
             binding.pullToRefresh.isRefreshing = false
         }
 
     }
 
-    private fun requestLocationPermissions() {
+    private fun requestLocationPermissionsFirstTime() {
 
-        binding.progressBar.show()
+        hideMainLayout()
+        //...
 
         requestPermissions(
             arrayOf(
@@ -518,6 +618,41 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ), AppConstants.LOCATION_REQUEST_CODE
         )
+
+    }
+
+    private fun requestLocationPermissionsToGetCurrentLocation() {
+
+        hideMainLayout()
+
+        binding.txtRequestCurrentLocation.setOnClickListener {
+            requestPermissions(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ), AppConstants.LOCATION_REQUEST_CODE
+            )
+            deleteSearchedLocationPreference()
+            clearSearchView()
+
+        }
+
+    }
+
+    private fun checkIfLocationPermissionsIsGranted() {
+
+        if (checkLocationPermissions(requireContext())) {
+
+            showMainLayout()
+            //deleteSearchedLocationPreference()
+            getLocationObserver()
+
+        } else {
+
+            showMainLayout()
+            searchLastLocationIfLocationPermissionIsGranted()
+
+        }
 
     }
 
@@ -532,8 +667,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
 
             if (checkLocationPermissions(requireContext())) {
 
-                binding.mainLayout.visibility = View.VISIBLE
-                deleteSearchedLocationPreference()
+                showMainLayout()
+                hideRequestCurrentLocation()
+                clearSearchView()
+                //deleteSearchedLocationPreference()
                 getLocationObserver()
 
             } else {
@@ -543,6 +680,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
                     "Location permission not granted!"
                 )
 
+                showMainLayout()
                 searchLastLocationIfLocationPermissionIsGranted()
 
             }

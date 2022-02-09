@@ -16,7 +16,7 @@ interface OnInternetCheckDialogButtonClickListener {
     fun internetCheckDialogPositiveButtonClicked()
 }
 
-fun showInternetCheckDialog(
+fun internetCheckDialog(
     activity: Activity,
     context: Context,
     dialogButtonListener: OnInternetCheckDialogButtonClickListener

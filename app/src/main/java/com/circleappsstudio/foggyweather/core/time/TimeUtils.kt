@@ -31,15 +31,6 @@ fun getCurrentHourFormatted(context: Context): String {
 
 }
 
-fun getCurrentHour24(context: Context): String {
-
-    val formatter24h = SimpleDateFormat("HH:mm", Locale.US)
-    val currentHour = Calendar.getInstance().time
-
-    return formatter24h.format(currentHour)
-
-}
-
 fun formatHour(hour: String, minute: String, context: Context): String {
 
     val formatter12h = SimpleDateFormat("hh:mm a", Locale.US)
@@ -187,6 +178,10 @@ fun formatDate(date: Date): String {
 
 }
 
+fun getCurrentDate(): String {
+    return formatDate(Calendar.getInstance().time)
+}
+
 fun getDateWithMonthName(date: Date): String {
 
     val dateFormat = SimpleDateFormat(
@@ -194,5 +189,5 @@ fun getDateWithMonthName(date: Date): String {
     )
 
     return dateFormat.format(date)
-
 }
+

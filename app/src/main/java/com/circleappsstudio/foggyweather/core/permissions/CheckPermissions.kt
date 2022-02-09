@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.content.ContextCompat.checkSelfPermission
 
-fun checkLocationPermissions(context: Context): Boolean {
+fun checkIfLocationPermissionsAreGranted(context: Context): Boolean {
     return (
             checkSelfPermission(
                 context,

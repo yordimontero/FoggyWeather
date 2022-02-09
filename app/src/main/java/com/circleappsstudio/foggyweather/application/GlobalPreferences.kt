@@ -2,8 +2,8 @@ package com.circleappsstudio.foggyweather.application
 
 import android.content.Context
 import com.circleappsstudio.foggyweather.application.AppConstants.GLOBAL_PREFERENCE
-import com.circleappsstudio.foggyweather.application.AppConstants.PREFERENCE_REQUEST_LOCATION_PERMISSION_FIRST_APP_LAUNCH
-import com.circleappsstudio.foggyweather.application.AppConstants.PREFERENCE_SEARCHED_LOCATION
+import com.circleappsstudio.foggyweather.application.AppConstants.PREFERENCE_WERE_LOCATION_PERMISSION_REQUESTED_SINGLE_TIME
+import com.circleappsstudio.foggyweather.application.AppConstants.PREFERENCE_LAST_SEARCHED_LOCATION
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
@@ -12,41 +12,55 @@ class GlobalPreferences @Inject constructor(@ApplicationContext context: Context
     private val preference = context.getSharedPreferences(GLOBAL_PREFERENCE, Context.MODE_PRIVATE)
     private val editor = preference.edit()
 
-    fun getRequestLocationPermissionsFirstAppLaunch(): Boolean {
-        return preference.getBoolean(PREFERENCE_REQUEST_LOCATION_PERMISSION_FIRST_APP_LAUNCH, false)
+    fun wereLocationPermissionsRequestedSingleTime(): Boolean {
+        /*
+            Method to check if location permission were requested for single time.
+        */
+        return preference.getBoolean(PREFERENCE_WERE_LOCATION_PERMISSION_REQUESTED_SINGLE_TIME, false)
     }
 
-    fun setRequestLocationPermissionsFirstAppLaunch() {
+    fun setLocationPermissionsRequestedSingleTime() {
+        /*
+            Method to put true when location permission were requested for single time.
+        */
         editor.putBoolean(
-            PREFERENCE_REQUEST_LOCATION_PERMISSION_FIRST_APP_LAUNCH, true
+            PREFERENCE_WERE_LOCATION_PERMISSION_REQUESTED_SINGLE_TIME, true
         ).apply()
     }
 
-    fun getSearchedLocation(): String? {
-        return preference.getString(PREFERENCE_SEARCHED_LOCATION, null)
+    fun getLastSearchedLocation(): String? {
+        /*
+            Method to get the last searched location.
+        */
+        return preference.getString(PREFERENCE_LAST_SEARCHED_LOCATION, null)
     }
 
-    fun setSearchedLocation(location: String) {
-
+    fun setLastSearchedLocation(location: String) {
+        /*
+            Method to set a last searched location.
+        */
         if (location.isNotEmpty()) {
 
             editor.putString(
-                PREFERENCE_SEARCHED_LOCATION, location
+                PREFERENCE_LAST_SEARCHED_LOCATION, location
             ).apply()
 
         } else {
 
             editor.putString(
-                PREFERENCE_SEARCHED_LOCATION, ""
+                PREFERENCE_LAST_SEARCHED_LOCATION, ""
             ).apply()
 
         }
 
     }
 
-    fun deleteSearchedLocation() {
-        if (getSearchedLocation() != null) {
-            preference.edit().remove(PREFERENCE_SEARCHED_LOCATION).apply()
+    fun deleteLastSearchedLocation() {
+        /*
+            Method to delete the last searched location.
+        */
+        if (getLastSearchedLocation() != null) {
+            preference.edit().remove(PREFERENCE_LAST_SEARCHED_LOCATION).apply()
         }
     }
 

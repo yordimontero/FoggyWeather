@@ -2,7 +2,7 @@ package com.circleappsstudio.foggyweather.repository.location
 
 import android.annotation.SuppressLint
 import android.content.Context
-import com.circleappsstudio.foggyweather.core.permissions.checkLocationPermissions
+import com.circleappsstudio.foggyweather.core.permissions.checkIfLocationPermissionsAreGranted
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -40,7 +40,7 @@ class Location @Inject constructor() {
                     fusedLocationProviderClient =
                         LocationServices.getFusedLocationProviderClient(context)
 
-                    if (checkLocationPermissions(context)) {
+                    if (checkIfLocationPermissionsAreGranted(context)) {
 
                         val task = fusedLocationProviderClient.lastLocation
 
@@ -71,7 +71,7 @@ class Location @Inject constructor() {
                             context
                         )
 
-                    if (checkLocationPermissions(context)) {
+                    if (checkIfLocationPermissionsAreGranted(context)) {
 
                         val task = huaweiFusedLocationProviderClient.lastLocation
 

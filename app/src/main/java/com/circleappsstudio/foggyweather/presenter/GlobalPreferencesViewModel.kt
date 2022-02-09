@@ -10,24 +10,39 @@ class GlobalPreferencesViewModel @Inject constructor(
     private val globalPreferences: GlobalPreferences
 ) : ViewModel() {
 
-    fun getRequestLocationPermissionsFirstAppLaunch(): Boolean {
-        return globalPreferences.getRequestLocationPermissionsFirstAppLaunch()
+    fun wereLocationPermissionsRequestedSingleTime(): Boolean {
+        /*
+            Method to check if location permission were requested for single time.
+        */
+        return globalPreferences.wereLocationPermissionsRequestedSingleTime()
     }
 
-    fun setRequestLocationPermissionsFirstAppLaunch() {
-        globalPreferences.setRequestLocationPermissionsFirstAppLaunch()
+    fun setLocationPermissionsRequestedSingleTime() {
+        /*
+            Method to put true when location permission were requested for single time.
+        */
+        globalPreferences.setLocationPermissionsRequestedSingleTime()
     }
 
-    fun getSearchedLocation(): String? {
-        return globalPreferences.getSearchedLocation()
+    fun getLastSearchedLocation(): String? {
+        /*
+            Method to get the last searched location.
+        */
+        return globalPreferences.getLastSearchedLocation()
     }
 
-    fun setSearchedLocation(location: String) {
-        globalPreferences.setSearchedLocation(location)
+    fun setLastSearchedLocation(location: String) {
+        /*
+            Method to set a last searched location.
+        */
+        globalPreferences.setLastSearchedLocation(location)
     }
 
-    fun deleteSearchedLocation() {
-        globalPreferences.deleteSearchedLocation()
+    fun deleteLastSearchedLocation() {
+        /*
+            Method to delete the last searched location.
+        */
+        globalPreferences.deleteLastSearchedLocation()
     }
 
 }

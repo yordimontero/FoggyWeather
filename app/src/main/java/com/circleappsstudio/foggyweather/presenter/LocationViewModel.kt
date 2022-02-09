@@ -19,22 +19,28 @@ class LocationViewModel @Inject constructor(
     fun fetchLocation(
         context: Context
     ) = liveData(viewModelScope.coroutineContext + Dispatchers.Main) {
-
+        /*
+            Method to fetch current location from GPS.
+        */
         kotlin.runCatching {
 
-            emit(Result.Loading())
+            emit(
+                Result.Loading()
+            )
 
             repository.getLocation(context)
 
         }.onSuccess { location ->
-            emit(Result.Success(location))
+
+            emit(
+                Result.Success(location)
+            )
+
         }.onFailure { throwable ->
 
             emit(
                 Result.Failure(
-                    Exception(
-                        throwable.message
-                    )
+                    Exception(throwable.message)
                 )
             )
 

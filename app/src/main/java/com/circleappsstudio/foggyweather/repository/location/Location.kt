@@ -21,77 +21,72 @@ class Location @Inject constructor() {
 
     @ExperimentalCoroutinesApi
     @SuppressLint("MissingPermission")
-    suspend fun getLocation(context: Context): List<String> {
-
+    suspend fun getLocation(context: Context): List<String> = suspendCancellableCoroutine { cont ->
+        /*
+            Method to get current location (latitude & longitude) from GPS.
+        */
         var latitude = ""
         var longitude = ""
 
         val currentLocation = mutableListOf<String>()
 
-        withContext(Dispatchers.IO) {
+        // Check is current device has Google Play Services.
+        if (GoogleApiAvailability.getInstance()
+                .isGooglePlayServicesAvailable(context) == ConnectionResult.SUCCESS
+        ) {
+            // Google Play Services are available.
 
-            suspendCancellableCoroutine<MutableList<String>> { coroutine ->
+            fusedLocationProviderClient =
+                LocationServices.getFusedLocationProviderClient(context)
 
-                if (GoogleApiAvailability.getInstance()
-                        .isGooglePlayServicesAvailable(context) == ConnectionResult.SUCCESS
-                ) {
-                    //Google Play services are available
+            if (checkIfLocationPermissionsAreGranted(context)) {
 
-                    fusedLocationProviderClient =
-                        LocationServices.getFusedLocationProviderClient(context)
+                val task = fusedLocationProviderClient.lastLocation
 
-                    if (checkIfLocationPermissionsAreGranted(context)) {
+                task.addOnSuccessListener { location ->
 
-                        val task = fusedLocationProviderClient.lastLocation
+                    if (location != null) {
+                        latitude = location.latitude.toString()
+                        longitude = location.longitude.toString()
 
-                        task.addOnSuccessListener { location ->
+                        currentLocation.add(latitude)
+                        currentLocation.add(longitude)
 
-                            if (location != null) {
-                                latitude = location.latitude.toString()
-                                longitude = location.longitude.toString()
+                        cont.resume(currentLocation)
 
-                                currentLocation.add(latitude)
-                                currentLocation.add(longitude)
-
-                                coroutine.resume(currentLocation)
-
-                            } else {
-                                coroutine.cancel()
-                            }
-
-                        }
-
+                    } else {
+                        cont.cancel()
                     }
 
-                } else {
-                    //Google Play services are not available on this device
+                }
 
-                    huaweiFusedLocationProviderClient =
-                        com.huawei.hms.location.LocationServices.getFusedLocationProviderClient(
-                            context
-                        )
+            }
 
-                    if (checkIfLocationPermissionsAreGranted(context)) {
+        } else {
+            // Google Play Services are not available.
 
-                        val task = huaweiFusedLocationProviderClient.lastLocation
+            huaweiFusedLocationProviderClient =
+                com.huawei.hms.location.LocationServices.getFusedLocationProviderClient(
+                    context
+                )
 
-                        task.addOnSuccessListener { location ->
+            if (checkIfLocationPermissionsAreGranted(context)) {
 
-                            if (location != null) {
-                                latitude = location.latitude.toString()
-                                longitude = location.longitude.toString()
+                val task = huaweiFusedLocationProviderClient.lastLocation
 
-                                currentLocation.add(latitude)
-                                currentLocation.add(longitude)
+                task.addOnSuccessListener { location ->
 
-                                coroutine.resume(currentLocation)
+                    if (location != null) {
+                        latitude = location.latitude.toString()
+                        longitude = location.longitude.toString()
 
-                            } else {
-                                coroutine.cancel()
-                            }
+                        currentLocation.add(latitude)
+                        currentLocation.add(longitude)
 
-                        }
+                        cont.resume(currentLocation)
 
+                    } else {
+                        cont.cancel()
                     }
 
                 }
@@ -100,35 +95,6 @@ class Location @Inject constructor() {
 
         }
 
-        return currentLocation
-
     }
-
-    /*fun getCity(context: Context, latitude: Double, longitude: Double): String {
-
-        var cityName = ""
-
-        val geoCoder = Geocoder(context, Locale.getDefault())
-
-        val adress: List<Address>
-
-        try {
-
-            adress = geoCoder.getFromLocation(latitude, longitude, 1)
-            val subAdminArea = adress[0].subAdminArea
-
-            cityName = if (!subAdminArea.isNullOrEmpty()) {
-                subAdminArea
-            } else {
-                ""
-            }
-
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-
-        return cityName
-
-    }*/
 
 }

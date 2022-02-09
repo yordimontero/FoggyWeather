@@ -10,11 +10,17 @@ class WeatherRepositoryImpl @Inject constructor(
 ): WeatherRepository {
 
     override suspend fun getCurrentWeather(
+        /*
+            Method to get Current Weather data.
+        */
         location: String,
         airQuality: Boolean
     ): CurrentWeatherResults = dataSource.getCurrentWeather(location, airQuality)
 
     override suspend fun getForecast(
+        /*
+            Method to get Forecast data.
+        */
         location: String,
         days: Int,
         airQuality: Boolean,
@@ -24,6 +30,9 @@ class WeatherRepositoryImpl @Inject constructor(
     )
 
     override suspend fun getAstronomy(
+        /*
+            Method to get Astronomy data.
+        */
         location: String,
         date: String
     ): AstronomyResults = dataSource.getAstronomy(
@@ -32,6 +41,9 @@ class WeatherRepositoryImpl @Inject constructor(
     )
 
     override suspend fun getAutocompleteResults(
+        /*
+            Method to get Autocomplete locations data.
+        */
         location: String
     ): List<Locations> = dataSource.getAutocompleteResults(
         location

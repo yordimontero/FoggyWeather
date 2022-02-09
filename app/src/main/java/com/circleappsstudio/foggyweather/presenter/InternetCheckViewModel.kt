@@ -11,10 +11,15 @@ import java.lang.Exception
 class InternetCheckViewModel : ViewModel() {
 
     fun checkInternet() = liveData(viewModelScope.coroutineContext + Dispatchers.Main) {
-
+        /*
+            Method to check if there's internet connection.
+        */
         try {
 
-            emit(Result.Loading())
+            emit(
+                Result.Loading()
+            )
+
             emit(
                 Result.Success(InternetCheck.isNetworkAvailable())
             )

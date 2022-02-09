@@ -2,6 +2,7 @@ package com.circleappsstudio.foggyweather.ui.home
 
 import android.Manifest
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -43,21 +44,20 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
 
     private val globalPreferencesViewModel by viewModels<GlobalPreferencesViewModel>()
 
+    private var coordinates: String = ""
+
     private val currentDate by lazy { getCurrentDate() }
 
     private val currentDateWithMothName by lazy {
         getDateWithMonthName(Calendar.getInstance().time)
     }
 
-    private var coordinates: String = ""
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding = FragmentHomeBinding.bind(view)
 
-        setupSearchView()
-        pullToRefresh()
+        searchViewSetup()
+        pullToRefreshSetup()
         currentDateTextViewSetup()
 
         requestLocationPermissionsForSingleTime()
@@ -70,21 +70,165 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
 
     }
 
-    private fun checkIfIsThereAnyLastLocationSearched(): Boolean {
+    private fun searchViewSetup() {
         /*
-            Method to check if is there any last location searched in SharedPreferences.
+            SearchView setup.
         */
-        return if (!getLastSearchedLocationPreference().isNullOrEmpty()) {
-            coordinates = getLastSearchedLocationPreference().toString()
-            true
-        } else {
-            false
+        binding.searchView.setOnQueryTextFocusChangeListener { view, hasFocus ->
+
+            if (hasFocus) {
+                // If SearchView has focus, show TextView that gets current location.
+                showRequestCurrentLocationTextView()
+            } else {
+                // If SearchView hasn't focus, hide TextView that gets current location.
+                hideRequestCurrentLocationTextView()
+            }
+
         }
+
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextSubmit(text: String?): Boolean {
+
+                text?.let {
+
+                    if (it.length >= 3) {
+
+                        coordinates = it
+                        setLastSearchedLocationPreference(it)
+                        checkInternetToGetWeatherInfoObserver()
+
+                        clearSearchView()
+                        showMainLayout()
+
+                    } else {
+
+                        requireContext().showToast(
+                            requireContext(),
+                            "Location not founded!"
+                        )
+
+                    }
+
+                }
+
+                return false
+            }
+
+            override fun onQueryTextChange(text: String?): Boolean {
+
+                text?.let {
+
+                    if (it.isEmpty()) {
+                        hideAutocompleteRecyclerView()
+                    } else {
+                        showAutocompleteRecyclerView()
+                        checkInternetToGetAutocompleteSearchObserver(it)
+                    }
+
+                }
+
+                return false
+            }
+
+        })
+
     }
 
-    private fun getLocationObserver() {
+    private fun pullToRefreshSetup() {
         /*
-            Method to get current location with GPS.
+            Pull to Refresh data setup.
+        */
+        binding.pullToRefresh.setOnRefreshListener {
+            checkIfLocationPermissionsAreGranted()
+            binding.pullToRefresh.isRefreshing = false
+        }
+
+    }
+
+    private fun checkInternetToGetWeatherInfoObserver() {
+        /*
+            Method to check if there's internet connection and get weather.
+        */
+        internetCheckViewModel.checkInternet()
+            .observe(viewLifecycleOwner, Observer { resultEmitted ->
+
+                when (resultEmitted) {
+
+                    is Result.Loading -> {
+                        showMainProgressbar()
+                    }
+
+                    is Result.Success -> {
+
+                        if (resultEmitted.data) {
+
+                            fetchAllWeatherDataObserver(
+                                location = coordinates,
+                                airQuality = false,
+                                days = 3,
+                                alerts = false,
+                                date = currentDate
+                            )
+
+                        } else {
+                            showInternetCheckDialog()
+                        }
+
+                    }
+
+                    is Result.Failure -> {
+                        showInternetCheckDialog()
+                    }
+
+                }
+
+            })
+
+    }
+
+    private fun checkInternetToGetAutocompleteSearchObserver(location: String) {
+        /*
+            Method to check if there's internet connection and get recyclerview autocomplete locations.
+        */
+        internetCheckViewModel.checkInternet()
+            .observe(viewLifecycleOwner, Observer { resultEmitted ->
+
+                when (resultEmitted) {
+
+                    is Result.Loading -> {
+                        showRvAutocompleteProgressbar()
+                    }
+
+                    is Result.Success -> {
+
+                        if (resultEmitted.data) {
+                            fetchAutocompleteResults(location)
+                        } else {
+
+                            showInternetCheckDialog()
+                            clearSearchView()
+                            hideRvAutocompleteProgressbar()
+                            showMainProgressbar()
+                            requireContext().hideKeyboard(requireContext(), requireView())
+
+                        }
+
+                    }
+
+                    is Result.Failure -> {
+                        showInternetCheckDialog()
+                    }
+
+                }
+
+            })
+
+    }
+
+    private fun fetchLocationObserver() {
+        /*
+            Method to fetch current location from GPS.
         */
         locationViewModel.fetchLocation(requireContext())
             .observe(viewLifecycleOwner, Observer { resultEmitted ->
@@ -127,87 +271,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
 
     }
 
-    private fun checkInternetToGetWeatherInfoObserver() {
-        /*
-            Method to check if there's internet connection and get weather.
-        */
-        internetCheckViewModel.checkInternet()
-            .observe(viewLifecycleOwner, Observer { resultEmitted ->
-
-                when (resultEmitted) {
-
-                    is Result.Loading -> {
-                        showMainProgressbar()
-                    }
-
-                    is Result.Success -> {
-
-                        if (resultEmitted.data) {
-
-                            getAllWeatherInfoObserver(
-                                location = coordinates,
-                                airQuality = false,
-                                days = 3,
-                                alerts = false,
-                                date = currentDate
-                            )
-
-                        } else {
-                            showInternetCheckDialog()
-                        }
-
-                    }
-
-                    is Result.Failure -> {
-                        showInternetCheckDialog()
-                    }
-
-                }
-
-            })
-
-    }
-
-    private fun checkInternetToGetAutocompleteSearchObserver(location: String) {
-        /*
-            Method to check if there's internet connection and get recyclerview autocomplete locations.
-        */
-        internetCheckViewModel.checkInternet()
-            .observe(viewLifecycleOwner, Observer { resultEmitted ->
-
-                when (resultEmitted) {
-
-                    is Result.Loading -> {
-                        showRvAutocompleteProgressbar()
-                    }
-
-                    is Result.Success -> {
-
-                        if (resultEmitted.data) {
-                            getAutocompleteResults(location)
-                        } else {
-
-                            showInternetCheckDialog()
-                            clearSearchView()
-                            hideRvAutocompleteProgressbar()
-                            showMainProgressbar()
-                            requireContext().hideKeyboard(requireContext(), requireView())
-
-                        }
-
-                    }
-
-                    is Result.Failure -> {
-                        showInternetCheckDialog()
-                    }
-
-                }
-
-            })
-
-    }
-
-    private fun getAllWeatherInfoObserver(
+    private fun fetchAllWeatherDataObserver(
         location: String,
         airQuality: Boolean,
         days: Int,
@@ -215,16 +279,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
         date: String
     ) {
         /*
-            Method to get all weather data.
+            Method to fetch all weather data.
         */
-        weatherViewModel.getAllWeatherInfo(
+        weatherViewModel.fetchAllWeatherData(
             location, airQuality, days, alerts, date
         ).observe(viewLifecycleOwner, Observer { resultEmitted ->
-            /*
-                t1 = getCurrentWeather.
-                t2 = getForecast.
-                t3 = getAstronomy.
-            */
+
             when (resultEmitted) {
 
                 is Result.Loading -> {
@@ -232,8 +292,13 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
                 }
 
                 is Result.Success -> {
+                    /*
+                        t1 = getCurrentWeather.
+                        t2 = getForecast.
+                        t3 = getAstronomy.
+                    */
 
-                    // getCurrentWeather:
+                    // t1 - getCurrentWeather:
                     getCurrentWeatherUISetup(
                         name = resultEmitted.data.t1.location.name,
                         region = resultEmitted.data.t1.location.region,
@@ -244,12 +309,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
                         lastUpdated = resultEmitted.data.t1.current.last_updated
                     )
 
-                    // getForecast:
+                    // t2 - getForecast:
                     getForecastUISetup(
                         forecastDayList = resultEmitted.data.t2.forecast.forecastday
                     )
 
-                    // getAstronomy:
+                    // t3 - getAstronomy:
                     getAstronomyUISetup(
                         sunrise = resultEmitted.data.t3.astronomy.astro.sunrise,
                         sunset = resultEmitted.data.t3.astronomy.astro.sunset,
@@ -264,7 +329,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
                 }
 
                 is Result.Failure -> {
-                    // Show try again dialog:
+
                     requireContext().showToast(
                         requireContext(),
                         "Something went wrong: ${resultEmitted.exception.message}"
@@ -280,9 +345,9 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
 
     }
 
-    private fun getAutocompleteResults(location: String) {
+    private fun fetchAutocompleteResults(location: String) {
         /*
-            Method to get all autocomplete location results.
+            Method to fetch Autocomplete locations data.
         */
         weatherViewModel.fetchAutocompleteResults(
             location
@@ -329,6 +394,168 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
 
             })
 
+    }
+
+    private fun getWeatherFromLastLocationSearched() {
+        /*
+            Method to get weather from last location searched.
+        */
+        if (checkIfIsThereAnyLastLocationSearched()) {
+            // There's a location in SharedPreferences.
+            checkInternetToGetWeatherInfoObserver()
+        } else {
+            // There's not any location in SharedPreferences.
+            hideMainLayout()
+            hideMainProgressbar()
+        }
+
+    }
+
+    private fun checkIfIsThereAnyLastLocationSearched(): Boolean {
+        /*
+            Method to check if is there any last location searched in SharedPreferences.
+        */
+        return if (!getLastSearchedLocationPreference().isNullOrEmpty()) {
+            coordinates = getLastSearchedLocationPreference().toString()
+            true
+        } else {
+            false
+        }
+    }
+
+    private fun requestLocationPermissionsForSingleTime() {
+        /*
+            Method that request location permission for single time.
+        */
+        val result = globalPreferencesViewModel.wereLocationPermissionsRequestedSingleTime()
+
+        if (!result) {
+            // If location permission are not requested for single time yet, requests it.
+            requestLocationPermissions()
+            setLocationPermissionsRequestedSingleTime()
+        }
+
+    }
+
+    private fun requestLocationPermissions() {
+        /*
+            Method to request location permissions.
+        */
+        hideMainLayout()
+
+        requestPermissions(
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ), AppConstants.LOCATION_REQUEST_CODE
+        )
+    }
+
+    private fun getWeatherFromCurrentLocation() {
+        /*
+            Method to get weather from current location when CurrentLocation TextView is clicked in RecyclerViewAutoComplete.
+        */
+        hideMainLayout()
+
+        binding.txtRequestCurrentLocation.setOnClickListener {
+            requestPermissions(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ), AppConstants.LOCATION_REQUEST_CODE
+            )
+            deleteLastSearchedLocationPreference()
+            clearSearchView()
+        }
+
+    }
+
+    private fun checkIfLocationPermissionsAreGranted() {
+        /*
+            Method to check if location permissions are granted.
+        */
+        if (checkIfLocationPermissionsAreGranted(requireContext())) {
+
+            showMainLayout()
+            fetchLocationObserver()
+
+        } else {
+
+            showMainLayout()
+            getWeatherFromLastLocationSearched()
+
+        }
+
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == AppConstants.LOCATION_REQUEST_CODE) {
+
+            if (checkIfLocationPermissionsAreGranted(requireContext())) {
+
+                fetchLocationObserver()
+                clearSearchView()
+                hideRequestCurrentLocationTextView()
+                showMainLayout()
+
+            } else {
+
+                requireContext().showToast(
+                    requireContext(),
+                    "Location permission not granted!"
+                )
+
+                showMainLayout()
+                getWeatherFromLastLocationSearched()
+
+            }
+
+        } else {
+
+            requireContext().showToast(
+                requireContext(),
+                "Something went wrong"
+            )
+
+            hideMainLayout()
+            hideMainProgressbar()
+
+        }
+
+    }
+
+    private fun setLocationPermissionsRequestedSingleTime() {
+        /*
+            Method to put true when location permission were requested for single time in SharedPreferences.
+        */
+        globalPreferencesViewModel.setLocationPermissionsRequestedSingleTime()
+    }
+
+    private fun getLastSearchedLocationPreference(): String? {
+        /*
+            Method to get the last location searched from SharedPreferences.
+        */
+        return globalPreferencesViewModel.getLastSearchedLocation()
+    }
+
+    private fun setLastSearchedLocationPreference(location: String) {
+        /*
+            Method to set a searched location in SharedPreferences.
+        */
+        return globalPreferencesViewModel.setLastSearchedLocation(location)
+    }
+
+    private fun deleteLastSearchedLocationPreference() {
+        /*
+            Method to delete the searched location from SharedPreferences.
+        */
+        globalPreferencesViewModel.deleteLastSearchedLocation()
     }
 
     private fun getCurrentWeatherUISetup(
@@ -426,63 +653,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
 
     }
 
-    private fun setLocationPermissionsRequestedSingleTime() {
-        /*
-            Method to put true when location permission were requested for single time in SharedPreferences.
-        */
-        globalPreferencesViewModel.setLocationPermissionsRequestedSingleTime()
-    }
-
-    private fun requestLocationPermissionsForSingleTime() {
-        /*
-            Method that request location permission for single time.
-        */
-        val result = globalPreferencesViewModel.wereLocationPermissionsRequestedSingleTime()
-
-        if (!result) {
-            // If location permission are not requested for single time yet, requests it.
-            requestLocationPermissions()
-            setLocationPermissionsRequestedSingleTime()
-        }
-
-    }
-
-    private fun getLastSearchedLocationPreference(): String? {
-        /*
-            Method to get the last location searched from SharedPreferences.
-        */
-        return globalPreferencesViewModel.getLastSearchedLocation()
-    }
-
-    private fun setLastSearchedLocationPreference(location: String) {
-        /*
-            Method to set a searched location in SharedPreferences.
-        */
-        return globalPreferencesViewModel.setLastSearchedLocation(location)
-    }
-
-    private fun deleteLastSearchedLocationPreference() {
-        /*
-            Method to delete the searched location in SharedPreferences.
-        */
-        globalPreferencesViewModel.deleteLastSearchedLocation()
-    }
-
-    private fun getWeatherFromLastLocationSearched() {
-        /*
-            Method to get weather from last location searched.
-        */
-        if (checkIfIsThereAnyLastLocationSearched()) {
-            // There's a location in SharedPreferences.
-            checkInternetToGetWeatherInfoObserver()
-        } else {
-            // There's not any location in SharedPreferences.
-            hideMainLayout()
-            hideMainProgressbar()
-        }
-
-    }
-
     private fun showMainProgressbar() {
         /*
             Method to show MainProgressbar.
@@ -567,173 +737,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
         binding.rvAutocomplete.adapter = null // Clear rvAutocomplete adapter.
     }
 
-    private fun setupSearchView() {
-        /*
-            SearchView setup.
-        */
-        binding.searchView.setOnQueryTextFocusChangeListener { view, hasFocus ->
-
-            if (hasFocus) {
-                showRequestCurrentLocationTextView()
-            } else {
-                hideRequestCurrentLocationTextView()
-            }
-
-        }
-
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-
-            override fun onQueryTextSubmit(text: String?): Boolean {
-
-                text?.let {
-
-                    if (it.length >= 3) {
-
-                        coordinates = it
-                        setLastSearchedLocationPreference(it)
-                        checkInternetToGetWeatherInfoObserver()
-
-                        clearSearchView()
-                        showMainLayout()
-
-                    } else {
-
-                        requireContext().showToast(
-                            requireContext(),
-                            "Location not founded!"
-                        )
-
-                    }
-
-                }
-
-                return false
-            }
-
-            override fun onQueryTextChange(text: String?): Boolean {
-
-                text?.let {
-
-                    if (it.isEmpty()) {
-                        hideAutocompleteRecyclerView()
-                    } else {
-                        showAutocompleteRecyclerView()
-                        checkInternetToGetAutocompleteSearchObserver(it)
-                    }
-
-                }
-
-                return false
-            }
-
-        })
-
-    }
-
-    private fun pullToRefresh() {
-        /*
-            Pull to Refresh data setup.
-        */
-        binding.pullToRefresh.setOnRefreshListener {
-            checkIfLocationPermissionsAreGranted()
-            binding.pullToRefresh.isRefreshing = false
-        }
-
-    }
-
-    private fun requestLocationPermissions() {
-        /*
-            Method to request location permissions.
-        */
-        hideMainLayout()
-
-        requestPermissions(
-            arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ), AppConstants.LOCATION_REQUEST_CODE
-        )
-    }
-
-    private fun getWeatherFromCurrentLocation() {
-        /*
-            Method to get weather from current location when CurrentLocation TextView is clicked in RecyclerViewAutoComplete.
-        */
-        hideMainLayout()
-
-        binding.txtRequestCurrentLocation.setOnClickListener {
-            requestPermissions(
-                arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ), AppConstants.LOCATION_REQUEST_CODE
-            )
-            deleteLastSearchedLocationPreference()
-            clearSearchView()
-        }
-
-    }
-
-    private fun checkIfLocationPermissionsAreGranted() {
-        /*
-            Method to check if location permissions are granted.
-        */
-        if (checkIfLocationPermissionsAreGranted(requireContext())) {
-
-            showMainLayout()
-            getLocationObserver()
-
-        } else {
-
-            showMainLayout()
-            getWeatherFromLastLocationSearched()
-
-        }
-
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        if (requestCode == AppConstants.LOCATION_REQUEST_CODE) {
-
-            if (checkIfLocationPermissionsAreGranted(requireContext())) {
-
-                getLocationObserver()
-                clearSearchView()
-                hideRequestCurrentLocationTextView()
-                showMainLayout()
-
-            } else {
-
-                requireContext().showToast(
-                    requireContext(),
-                    "Location permission not granted!"
-                )
-
-                showMainLayout()
-                getWeatherFromLastLocationSearched()
-
-            }
-
-        } else {
-
-            requireContext().showToast(
-                requireContext(),
-                "Something went wrong"
-            )
-
-            hideMainLayout()
-            hideMainProgressbar()
-
-        }
-
-    }
-
     private fun showInternetCheckDialog() {
         /*
             Method to show internetCheckDialog.
@@ -746,6 +749,13 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
 
     }
 
+    override fun internetCheckDialogPositiveButtonClicked() {
+        /*
+            Method to control positive button click on InternetCheckDialog.
+        */
+        checkInternetToGetWeatherInfoObserver()
+    }
+
     override fun onLocationClick(locations: Locations) {
         /*
             Method to get the searched location in SearchBar.
@@ -754,13 +764,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
             "${locations.name}, ${locations.region}, ${locations.country}",
             true
         )
-    }
-
-    override fun internetCheckDialogPositiveButtonClicked() {
-        /*
-            Method to control positive button click on InternetCheckDialog.
-        */
-        checkInternetToGetWeatherInfoObserver()
     }
 
 }

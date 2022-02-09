@@ -15,7 +15,9 @@ class WeatherRemoteDataSourceImpl @Inject constructor(
         location: String,
         airQuality: Boolean
     ): CurrentWeatherResults = withContext(Dispatchers.IO) {
-
+        /*
+            Method to get Current Weather data from WebService.
+        */
         webService.getCurrentWeather(
             AppConstants.API_KEY,
             location,
@@ -30,7 +32,9 @@ class WeatherRemoteDataSourceImpl @Inject constructor(
         airQuality: Boolean,
         alerts: Boolean
     ): ForecastResults = withContext(Dispatchers.IO) {
-
+        /*
+            Method to get Forecast data from WebService.
+        */
         webService.getForecast(
             AppConstants.API_KEY,
             location,
@@ -45,7 +49,9 @@ class WeatherRemoteDataSourceImpl @Inject constructor(
         location: String,
         date: String
     ): AstronomyResults = withContext(Dispatchers.IO) {
-
+        /*
+            Method to get Astronomy data from WebService.
+        */
         webService.getAstronomy(
             AppConstants.API_KEY,
             location,
@@ -57,7 +63,9 @@ class WeatherRemoteDataSourceImpl @Inject constructor(
     override suspend fun getAutocompleteResults(
         location: String
     ): List<Locations> = withContext(Dispatchers.IO) {
-
+        /*
+            Method to get Autocomplete locations data from WebService.
+        */
         webService.getAutocompleteResults(
             AppConstants.API_KEY,
             location

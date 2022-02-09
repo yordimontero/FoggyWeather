@@ -8,6 +8,9 @@ interface WebService {
 
     @GET("current.json")
     suspend fun getCurrentWeather(
+        /*
+            Method to get Current Weather data from API Rest.
+        */
         @Query("key")
         apiKey: String,
         @Query("q")
@@ -16,8 +19,12 @@ interface WebService {
         airQuality: Boolean
     ): CurrentWeatherResults
 
+
     @GET("forecast.json")
     suspend fun getForecast(
+        /*
+            Method to get Forecast data from API Rest.
+        */
         @Query("key")
         apiKey: String,
         @Query("q")
@@ -30,8 +37,12 @@ interface WebService {
         alerts: Boolean
     ): ForecastResults
 
+
     @GET("astronomy.json")
     suspend fun getAstronomy(
+        /*
+            Method to get Astronomy data from API Rest.
+        */
         @Query("key")
         apiKey: String,
         @Query("q")
@@ -40,8 +51,12 @@ interface WebService {
         date: String
     ): AstronomyResults
 
+
     @GET("search.json")
     suspend fun getAutocompleteResults(
+        /*
+            Method to get Autocomplete locations data from API Rest.
+        */
         @Query("key")
         apiKey: String,
         @Query("q")

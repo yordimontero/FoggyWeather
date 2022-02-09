@@ -5,20 +5,26 @@ import android.text.format.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-fun checkHourFormat(context: Context): Boolean = DateFormat.is24HourFormat(context)
-
 fun splitDate(date: String): String {
+    /*
+        Method to split date of hour from API field. Example: 2022-02-09 19:45
+    */
     val splitDate = date.split(" ")
     return splitDate[1]
 }
 
 fun splitHour(hour: String, position: Int): String {
+    /*
+        Method to split fetched hour from API in hours and minutes. Example: 19:45
+    */
     val splitHour = hour.split(":")
     return splitHour[position]
 }
 
 fun getCurrentHourFormatted(context: Context): String {
-
+    /*
+        Method to get current hour and format it in 12 h or 24 h.
+    */
     val formatter12h = SimpleDateFormat("hh:mm a", Locale.US)
     val formatter24h = SimpleDateFormat("HH:mm", Locale.US)
     val currentHour = Calendar.getInstance().time
@@ -32,7 +38,9 @@ fun getCurrentHourFormatted(context: Context): String {
 }
 
 fun formatHour(hour: String, minute: String, context: Context): String {
-
+    /*
+        Method to get an hour an format it in 12 h or 24 h.
+    */
     val formatter12h = SimpleDateFormat("hh:mm a", Locale.US)
     val formatter24h = SimpleDateFormat("HH:mm", Locale.US)
     val calendar = Calendar.getInstance()
@@ -51,7 +59,9 @@ fun formatHour(hour: String, minute: String, context: Context): String {
 }
 
 fun getCurrentForecastCard(currentHour: String, context: Context): Int {
-
+    /*
+        Method to get the current card in Forecast RecyclerView based on current hour.
+    */
     var value = 0
 
     val splitHour24 = splitHour(currentHour, 0)
@@ -169,7 +179,9 @@ fun getCurrentForecastCard(currentHour: String, context: Context): Int {
 }
 
 fun formatDate(date: Date): String {
-
+    /*
+        Method to format a date in year-month-day.
+    */
     val dateFormat = SimpleDateFormat(
         "yyyy-MM-dd", Locale.ENGLISH
     )
@@ -179,11 +191,16 @@ fun formatDate(date: Date): String {
 }
 
 fun getCurrentDate(): String {
+    /*
+        Method to get current date.
+    */
     return formatDate(Calendar.getInstance().time)
 }
 
 fun getDateWithMonthName(date: Date): String {
-
+    /*
+        Method to get current date with month name. Example: Wed, 9 Feb.
+    */
     val dateFormat = SimpleDateFormat(
         "EEE, d MMM", Locale.ENGLISH
     )

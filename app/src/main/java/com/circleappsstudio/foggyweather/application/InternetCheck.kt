@@ -9,6 +9,9 @@ import java.net.Socket
 object InternetCheck {
 
     suspend fun isNetworkAvailable() = withContext(Dispatchers.IO) {
+        /*
+            Method to check if there's internet connection.
+        */
         try {
             val sock = Socket()
             val socketAddress = InetSocketAddress("8.8.8.8", 53)

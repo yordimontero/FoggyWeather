@@ -16,46 +16,24 @@ class WeatherViewModel @Inject constructor(
     private val repository: WeatherRepository
 ) : ViewModel() {
 
-    fun fetchAutocompleteResults(
-        location: String
-    ) = liveData(viewModelScope.coroutineContext + Dispatchers.Main) {
-
-        kotlin.runCatching {
-
-            emit(Result.Loading())
-            repository.getAutocompleteResults(location)
-
-        }.onSuccess { locations ->
-
-            emit(Result.Success(locations))
-
-        }.onFailure { throwable ->
-
-            emit(
-                Result.Failure(
-                    Exception(
-                        throwable.message
-                    )
-                )
-            )
-
-        }
-
-    }
-
-    // Testing:
-
-    fun getAllWeatherInfo(
+    fun fetchAllWeatherData(
         location: String,
         airQuality: Boolean,
         days: Int,
         alerts: Boolean,
         date: String
     ) = liveData(viewModelScope.coroutineContext + Dispatchers.Main) {
-
+        /*
+            Method to fetch all weather data:
+            t1 = getCurrentWeather.
+            t2 = getForecast.
+            t3 = getAstronomy.
+        */
         try {
 
-            emit(Result.Loading())
+            emit(
+                Result.Loading()
+            )
 
             emit(
                 Result.Success(
@@ -80,8 +58,38 @@ class WeatherViewModel @Inject constructor(
         } catch (e: Exception) {
 
             emit(
+                Result.Failure(e)
+            )
+
+        }
+
+    }
+
+    fun fetchAutocompleteResults(
+        location: String
+    ) = liveData(viewModelScope.coroutineContext + Dispatchers.Main) {
+        /*
+            Method to fetch Autocomplete locations data.
+        */
+        kotlin.runCatching {
+
+            emit(
+                Result.Loading()
+            )
+
+            repository.getAutocompleteResults(location)
+
+        }.onSuccess { locations ->
+
+            emit(
+                Result.Success(locations)
+            )
+
+        }.onFailure { throwable ->
+
+            emit(
                 Result.Failure(
-                    e
+                    Exception(throwable.message)
                 )
             )
 

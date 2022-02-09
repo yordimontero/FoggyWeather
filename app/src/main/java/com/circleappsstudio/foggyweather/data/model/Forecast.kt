@@ -1,17 +1,8 @@
 package com.circleappsstudio.foggyweather.data.model
 
-data class ForecastResults(
-    val forecast: Forecast
-)
-
-data class Forecast(
-    val forecastday: List<ForecastDay> = listOf()
-)
-
-data class ForecastDay(
-    val date: String = "",
-    val day: Day,
-    val hour: List<Hour> = listOf()
+data class Condition(
+    val text: String = "",
+    val icon: String = ""
 )
 
 data class Day(
@@ -20,13 +11,22 @@ data class Day(
     val condition: Condition
 )
 
-data class Condition(
-    val text: String = "",
-    val icon: String = ""
-)
-
 data class Hour(
     val time: String = "",
     val temp_c: String = "",
     val condition: Condition
+)
+
+data class ForecastDay(
+    val date: String = "",
+    val day: Day,
+    val hour: List<Hour> = listOf()
+)
+
+data class Forecast(
+    val forecastday: List<ForecastDay> = listOf()
+)
+
+data class ForecastResults(
+    val forecast: Forecast
 )

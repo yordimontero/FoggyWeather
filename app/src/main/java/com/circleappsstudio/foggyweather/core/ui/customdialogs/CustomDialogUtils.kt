@@ -10,8 +10,7 @@ import com.circleappsstudio.foggyweather.databinding.CustomInternetCheckDialogBi
 
 interface OnInternetCheckDialogButtonClickListener {
     /*
-        [ENG]: Method that controls InternetCheckDialog UI interactions.
-        [ESP]: Método que controla interacciones de UI del InternetCheckDialog.
+        Method that controls InternetCheckDialog UI interactions.
     */
     fun internetCheckDialogPositiveButtonClicked()
 }
@@ -22,8 +21,7 @@ fun internetCheckDialog(
     dialogButtonListener: OnInternetCheckDialogButtonClickListener
 ) {
     /*
-        [ENG]: Method to show a confirmation dialog.
-        [ESP]: Método para mostrar un dialog de confirmación.
+        Method to show a dialog when there's not internet connection.
     */
 
     // Inflate the dialog as custom view:

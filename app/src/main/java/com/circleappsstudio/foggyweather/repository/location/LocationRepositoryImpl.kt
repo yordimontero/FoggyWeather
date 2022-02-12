@@ -6,9 +6,12 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+/*
+    @Inject constructor(...) injects LocationUtils Class.
+*/
 class LocationRepositoryImpl @Inject constructor(
-    private val location: Location
-) : LocationRepository {
+    private val locationUtils: LocationUtils
+): LocationRepository {
 
     @ExperimentalCoroutinesApi
     override suspend fun getLocation(
@@ -17,7 +20,7 @@ class LocationRepositoryImpl @Inject constructor(
         /*
             Method to get current location from GPS.
         */
-        location.getLocation(context)
+        locationUtils.getLocation(context)
     }
 
 }

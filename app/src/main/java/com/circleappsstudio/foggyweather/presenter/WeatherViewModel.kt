@@ -11,6 +11,9 @@ import kotlinx.coroutines.Dispatchers
 import java.lang.Exception
 import javax.inject.Inject
 
+/*
+    @HiltViewModel creates automatically the ViewModel Dependency without create it in AppModule manually.
+*/
 @HiltViewModel
 class WeatherViewModel @Inject constructor(
     private val repository: WeatherRepository

@@ -14,7 +14,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.coroutines.resume
 
-class Location @Inject constructor() {
+class LocationUtils @Inject constructor() {
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var huaweiFusedLocationProviderClient: com.huawei.hms.location.FusedLocationProviderClient

@@ -5,6 +5,9 @@ import com.circleappsstudio.foggyweather.data.remote.WeatherRemoteDataSource
 import com.circleappsstudio.foggyweather.data.remote.WeatherRemoteDataSourceImpl
 import javax.inject.Inject
 
+/*
+    @Inject constructor(...) injects WeatherRemoteDataSource Interface.
+*/
 class WeatherRepositoryImpl @Inject constructor(
     private val dataSource: WeatherRemoteDataSource
 ): WeatherRepository {

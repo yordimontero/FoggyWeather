@@ -7,6 +7,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+/*
+    @Inject constructor(...) injects WebService Interface.
+*/
 class WeatherRemoteDataSourceImpl @Inject constructor(
     private val webService: WebService
 ) : WeatherRemoteDataSource {

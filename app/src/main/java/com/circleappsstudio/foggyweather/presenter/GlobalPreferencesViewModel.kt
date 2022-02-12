@@ -5,6 +5,9 @@ import com.circleappsstudio.foggyweather.application.GlobalPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
+/*
+    @HiltViewModel creates automatically the ViewModel Dependency without create it in AppModule manually.
+*/
 @HiltViewModel
 class GlobalPreferencesViewModel @Inject constructor(
     private val globalPreferences: GlobalPreferences

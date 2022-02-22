@@ -618,11 +618,16 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
         forecastDayList.forEachIndexed { index, forecastDay ->
 
-            binding.rvForecast.adapter = ForecastByHourAdapter(
-                forecastDay.hour,
-                forecastRecyclerViewPosition.toString(),
-                requireContext()
-            )
+            if (index == 0) {
+
+                binding.rvForecast.adapter = ForecastByHourAdapter(
+                    forecastDay.hour,
+                    forecastRecyclerViewPosition.toString(),
+                    requireContext()
+                )
+
+            }
+
         }
 
         binding.rvForecast.scrollToPosition(forecastRecyclerViewPosition)

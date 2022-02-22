@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "138611662250",
+    "project_id": "foggyweather-c96ac",
+    "storage_bucket": "foggyweather-c96ac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:138611662250:android:37c2c7e8b2258e49da5fd3",
+        "android_client_info": {
+          "package_name": "com.circleappsstudio.foggyweather"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "138611662250-qs0nmd4iv145mca4712i8mvom55i924q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvoOVDGcV07z-686W8IpgYuv63B7J4NQ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "138611662250-qs0nmd4iv145mca4712i8mvom55i924q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

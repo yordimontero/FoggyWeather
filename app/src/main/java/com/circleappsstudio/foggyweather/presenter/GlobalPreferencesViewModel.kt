@@ -13,6 +13,20 @@ class GlobalPreferencesViewModel @Inject constructor(
     private val globalPreferences: GlobalPreferences
 ) : ViewModel() {
 
+    fun isRateAppDialogLaunched(): Boolean {
+        /*
+            Method to check if rate app dialog was launched already or not.
+        */
+        return globalPreferences.isRateAppDialogLaunched()
+    }
+
+    fun setRateAppDialogLaunched() {
+        /*
+            Method to put true when rate app dialog was launched already.
+        */
+        globalPreferences.setRateAppDialogLaunched()
+    }
+
     fun wereLocationPermissionsRequestedSingleTime(): Boolean {
         /*
             Method to check if location permission were requested for single time.

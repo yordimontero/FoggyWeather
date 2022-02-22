@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import com.circleappsstudio.foggyweather.databinding.CustomInternetCheckDialogBinding
+import com.circleappsstudio.foggyweather.databinding.CustomRateAppDialogBinding
 
 interface OnInternetCheckDialogButtonClickListener {
     /*
@@ -44,6 +45,51 @@ fun internetCheckDialog(
         // Close dialog:
         dialogInstance.dismiss()
         dialogButtonListener.internetCheckDialogPositiveButtonClicked()
+    }
+
+}
+
+interface OnConfirmationDialogButtonClickListener {
+    /*
+        Method that controls ConfirmationDialog UI interactions.
+    */
+    fun confirmationDialogPositiveButtonClicked()
+}
+
+fun rateAppDialog(
+    activity: Activity,
+    context: Context,
+    dialogButtonListener: OnConfirmationDialogButtonClickListener
+) {
+    /*
+        Method to show a confirmation dialog (app rate).
+    */
+    // Inflate the dialog as custom view:
+    val binding = CustomRateAppDialogBinding.inflate(LayoutInflater.from(context))
+
+    // AlertDialogBuilder:
+    val dialogBuilder = AlertDialog.Builder(activity).setView(binding.root)
+    dialogBuilder.setCancelable(false)
+
+    // Show dialog:
+    val dialogInstance = dialogBuilder.show()
+
+    // Setting dialog with transparent background:
+    dialogInstance.window?.setBackgroundDrawable(
+        ColorDrawable(Color.TRANSPARENT)
+    )
+
+    // Set Listener:
+    binding.btnConfirm.setOnClickListener {
+        // Close dialog:
+        dialogButtonListener.confirmationDialogPositiveButtonClicked()
+        dialogInstance.dismiss()
+    }
+
+    // Set Listener:
+    binding.btnCancel.setOnClickListener {
+        // Close dialog:
+        dialogInstance.dismiss()
     }
 
 }

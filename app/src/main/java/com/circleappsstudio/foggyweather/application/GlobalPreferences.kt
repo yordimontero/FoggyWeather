@@ -2,6 +2,7 @@ package com.circleappsstudio.foggyweather.application
 
 import android.content.Context
 import com.circleappsstudio.foggyweather.application.AppConstants.GLOBAL_PREFERENCE
+import com.circleappsstudio.foggyweather.application.AppConstants.PREFERENCE_IS_RATE_APP_DIALOG_LAUNCHED
 import com.circleappsstudio.foggyweather.application.AppConstants.PREFERENCE_WERE_LOCATION_PERMISSION_REQUESTED_SINGLE_TIME
 import com.circleappsstudio.foggyweather.application.AppConstants.PREFERENCE_LAST_SEARCHED_LOCATION
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -11,6 +12,22 @@ class GlobalPreferences @Inject constructor(@ApplicationContext context: Context
 
     private val preference = context.getSharedPreferences(GLOBAL_PREFERENCE, Context.MODE_PRIVATE)
     private val editor = preference.edit()
+
+    fun isRateAppDialogLaunched(): Boolean {
+        /*
+            Method to check if rate app dialog was launched already or not.
+        */
+        return preference.getBoolean(PREFERENCE_IS_RATE_APP_DIALOG_LAUNCHED, false)
+    }
+
+    fun setRateAppDialogLaunched() {
+        /*
+            Method to put true when rate app dialog was launched already.
+        */
+        editor.putBoolean(
+            PREFERENCE_IS_RATE_APP_DIALOG_LAUNCHED, true
+        ).apply()
+    }
 
     fun wereLocationPermissionsRequestedSingleTime(): Boolean {
         /*

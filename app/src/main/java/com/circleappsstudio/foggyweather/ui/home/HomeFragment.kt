@@ -2,7 +2,6 @@ package com.circleappsstudio.foggyweather.ui.home
 
 import android.Manifest
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -31,18 +30,17 @@ import com.circleappsstudio.foggyweather.data.model.ForecastDay
 import java.util.*
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLocationClickListener,
+class HomeFragment : Fragment(R.layout.fragment_home),
+    AutocompleteAdapter.OnLocationClickListener,
     OnInternetCheckDialogButtonClickListener {
 
     private lateinit var binding: FragmentHomeBinding
 
     private val weatherViewModel by viewModels<WeatherViewModel>()
-
     private val locationViewModel by viewModels<LocationViewModel>()
-
     private val internetCheckViewModel by viewModels<InternetCheckViewModel>()
-
     private val globalPreferencesViewModel by viewModels<GlobalPreferencesViewModel>()
+    private val adMobUtilsViewModel by viewModels<AdMobUtilsViewModel>()
 
     private var coordinates: String = ""
 
@@ -55,6 +53,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
+
+        loadNativeAd()
 
         searchViewSetup()
         pullToRefreshSetup()
@@ -651,6 +651,13 @@ class HomeFragment : Fragment(R.layout.fragment_home), AutocompleteAdapter.OnLoc
         binding.txtMoonPhase.text = moonPhase
         binding.txtMoonIllumination.text = moonIllumination
 
+    }
+
+    private fun loadNativeAd() {
+        /*
+            Method to load a NativeAd.
+        */
+        adMobUtilsViewModel.loadNativeAd(binding.nativeAd)
     }
 
     private fun showMainProgressbar() {

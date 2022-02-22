@@ -11,8 +11,16 @@ import com.circleappsstudio.foggyweather.data.model.ForecastDay
 import com.circleappsstudio.foggyweather.databinding.Forecast3DaysItemViewBinding
 
 class Forecast3DaysAdapter(
-    val forecast3DaysList: List<ForecastDay>
+    private val forecast3DaysList: List<ForecastDay>,
+    private val itemClickListener: OnForecastDayClickListener
 ): RecyclerView.Adapter<BaseViewHolder<*>>() {
+
+    interface OnForecastDayClickListener {
+        /*
+            Interface to set click function in each item from RecyclerView.
+        */
+        fun onForecastDayClick(forecastDay: ForecastDay)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
 
@@ -56,6 +64,11 @@ class Forecast3DaysAdapter(
 
             binding.txtMaxTemp.text = item.day.maxtemp_c.toString()
             binding.txtMinTemp.text = item.day.mintemp_c.toString()
+
+            binding.root.setOnClickListener {
+                // setOnClickListener function:
+                itemClickListener.onForecastDayClick(item)
+            }
 
         }
 

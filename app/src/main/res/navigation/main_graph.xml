@@ -9,10 +9,23 @@
         android:id="@+id/fragment_home"
         android:name="com.circleappsstudio.foggyweather.ui.home.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_fragment_home_to_forecastByDayFragment"
+            app:destination="@id/fragment_forecast_by_day"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
     <fragment
         android:id="@+id/fragment_more"
         android:name="com.circleappsstudio.foggyweather.ui.more.MoreFragment"
         android:label="More"
         tools:layout="@layout/fragment_more" />
+    <fragment
+        android:id="@+id/fragment_forecast_by_day"
+        android:name="com.circleappsstudio.foggyweather.ui.forecastbyday.ForecastByDayFragment"
+        android:label="Forecast"
+        tools:layout="@layout/fragment_forecast_by_day" />
 </navigation>

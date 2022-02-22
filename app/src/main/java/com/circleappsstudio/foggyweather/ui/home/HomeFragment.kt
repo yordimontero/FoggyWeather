@@ -4,6 +4,7 @@ import android.Manifest
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
@@ -22,6 +23,8 @@ import com.circleappsstudio.foggyweather.ui.home.adapter.Forecast3DaysAdapter
 import com.circleappsstudio.foggyweather.ui.home.adapter.ForecastByHourAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.appcompat.widget.SearchView
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.circleappsstudio.foggyweather.core.ui.hide
 import com.circleappsstudio.foggyweather.core.ui.hideKeyboard
 import com.circleappsstudio.foggyweather.core.ui.show
@@ -31,10 +34,12 @@ import java.util.*
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home),
+    Forecast3DaysAdapter.OnForecastDayClickListener,
     AutocompleteAdapter.OnLocationClickListener,
     OnInternetCheckDialogButtonClickListener {
 
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var navController: NavController
 
     private val weatherViewModel by viewModels<WeatherViewModel>()
     private val locationViewModel by viewModels<LocationViewModel>()
@@ -53,6 +58,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
+        navController = Navigation.findNavController(view)
 
         loadNativeAd()
 
@@ -632,7 +638,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
         binding.rvForecast.scrollToPosition(forecastRecyclerViewPosition)
 
-        binding.rvForecast3Days.adapter = Forecast3DaysAdapter(forecastDayList)
+        binding.rvForecast3Days.adapter = Forecast3DaysAdapter(forecastDayList, this)
 
     }
 
@@ -740,6 +746,13 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         binding.txtCurrentDate.text = currentDateWithMothName
     }
 
+    private fun goToForecastByDayFragment() {
+        /*
+            Method to go to ForecastByDayFragment.
+        */
+        navController.navigate(R.id.fragment_forecast_by_day)
+    }
+
     private fun clearSearchView() {
         /*
             Method to clear SearchView.
@@ -776,6 +789,14 @@ class HomeFragment : Fragment(R.layout.fragment_home),
             "${locations.name}, ${locations.region}, ${locations.country}",
             true
         )
+    }
+
+    override fun onForecastDayClick(forecastDay: ForecastDay) {
+        /*
+            Method to set click function in RvForecast RecyclerView.
+        */
+        Toast.makeText(requireContext(), "${forecastDay.date}", Toast.LENGTH_SHORT).show()
+        goToForecastByDayFragment()
     }
 
 }

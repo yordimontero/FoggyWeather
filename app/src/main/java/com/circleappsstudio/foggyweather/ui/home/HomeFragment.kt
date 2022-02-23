@@ -23,6 +23,7 @@ import com.circleappsstudio.foggyweather.ui.home.adapter.Forecast3DaysAdapter
 import com.circleappsstudio.foggyweather.ui.home.adapter.ForecastByHourAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.appcompat.widget.SearchView
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.circleappsstudio.foggyweather.core.ui.hide
@@ -750,7 +751,12 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         /*
             Method to go to ForecastByDayFragment.
         */
-        navController.navigate(R.id.fragment_forecast_by_day)
+        navController.navigate(
+            R.id.fragment_forecast_by_day, bundleOf(
+                "date" to "2021-12-31",
+                "location" to "Argentina, Alajuela"
+            )
+        )
     }
 
     private fun clearSearchView() {

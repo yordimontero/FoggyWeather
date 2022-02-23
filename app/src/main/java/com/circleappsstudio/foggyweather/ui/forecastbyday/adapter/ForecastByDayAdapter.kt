@@ -1,4 +1,4 @@
-package com.circleappsstudio.foggyweather.ui.home.adapter
+package com.circleappsstudio.foggyweather.ui.forecastbyday.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -13,9 +13,9 @@ import com.circleappsstudio.foggyweather.core.time.splitHour
 import com.circleappsstudio.foggyweather.core.ui.changeForecastByHourCardViewColor
 import com.circleappsstudio.foggyweather.core.ui.changeForecastByHourUnselectedCardViewColor
 import com.circleappsstudio.foggyweather.data.model.Hour
-import com.circleappsstudio.foggyweather.databinding.ForecastItemViewBinding
+import com.circleappsstudio.foggyweather.databinding.ForecastByDayItemViewBinding
 
-class ForecastByHourAdapter(
+class ForecastByDayAdapter(
     private val forecastByHourList: List<Hour>,
     private var currentHour: String,
     private val context: Context
@@ -23,20 +23,22 @@ class ForecastByHourAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
 
-        val itemBinding = ForecastItemViewBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
-        )
+        val itemBinding = ForecastByDayItemViewBinding
+            .inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
 
-        return ForecastViewHolder(itemBinding, parent.context)
+        return ForecastByDayViewHolder(itemBinding, parent.context)
 
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) {
 
         when (holder) {
-            is ForecastViewHolder -> {
+
+            is ForecastByDayViewHolder -> {
 
                 holder.bind(forecastByHourList[position])
 
@@ -51,7 +53,7 @@ class ForecastByHourAdapter(
                         secondaryCardView = holder.binding.secondaryCardView,
                         hour = holder.binding.txtHour,
                         temperature = holder.binding.txtTemperature,
-                        grades = holder.binding.txtGrades
+                        grades = holder.binding.txtTemperatureGrades
                     )
 
                 } else {
@@ -62,22 +64,22 @@ class ForecastByHourAdapter(
                         secondaryCardView = holder.binding.secondaryCardView,
                         hour = holder.binding.txtHour,
                         temperature = holder.binding.txtTemperature,
-                        grades = holder.binding.txtGrades
+                        grades = holder.binding.txtTemperatureGrades
                     )
 
                 }
-
             }
+
         }
 
     }
 
     override fun getItemCount(): Int = forecastByHourList.size
 
-    private inner class ForecastViewHolder(
-        val binding: ForecastItemViewBinding,
+    private inner class ForecastByDayViewHolder(
+        val binding: ForecastByDayItemViewBinding,
         val context: Context
-    ) : BaseViewHolder<Hour>(binding.root) {
+    ): BaseViewHolder<Hour>(binding.root) {
 
         override fun bind(item: Hour) {
 
@@ -89,14 +91,19 @@ class ForecastByHourAdapter(
                 context
             )
 
-            binding.txtHour.text = formattedHour
+            //binding.txtHour.text = formattedHour
+            binding.txtHour.text = item.time
 
             Glide.with(context)
                 .load("${AppConstants.BASE_IMAGE_URL}${item.condition.icon}")
                 .centerCrop()
                 .into(binding.imgIcon)
 
+            binding.txtCondition.text = item.condition.text
+
             binding.txtTemperature.text = item.temp_c
+
+            binding.txtFeelsLike.text = item.feelslike_c
 
         }
 

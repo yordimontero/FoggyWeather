@@ -16,9 +16,7 @@ import com.circleappsstudio.foggyweather.data.model.Hour
 import com.circleappsstudio.foggyweather.databinding.ForecastByDayItemViewBinding
 
 class ForecastByDayAdapter(
-    private val forecastByHourList: List<Hour>,
-    private var currentHour: String,
-    private val context: Context
+    private val forecastByHourList: List<Hour>
 ): RecyclerView.Adapter<BaseViewHolder<*>>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
@@ -39,35 +37,7 @@ class ForecastByDayAdapter(
         when (holder) {
 
             is ForecastByDayViewHolder -> {
-
                 holder.bind(forecastByHourList[position])
-
-                val hour = splitDate(forecastByHourList[position].time)
-                val splitHour = splitHour(hour, 0).toInt()
-
-                if (currentHour.toInt() == splitHour) {
-
-                    changeForecastByHourCardViewColor(
-                        context = context,
-                        primaryCardView = holder.binding.primaryCardView,
-                        secondaryCardView = holder.binding.secondaryCardView,
-                        hour = holder.binding.txtHour,
-                        temperature = holder.binding.txtTemperature,
-                        grades = holder.binding.txtTemperatureGrades
-                    )
-
-                } else {
-
-                    changeForecastByHourUnselectedCardViewColor(
-                        context = context,
-                        primaryCardView = holder.binding.primaryCardView,
-                        secondaryCardView = holder.binding.secondaryCardView,
-                        hour = holder.binding.txtHour,
-                        temperature = holder.binding.txtTemperature,
-                        grades = holder.binding.txtTemperatureGrades
-                    )
-
-                }
             }
 
         }
@@ -91,8 +61,7 @@ class ForecastByDayAdapter(
                 context
             )
 
-            //binding.txtHour.text = formattedHour
-            binding.txtHour.text = item.time
+            binding.txtHour.text = formattedHour
 
             Glide.with(context)
                 .load("${AppConstants.BASE_IMAGE_URL}${item.condition.icon}")

@@ -56,6 +56,9 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         getDateWithMonthName(Calendar.getInstance().time)
     }
 
+    private var forecastDayList: List<ForecastDay> = listOf()
+    private var forecast3DaysAdapterPosition: Int = 0
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
@@ -317,6 +320,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                     )
 
                     // t2 - getForecast:
+                    forecastDayList = resultEmitted.data.t2.forecast.forecastday
                     getForecastUISetup(
                         forecastDayList = resultEmitted.data.t2.forecast.forecastday
                     )
@@ -753,8 +757,8 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         */
         navController.navigate(
             R.id.fragment_forecast_by_day, bundleOf(
-                "date" to "2021-12-31",
-                "location" to "Argentina, Alajuela"
+                "forecastList" to forecastDayList,
+                "position" to forecast3DaysAdapterPosition
             )
         )
     }
@@ -797,11 +801,12 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         )
     }
 
-    override fun onForecastDayClick(forecastDay: ForecastDay) {
+    override fun onForecastDayClick(forecastDay: ForecastDay, position: Int) {
         /*
             Method to set click function in RvForecast RecyclerView.
         */
-        Toast.makeText(requireContext(), "${forecastDay.date}", Toast.LENGTH_SHORT).show()
+        forecast3DaysAdapterPosition = position
+        Toast.makeText(requireContext(), "${forecastDay.date}, Position: $position", Toast.LENGTH_SHORT).show()
         goToForecastByDayFragment()
     }
 

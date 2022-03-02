@@ -3,6 +3,7 @@ package com.circleappsstudio.foggyweather.ui.home.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.circleappsstudio.foggyweather.application.AppConstants
@@ -19,7 +20,7 @@ class Forecast3DaysAdapter(
         /*
             Interface to set click function in each item from RecyclerView.
         */
-        fun onForecastDayClick(forecastDay: ForecastDay)
+        fun onForecastDayClick(forecastDay: ForecastDay, position: Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
@@ -30,7 +31,19 @@ class Forecast3DaysAdapter(
             false
         )
 
-        return Forecast3DaysViewHolder(itemBinding, parent.context)
+        val holder = Forecast3DaysViewHolder(itemBinding, parent.context)
+
+        itemBinding.root.setOnClickListener {
+
+            val position = holder.adapterPosition.takeIf {
+                it != DiffUtil.DiffResult.NO_POSITION
+            } ?: return@setOnClickListener
+
+            itemClickListener.onForecastDayClick(forecast3DaysList[position], position)
+
+        }
+
+        return holder
 
     }
 
@@ -64,11 +77,6 @@ class Forecast3DaysAdapter(
 
             binding.txtMaxTemp.text = item.day.maxtemp_c.toString()
             binding.txtMinTemp.text = item.day.mintemp_c.toString()
-
-            binding.root.setOnClickListener {
-                // setOnClickListener function:
-                itemClickListener.onForecastDayClick(item)
-            }
 
         }
 

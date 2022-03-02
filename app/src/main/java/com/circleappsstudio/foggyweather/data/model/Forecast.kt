@@ -15,7 +15,8 @@ data class Hour(
     val time: String = "",
     val temp_c: String = "",
     val condition: Condition,
-    val feelslike_c: String = ""
+    val feelslike_c: String = "",
+    val chance_of_rain: Int = 0
 )
 
 data class ForecastDay(

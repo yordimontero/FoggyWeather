@@ -74,6 +74,8 @@ class ForecastByDayAdapter(
 
             binding.txtFeelsLike.text = item.feelslike_c
 
+            binding.txtChanceOfRain.text = item.chance_of_rain.toString()
+
         }
 
     }

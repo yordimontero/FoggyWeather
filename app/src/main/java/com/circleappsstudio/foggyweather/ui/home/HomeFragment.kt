@@ -751,14 +751,15 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         binding.txtCurrentDate.text = currentDateWithMothName
     }
 
-    private fun goToForecastByDayFragment() {
+    private fun goToForecastByDayFragment(date: String) {
         /*
             Method to go to ForecastByDayFragment.
         */
         navController.navigate(
             R.id.fragment_forecast_by_day, bundleOf(
                 "forecastList" to forecastDayList,
-                "position" to forecast3DaysAdapterPosition
+                "position" to forecast3DaysAdapterPosition,
+                "date" to date
             )
         )
     }
@@ -807,7 +808,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         */
         forecast3DaysAdapterPosition = position
         Toast.makeText(requireContext(), "${forecastDay.date}, Position: $position", Toast.LENGTH_SHORT).show()
-        goToForecastByDayFragment()
+        goToForecastByDayFragment(forecastDay.date)
     }
 
 }

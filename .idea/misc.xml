@@ -7,6 +7,7 @@
         <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/drawable/bottom_nav_colors.xml" value="0.1638888888888889" />
         <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/drawable/ic_close.xml" value="0.21875" />
         <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/drawable/ic_cloud.xml" value="0.1638888888888889" />
+        <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/drawable/ic_hour.xml" value="0.21458333333333332" />
         <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/drawable/ic_search.xml" value="0.21875" />
         <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/drawable/tab_color_selector.xml" value="0.1638888888888889" />
         <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/activity_main.xml" value="0.25" />
@@ -19,7 +20,7 @@
         <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/forecast_by_day_item_view.xml" value="0.5" />
         <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/forecast_item_view.xml" value="0.25" />
         <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/fragment_current_weather.xml" value="0.22" />
-        <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/fragment_forecast_by_day.xml" value="0.33" />
+        <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/fragment_forecast_by_day.xml" value="0.5" />
         <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/fragment_more.xml" value="0.25" />
         <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/menu/bottom_nav_menu.xml" value="0.20260416666666667" />

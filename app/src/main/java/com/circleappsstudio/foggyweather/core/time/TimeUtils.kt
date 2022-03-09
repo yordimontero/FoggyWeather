@@ -2,6 +2,7 @@ package com.circleappsstudio.foggyweather.core.time
 
 import android.content.Context
 import android.text.format.DateFormat
+import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -208,3 +209,10 @@ fun getDateWithMonthName(date: Date): String {
     return dateFormat.format(date)
 }
 
+fun convertStringToDate(dateString: String): Date {
+    val format = SimpleDateFormat("yyyy-MM-dd")
+
+    val date = format.parse(dateString)
+    Log.wtf("date", "date: $date")
+    return date
+}

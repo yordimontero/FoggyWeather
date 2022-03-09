@@ -43,7 +43,10 @@
                         android:fontFamily="sans-serif-light"
                         tools:text="00:00"
                         android:textSize="18sp"
-                        android:layout_marginBottom="10dp"/>
+                        android:layout_marginBottom="10dp"
+                        app:drawableStartCompat="@drawable/ic_hour"
+                        app:drawableTint="@color/light_blue"
+                        android:drawablePadding="1dp"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -89,7 +92,7 @@
                             android:fontFamily="sans-serif-light"
                             android:text="Feels like"
                             android:textSize="18sp"
-                            android:layout_marginEnd="2dp"/>
+                            android:layout_marginEnd="3dp"/>
 
                         <TextView
                             android:id="@+id/txt_feels_like"
@@ -116,6 +119,14 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            android:text="Chance of rain"
+                            android:textSize="18sp"
+                            android:layout_marginEnd="3dp"/>
+
+                        <TextView
                             android:id="@+id/txt_chance_of_rain"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -129,16 +140,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif-light"
                             android:text="%"
-                            android:textSize="18sp"
-                            android:layout_marginEnd="2dp"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
-                            android:text="Rain"
-                            android:textSize="18sp"
-                            android:layout_marginEnd="2dp"/>
+                            android:textSize="18sp" />
 
                     </LinearLayout>
 

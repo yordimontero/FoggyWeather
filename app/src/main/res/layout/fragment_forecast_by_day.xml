@@ -6,16 +6,18 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".ui.forecastbyday.ForecastByDayFragment">
+    tools:context=".ui.forecastbyday.ForecastByDayFragment"
+    android:padding="10dp">
 
     <TextView
+        android:id="@+id/txt_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="12dp"
         android:fontFamily="sans-serif-light"
-        tools:text="2022-02-23"
-        android:textSize="18sp"
+        tools:text="Sat, 3 Aug"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView

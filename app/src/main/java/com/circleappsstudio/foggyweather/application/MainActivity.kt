@@ -3,9 +3,9 @@ package com.circleappsstudio.foggyweather.application
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -14,6 +14,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.circleappsstudio.foggyweather.R
 import com.circleappsstudio.foggyweather.core.ui.customdialogs.OnConfirmationDialogButtonClickListener
 import com.circleappsstudio.foggyweather.core.ui.customdialogs.rateAppDialog
+import com.circleappsstudio.foggyweather.core.ui.hide
+import com.circleappsstudio.foggyweather.core.ui.show
 import com.circleappsstudio.foggyweather.databinding.ActivityMainBinding
 import com.circleappsstudio.foggyweather.presenter.AdMobUtilsViewModel
 import com.circleappsstudio.foggyweather.presenter.AppRateUtilsViewModel
@@ -22,6 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(),
+    View.OnClickListener,
     OnConfirmationDialogButtonClickListener {
 
     private lateinit var navHostFragment: NavHostFragment
@@ -45,6 +48,8 @@ class MainActivity : AppCompatActivity(),
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
+        binding.btnArrowBack.setOnClickListener(this)
+
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.fragment_home, R.id.fragment_more
@@ -54,8 +59,45 @@ class MainActivity : AppCompatActivity(),
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.navView.setupWithNavController(navController)
 
+        setBottomNavigationVisibility()
+
         initAdMob()
         initAppRate()
+
+    }
+
+    override fun onClick(view: View?) {
+
+        if (binding.btnArrowBack == view) {
+            navController.navigateUp()
+        }
+
+    }
+
+    private fun setBottomNavigationVisibility() {
+
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+
+            when (destination.id) {
+
+                R.id.fragment_home -> {
+                    showBottomNavigation()
+                    hideArrowBack()
+                }
+
+                R.id.fragment_forecast_by_day -> {
+                    hideBottomNavigation()
+                    showArrowBack()
+                }
+
+                else -> {
+                    showBottomNavigation()
+                    showArrowBack()
+                }
+
+            }
+
+        }
 
     }
 
@@ -107,6 +149,23 @@ class MainActivity : AppCompatActivity(),
             Method that controls positive button of showAppRateDialog.
         */
         goToPlayStore()
+    }
+
+
+    private fun showBottomNavigation() {
+        binding.navView.show()
+    }
+
+    private fun hideBottomNavigation() {
+        binding.navView.hide()
+    }
+
+    private fun showArrowBack() {
+        binding.btnArrowBack.show()
+    }
+
+    private fun hideArrowBack() {
+        binding.btnArrowBack.hide()
     }
 
 }

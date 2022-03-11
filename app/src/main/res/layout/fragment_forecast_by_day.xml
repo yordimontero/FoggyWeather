@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:drawablePadding="4dp"
             android:fontFamily="sans-serif-light"
-            android:text="No forecast data available!"
+            android:text="Error fetching forecast data!"
             android:textSize="18sp"
             android:textStyle="bold"
             android:visibility="gone"

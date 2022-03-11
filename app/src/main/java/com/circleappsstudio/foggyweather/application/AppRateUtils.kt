@@ -12,6 +12,7 @@ class AppRateUtils @Inject constructor(
         /*
             Method to initialize AppRate.
          */
+
         // Production:
         /*AppRate.with(context)
             .setInstallDays(2)

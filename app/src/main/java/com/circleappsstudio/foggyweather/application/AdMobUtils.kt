@@ -1,6 +1,5 @@
 package com.circleappsstudio.foggyweather.application
 
-import android.app.Activity
 import android.content.Context
 import com.google.android.gms.ads.*
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -12,9 +11,9 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.suspendCancellableCoroutine
 
-class AdMobUtils @Inject constructor(@ApplicationContext val context: Context) {
-
-    private var mInterstitialAd: InterstitialAd? = null
+class AdMobUtils @Inject constructor(
+    @ApplicationContext val context: Context
+) {
 
     fun initAdMob() {
         /*
@@ -31,86 +30,33 @@ class AdMobUtils @Inject constructor(@ApplicationContext val context: Context) {
             context,
             "ca-app-pub-3940256099942544/2247696110"
         ).forNativeAd {
-                val styles = NativeTemplateStyle.Builder().build()
-                val template: TemplateView = templateView
-                template.setStyles(styles)
-                template.setNativeAd(it)
-            }.build()
+            val styles = NativeTemplateStyle.Builder().build()
+            val template: TemplateView = templateView
+            template.setStyles(styles)
+            template.setNativeAd(it)
+        }.build()
 
-        adLoader.loadAd(AdRequest.Builder().build())
-
-    }
-
-    fun loadBannerAdMob() : AdRequest {
-        /*
-            Método para cargar el anuncio Banner "BannerMain".
-            Retorna un AdRequest, el cual se utiliza para setearselo al XML del banner.
-        */
-        // ID Banner:
-        // ID Test Banner: ca-app-pub-3940256099942544/6300978111
-        return AdRequest.Builder().build()
-
-    }
-
-    /*fun showInterstitialAdMob(activity: Activity) {
-        /*
-            Método para cargar el anuncio Intersticial "Interstitial_Main".
-        */
-        // ID Interstitial:
-        // ID Test Interstitial: ca-app-pub-3940256099942544/1033173712
-
-        // Create Callback:
-
-
-        /*InterstitialAd.load(
-            context,
-            "ca-app-pub-3940256099942544/1033173712",
-            AdRequest.Builder().build(),
-            object : InterstitialAdLoadCallback() {
-                override fun onAdFailedToLoad(adError: LoadAdError) {
-                    mInterstitialAd = null
-                }
-
-                override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                    mInterstitialAd = interstitialAd
-                    mInterstitialAd?.show(activity)
-                }
-            })*/
-
-    }*/
-
-    /*@ExperimentalCoroutinesApi
-    suspend fun showInterstitialAdMob(activity: Activity): Boolean = suspendCancellableCoroutine { cont ->
-
-        val adRequest = AdRequest.Builder().build()
-
-        val loadCallback = object : InterstitialAdLoadCallback() {
-
-            override fun onAdLoaded(p0: InterstitialAd) {
-                super.onAdLoaded(p0)
-                cont.resume(true, null)
-            }
-
-            override fun onAdFailedToLoad(error: LoadAdError) {
-                super.onAdFailedToLoad(error)
-                cont.resume(false, null)
-            }
-
-        }
-
-        InterstitialAd.load(
-            context,
-            "ca-app-pub-3940256099942544/1033173712",
-            adRequest,
-            loadCallback
+        adLoader.loadAd(
+            AdRequest.Builder().build()
         )
 
-    }*/
+    }
+
+    fun buildAdRequest(): AdRequest {
+        /*
+            Method to build an AdRequest.
+        */
+        return AdRequest.Builder().build()
+    }
 
     @ExperimentalCoroutinesApi
-    suspend fun showInterstitialAdMob(): InterstitialAd? = suspendCancellableCoroutine { cont ->
-
-        val adRequest = AdRequest.Builder().build()
+    suspend fun showInterstitialAd(): InterstitialAd? = suspendCancellableCoroutine { cont ->
+        /*
+            Method to load an InterstitialAd.
+            It returns an InterstitialAd, that is used to show it in a View (Activity or Fragment).
+        */
+        // ID Banner: ...
+        // ID Test Banner: ca-app-pub-3940256099942544/1033173712
 
         val loadCallback = object : InterstitialAdLoadCallback() {
 
@@ -129,10 +75,21 @@ class AdMobUtils @Inject constructor(@ApplicationContext val context: Context) {
         InterstitialAd.load(
             context,
             "ca-app-pub-3940256099942544/1033173712",
-            adRequest,
+            buildAdRequest(),
             loadCallback
         )
 
+    }
+
+    fun showBannerAd(banner: AdView) {
+        /*
+            Method to show an BannerAd.
+        */
+        // ID Banner: ...
+        // ID Test Banner: ca-app-pub-3940256099942544/6300978111
+        banner.loadAd(
+            buildAdRequest()
+        )
     }
 
 }

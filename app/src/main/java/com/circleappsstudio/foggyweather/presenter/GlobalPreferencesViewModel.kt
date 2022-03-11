@@ -13,30 +13,30 @@ class GlobalPreferencesViewModel @Inject constructor(
     private val globalPreferences: GlobalPreferences
 ) : ViewModel() {
 
-    fun isRateAppDialogLaunched(): Boolean {
+    fun didRateAppDialogIsLaunched(): Boolean {
         /*
-            Method to check if rate app dialog was launched already or not.
+            Method to check if rate app dialog was already launched or not.
         */
-        return globalPreferences.isRateAppDialogLaunched()
+        return globalPreferences.didRateAppDialogIsLaunched()
     }
 
     fun setRateAppDialogLaunched() {
         /*
-            Method to put true when rate app dialog was launched already.
+            Method to put true when rate app dialog is already launched.
         */
         globalPreferences.setRateAppDialogLaunched()
     }
 
-    fun wereLocationPermissionsRequestedSingleTime(): Boolean {
+    fun didLocationPermissionsAreRequestedSingleTime(): Boolean {
         /*
             Method to check if location permission were requested for single time.
         */
-        return globalPreferences.wereLocationPermissionsRequestedSingleTime()
+        return globalPreferences.didLocationPermissionsAreRequestedSingleTime()
     }
 
     fun setLocationPermissionsRequestedSingleTime() {
         /*
-            Method to put true when location permission were requested for single time.
+            Method to put true when location permission are requested for single time.
         */
         globalPreferences.setLocationPermissionsRequestedSingleTime()
     }
@@ -50,7 +50,7 @@ class GlobalPreferencesViewModel @Inject constructor(
 
     fun setLastSearchedLocation(location: String) {
         /*
-            Method to set a last searched location.
+            Method to set the last searched location.
         */
         globalPreferences.setLastSearchedLocation(location)
     }

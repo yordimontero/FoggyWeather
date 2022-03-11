@@ -113,10 +113,24 @@ class MainActivity : AppCompatActivity(),
             Method to initialize AppRate.
         */
 
-        if (appRateUtilsViewModel.initAppRate() && !globalPreferencesViewModel.isRateAppDialogLaunched()) {
+        if (appRateUtilsViewModel.initAppRate() && !didRateAppDialogIsLaunched()) {
             showRateAppDialog()
         }
 
+    }
+
+    private fun didRateAppDialogIsLaunched(): Boolean {
+        /*
+            Method to check if rate app dialog was already launched or not.
+        */
+        return globalPreferencesViewModel.didRateAppDialogIsLaunched()
+    }
+
+    private fun setRateAppDialogLaunched() {
+        /*
+            Method to put true when rate app dialog is already launched.
+        */
+        globalPreferencesViewModel.setRateAppDialogLaunched()
     }
 
     private fun goToPlayStore() {
@@ -141,7 +155,7 @@ class MainActivity : AppCompatActivity(),
             this
         )
 
-        globalPreferencesViewModel.setRateAppDialogLaunched()
+        setRateAppDialogLaunched()
     }
 
     override fun confirmationDialogPositiveButtonClicked() {

@@ -105,7 +105,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                     if (it.length >= 3) {
 
                         coordinates = it
-                        setLastSearchedLocationPreference(it)
+                        setLastLocationSearchedPreference(it)
                         checkInternetToGetWeatherInfoObserver()
 
                         clearSearchView()
@@ -257,7 +257,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                                 If there's some last location searched, coordinates will be the that location.
                             */
                             coordinates = "${resultEmitted.data[0]},${resultEmitted.data[1]}"
-                            setLastSearchedLocationPreference(coordinates)
+                            setLastLocationSearchedPreference(coordinates)
                         }
 
                         checkInternetToGetWeatherInfoObserver()
@@ -438,12 +438,12 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         /*
             Method that request location permission for single time.
         */
-        val result = globalPreferencesViewModel.wereLocationPermissionsRequestedSingleTime()
+        val result = didLocationPermissionsAreRequestedSingleTimePreference()
 
         if (!result) {
             // If location permission are not requested for single time yet, requests it.
             requestLocationPermissions()
-            setLocationPermissionsRequestedSingleTime()
+            setLocationPermissionsRequestedSingleTimePreference()
         }
 
     }
@@ -541,30 +541,37 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
     }
 
-    private fun setLocationPermissionsRequestedSingleTime() {
+    private fun didLocationPermissionsAreRequestedSingleTimePreference(): Boolean {
         /*
-            Method to put true when location permission were requested for single time in SharedPreferences.
+            Method to check if location permission were requested for single time.
+        */
+        return globalPreferencesViewModel.didLocationPermissionsAreRequestedSingleTime()
+    }
+
+    private fun setLocationPermissionsRequestedSingleTimePreference() {
+        /*
+            Method to put true when location permission are requested for single time.
         */
         globalPreferencesViewModel.setLocationPermissionsRequestedSingleTime()
     }
 
     private fun getLastSearchedLocationPreference(): String? {
         /*
-            Method to get the last location searched from SharedPreferences.
+            Method to get the last searched location.
         */
         return globalPreferencesViewModel.getLastSearchedLocation()
     }
 
-    private fun setLastSearchedLocationPreference(location: String) {
+    private fun setLastLocationSearchedPreference(location: String) {
         /*
-            Method to set a searched location in SharedPreferences.
+            Method to set the last searched location.
         */
         return globalPreferencesViewModel.setLastSearchedLocation(location)
     }
 
     private fun deleteLastSearchedLocationPreference() {
         /*
-            Method to delete the searched location from SharedPreferences.
+            Method to delete the last searched location.
         */
         globalPreferencesViewModel.deleteLastSearchedLocation()
     }

@@ -1,7 +1,5 @@
 package com.circleappsstudio.foggyweather.presenter
 
-import android.app.Activity
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
@@ -9,6 +7,7 @@ import com.circleappsstudio.foggyweather.application.AdMobUtils
 import com.circleappsstudio.foggyweather.core.Result
 import com.google.android.ads.nativetemplates.TemplateView
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -34,15 +33,20 @@ class AdMobUtilsViewModel @Inject constructor(
         adMobUtils.loadNativeAd(templateView)
     }
 
-    fun loadBannerAdMob(): AdRequest = adMobUtils.loadBannerAdMob()
-
-    //fun showInterstitialAdMob(activity: Activity) = adMobUtils.showInterstitialAdMob(activity)
+    fun buildAdRequest(): AdRequest {
+        /*
+            Method to build an AdRequest.
+        */
+        return adMobUtils.buildAdRequest()
+    }
 
     @ExperimentalCoroutinesApi
-    fun showInterstitialAdMob() = liveData(
+    fun showInterstitialAd() = liveData(
         viewModelScope.coroutineContext + Dispatchers.Main
     ) {
-
+        /*
+            Method to load an InterstitialAd.
+        */
         try {
 
             emit(
@@ -51,7 +55,7 @@ class AdMobUtilsViewModel @Inject constructor(
 
             emit(
                 Result.Success(
-                    adMobUtils.showInterstitialAdMob()
+                    adMobUtils.showInterstitialAd()
                 )
             )
 
@@ -63,6 +67,13 @@ class AdMobUtilsViewModel @Inject constructor(
 
         }
 
+    }
+
+    fun showBannerAd(banner: AdView) {
+        /*
+            Method to show an BannerAd.
+        */
+        adMobUtils.showBannerAd(banner)
     }
 
 }

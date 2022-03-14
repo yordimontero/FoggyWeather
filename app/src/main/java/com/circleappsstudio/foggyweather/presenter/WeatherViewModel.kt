@@ -13,6 +13,7 @@ import javax.inject.Inject
 
 /*
     @HiltViewModel creates automatically the ViewModel Dependency without create it in AppModule manually.
+    @Inject constructor(...) injects WeatherRepository Interface.
 */
 @HiltViewModel
 class WeatherViewModel @Inject constructor(
@@ -21,9 +22,6 @@ class WeatherViewModel @Inject constructor(
 
     fun fetchAllWeatherData(
         location: String,
-        airQuality: Boolean,
-        days: Int,
-        alerts: Boolean,
         date: String
     ) = liveData(viewModelScope.coroutineContext + Dispatchers.Main) {
         /*
@@ -32,36 +30,41 @@ class WeatherViewModel @Inject constructor(
             t2 = getForecast.
             t3 = getAstronomy.
         */
-        try {
+
+        kotlin.runCatching {
 
             emit(
                 Result.Loading()
             )
 
-            emit(
-                Result.Success(
-                    NTuple3(
-                        t1 = repository.getCurrentWeather(
-                            location,
-                            airQuality
-                        ),
-                        t2 = repository.getForecast(
-                            location,
-                            days,
-                            airQuality,
-                            alerts
-                        ),
-                        t3 = repository.getAstronomy(
-                            location, date
-                        )
-                    )
+            NTuple3(
+                t1 = repository.getCurrentWeather(
+                    location
+                ),
+
+                t2 = repository.getForecast(
+                    location
+                ),
+
+                t3 = repository.getAstronomy(
+                    location, date
                 )
             )
 
-        } catch (e: Exception) {
+        }.onSuccess { weatherData ->
 
             emit(
-                Result.Failure(e)
+                Result.Success(
+                    weatherData
+                )
+            )
+
+        }.onFailure { throwable ->
+
+            emit(
+                Result.Failure(
+                    Exception(throwable.message)
+                )
             )
 
         }
@@ -72,7 +75,7 @@ class WeatherViewModel @Inject constructor(
         location: String
     ) = liveData(viewModelScope.coroutineContext + Dispatchers.Main) {
         /*
-            Method to fetch Autocomplete locations data.
+            Method to fetch autocomplete locations data.
         */
         kotlin.runCatching {
 

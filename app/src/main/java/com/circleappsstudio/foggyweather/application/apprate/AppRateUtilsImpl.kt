@@ -1,14 +1,15 @@
-package com.circleappsstudio.foggyweather.application
+package com.circleappsstudio.foggyweather.application.apprate
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import hotchemi.android.rate.AppRate
 import javax.inject.Inject
 
-class AppRateUtils @Inject constructor(
+class AppRateUtilsImpl @Inject constructor(
     @ApplicationContext private val context: Context
-) {
-    fun initAppRate(): Boolean {
+): AppRateUtils {
+
+    override fun initAppRate(): Boolean {
         /*
             Method to initialize AppRate.
          */
@@ -30,4 +31,5 @@ class AppRateUtils @Inject constructor(
         return AppRate.with(context).shouldShowRateDialog()
 
     }
+
 }

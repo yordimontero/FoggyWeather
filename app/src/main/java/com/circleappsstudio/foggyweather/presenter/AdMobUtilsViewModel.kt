@@ -3,7 +3,7 @@ package com.circleappsstudio.foggyweather.presenter
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
-import com.circleappsstudio.foggyweather.application.AdMobUtils
+import com.circleappsstudio.foggyweather.application.admob.AdMobUtils
 import com.circleappsstudio.foggyweather.core.Result
 import com.google.android.ads.nativetemplates.TemplateView
 import com.google.android.gms.ads.AdRequest
@@ -14,6 +14,10 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.lang.Exception
 import javax.inject.Inject
 
+/*
+    @HiltViewModel creates automatically the ViewModel Dependency without create it in AppModule manually.
+    @Inject constructor(...) injects AdMobUtils Interface.
+*/
 @HiltViewModel
 class AdMobUtilsViewModel @Inject constructor(
     private val adMobUtils: AdMobUtils
@@ -33,13 +37,6 @@ class AdMobUtilsViewModel @Inject constructor(
         adMobUtils.loadNativeAd(templateView)
     }
 
-    fun buildAdRequest(): AdRequest {
-        /*
-            Method to build an AdRequest.
-        */
-        return adMobUtils.buildAdRequest()
-    }
-
     @ExperimentalCoroutinesApi
     fun showInterstitialAd() = liveData(
         viewModelScope.coroutineContext + Dispatchers.Main
@@ -47,7 +44,34 @@ class AdMobUtilsViewModel @Inject constructor(
         /*
             Method to load an InterstitialAd.
         */
-        try {
+
+        kotlin.runCatching {
+
+            emit(
+                Result.Loading()
+            )
+
+            adMobUtils.showInterstitialAd()
+
+        }.onSuccess { interstitialAd ->
+
+            emit(
+                Result.Success(interstitialAd)
+            )
+
+        }.onFailure { throwable ->
+
+            emit(
+                Result.Failure(
+                    Exception(
+                        throwable.message
+                    )
+                )
+            )
+
+        }
+
+        /*try {
 
             emit(
                 Result.Loading()
@@ -65,7 +89,7 @@ class AdMobUtilsViewModel @Inject constructor(
                 Result.Failure(e)
             )
 
-        }
+        }*/
 
     }
 

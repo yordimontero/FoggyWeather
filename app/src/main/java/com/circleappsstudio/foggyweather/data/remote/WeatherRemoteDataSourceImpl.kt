@@ -15,35 +15,31 @@ class WeatherRemoteDataSourceImpl @Inject constructor(
 ) : WeatherRemoteDataSource {
 
     override suspend fun getCurrentWeather(
-        location: String,
-        airQuality: Boolean
+        location: String
     ): CurrentWeatherResults = withContext(Dispatchers.IO) {
         /*
-            Method to get Current Weather data from WebService.
+            Method to get current weather data from WebService.
         */
         webService.getCurrentWeather(
             AppConstants.API_KEY,
             location,
-            airQuality
+            airQuality = false
         )
 
     }
 
     override suspend fun getForecast(
-        location: String,
-        days: Int,
-        airQuality: Boolean,
-        alerts: Boolean
+        location: String
     ): ForecastResults = withContext(Dispatchers.IO) {
         /*
-            Method to get Forecast data from WebService.
+            Method to get forecast data from WebService.
         */
         webService.getForecast(
             AppConstants.API_KEY,
             location,
-            days,
-            airQuality,
-            alerts
+            days = 3,
+            airQuality = false,
+            alerts = false
         )
 
     }
@@ -53,7 +49,7 @@ class WeatherRemoteDataSourceImpl @Inject constructor(
         date: String
     ): AstronomyResults = withContext(Dispatchers.IO) {
         /*
-            Method to get Astronomy data from WebService.
+            Method to get astronomy data from WebService.
         */
         webService.getAstronomy(
             AppConstants.API_KEY,
@@ -67,7 +63,7 @@ class WeatherRemoteDataSourceImpl @Inject constructor(
         location: String
     ): List<Locations> = withContext(Dispatchers.IO) {
         /*
-            Method to get Autocomplete locations data from WebService.
+            Method to get autocomplete locations data from WebService.
         */
         webService.getAutocompleteResults(
             AppConstants.API_KEY,

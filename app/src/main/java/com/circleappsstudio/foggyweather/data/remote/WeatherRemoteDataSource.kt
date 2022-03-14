@@ -8,15 +8,11 @@ import com.circleappsstudio.foggyweather.data.model.Locations
 interface WeatherRemoteDataSource {
 
     suspend fun getCurrentWeather(
-        location: String,
-        airQuality: Boolean
+        location: String
     ): CurrentWeatherResults
 
     suspend fun getForecast(
-        location: String,
-        days: Int,
-        airQuality: Boolean,
-        alerts: Boolean
+        location: String
     ): ForecastResults
 
     suspend fun getAstronomy(

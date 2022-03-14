@@ -1,4 +1,4 @@
-package com.circleappsstudio.foggyweather.application
+package com.circleappsstudio.foggyweather.application.admob
 
 import android.content.Context
 import com.google.android.gms.ads.*
@@ -11,18 +11,18 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.suspendCancellableCoroutine
 
-class AdMobUtils @Inject constructor(
+class AdMobUtilsImpl @Inject constructor(
     @ApplicationContext val context: Context
-) {
+): AdMobUtils {
 
-    fun initAdMob() {
+    override fun initAdMob() {
         /*
             Method to initialize AdMob.
         */
         MobileAds.initialize(context)
     }
 
-    fun loadNativeAd(templateView: TemplateView) {
+    override fun loadNativeAd(templateView: TemplateView) {
         /*
             Method to load a NativeAd.
         */
@@ -42,7 +42,7 @@ class AdMobUtils @Inject constructor(
 
     }
 
-    fun buildAdRequest(): AdRequest {
+    override fun buildAdRequest(): AdRequest {
         /*
             Method to build an AdRequest.
         */
@@ -50,7 +50,7 @@ class AdMobUtils @Inject constructor(
     }
 
     @ExperimentalCoroutinesApi
-    suspend fun showInterstitialAd(): InterstitialAd? = suspendCancellableCoroutine { cont ->
+    override suspend fun showInterstitialAd(): InterstitialAd? = suspendCancellableCoroutine { cont ->
         /*
             Method to load an InterstitialAd.
             It returns an InterstitialAd, that is used to show it in a View (Activity or Fragment).
@@ -81,7 +81,7 @@ class AdMobUtils @Inject constructor(
 
     }
 
-    fun showBannerAd(banner: AdView) {
+    override fun showBannerAd(banner: AdView) {
         /*
             Method to show an BannerAd.
         */

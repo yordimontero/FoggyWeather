@@ -2,13 +2,13 @@ package com.circleappsstudio.foggyweather.core.time
 
 import android.content.Context
 import android.text.format.DateFormat
-import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.*
 
 fun splitDate(date: String): String {
     /*
         Method to split date of hour from API field. Example: 2022-02-09 19:45
+        Result: 2022-02-09.
     */
     val splitDate = date.split(" ")
     return splitDate[1]
@@ -17,6 +17,7 @@ fun splitDate(date: String): String {
 fun splitHour(hour: String, position: Int): String {
     /*
         Method to split fetched hour from API in hours and minutes. Example: 19:45
+        Result: [1]19 / [2]45.
     */
     val splitHour = hour.split(":")
     return splitHour[position]
@@ -40,7 +41,7 @@ fun getCurrentHourFormatted(context: Context): String {
 
 fun formatHour(hour: String, minute: String, context: Context): String {
     /*
-        Method to get an hour an format it in 12 h or 24 h.
+        Method to get an hour and format it in 12 h or 24 h.
     */
     val formatter12h = SimpleDateFormat("hh:mm a", Locale.US)
     val formatter24h = SimpleDateFormat("HH:mm", Locale.US)
@@ -209,10 +210,13 @@ fun getDateWithMonthName(date: Date): String {
     return dateFormat.format(date)
 }
 
-fun convertStringToDate(dateString: String): Date {
-    val format = SimpleDateFormat("yyyy-MM-dd")
+fun convertStringToDate(dateString: String): Date? {
+    /*
+         Method to convert a String value in Date value.
+    */
+    val format = SimpleDateFormat(
+        "yyyy-MM-dd", Locale.ENGLISH
+    )
 
-    val date = format.parse(dateString)
-    Log.wtf("date", "date: $date")
-    return date
+    return format.parse(dateString)
 }

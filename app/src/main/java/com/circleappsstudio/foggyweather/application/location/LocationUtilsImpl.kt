@@ -1,4 +1,4 @@
-package com.circleappsstudio.foggyweather.repository.location
+package com.circleappsstudio.foggyweather.application.location
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -7,21 +7,20 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import kotlinx.coroutines.Dispatchers
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.coroutines.resume
 
-class LocationUtils @Inject constructor() {
+class LocationUtilsImpl @Inject constructor(): LocationUtils {
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var huaweiFusedLocationProviderClient: com.huawei.hms.location.FusedLocationProviderClient
 
     @ExperimentalCoroutinesApi
     @SuppressLint("MissingPermission")
-    suspend fun getLocation(context: Context): List<String> = suspendCancellableCoroutine { cont ->
+    override suspend fun getLocation(context: Context): List<String> = suspendCancellableCoroutine { cont ->
         /*
             Method to get current location (latitude & longitude) from GPS.
         */
@@ -32,8 +31,7 @@ class LocationUtils @Inject constructor() {
 
         // Check is current device has Google Play Services.
         if (GoogleApiAvailability.getInstance()
-                .isGooglePlayServicesAvailable(context) == ConnectionResult.SUCCESS
-        ) {
+                .isGooglePlayServicesAvailable(context) == ConnectionResult.SUCCESS) {
             // Google Play Services are available.
 
             fusedLocationProviderClient =
@@ -46,6 +44,7 @@ class LocationUtils @Inject constructor() {
                 task.addOnSuccessListener { location ->
 
                     if (location != null) {
+
                         latitude = location.latitude.toString()
                         longitude = location.longitude.toString()
 
@@ -77,6 +76,7 @@ class LocationUtils @Inject constructor() {
                 task.addOnSuccessListener { location ->
 
                     if (location != null) {
+
                         latitude = location.latitude.toString()
                         longitude = location.longitude.toString()
 

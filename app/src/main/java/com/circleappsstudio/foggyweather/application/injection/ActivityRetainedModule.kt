@@ -1,5 +1,13 @@
 package com.circleappsstudio.foggyweather.application.injection
 
+import com.circleappsstudio.foggyweather.application.admob.AdMobUtils
+import com.circleappsstudio.foggyweather.application.admob.AdMobUtilsImpl
+import com.circleappsstudio.foggyweather.application.apprate.AppRateUtils
+import com.circleappsstudio.foggyweather.application.apprate.AppRateUtilsImpl
+import com.circleappsstudio.foggyweather.application.location.LocationUtils
+import com.circleappsstudio.foggyweather.application.location.LocationUtilsImpl
+import com.circleappsstudio.foggyweather.application.preferences.GlobalPreferences
+import com.circleappsstudio.foggyweather.application.preferences.GlobalPreferencesImpl
 import com.circleappsstudio.foggyweather.data.remote.WeatherRemoteDataSource
 import com.circleappsstudio.foggyweather.data.remote.WeatherRemoteDataSourceImpl
 import com.circleappsstudio.foggyweather.repository.location.LocationRepository
@@ -45,5 +53,37 @@ abstract class ActivityRetainedModule {
         */
         dataSource: WeatherRemoteDataSourceImpl
     ): WeatherRemoteDataSource
+
+    @Binds
+    abstract fun bindAdMobUtilsImpl(
+        /*
+            Bind AdMobUtilsImpl with their Interface (AdMobUtils) and Provide this Interface.
+        */
+        adMobUtils: AdMobUtilsImpl
+    ): AdMobUtils
+
+    @Binds
+    abstract fun bindAppRateUtilsImpl(
+        /*
+            Bind AppRateUtilsImpl with their Interface (AppRateUtils) and Provide this Interface.
+        */
+        appRateUtils: AppRateUtilsImpl
+    ): AppRateUtils
+
+    @Binds
+    abstract fun bindLocationUtilsImpl(
+        /*
+            Bind LocationUtilsImpl with their Interface (LocationUtils) and Provide this Interface.
+        */
+        locationUtils: LocationUtilsImpl
+    ): LocationUtils
+
+    @Binds
+    abstract fun bindGlobalPreferencesImpl(
+        /*
+            Bind GlobalPreferencesImpl with their Interface (GlobalPreferences) and Provide this Interface.
+        */
+        globalPreferences: GlobalPreferencesImpl
+    ): GlobalPreferences
 
 }

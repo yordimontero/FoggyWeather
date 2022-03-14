@@ -6,12 +6,12 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
+import com.circleappsstudio.foggyweather.databinding.CustomAppRateDialogBinding
 import com.circleappsstudio.foggyweather.databinding.CustomInternetCheckDialogBinding
-import com.circleappsstudio.foggyweather.databinding.CustomRateAppDialogBinding
 
-interface OnInternetCheckDialogButtonClickListener {
+interface OnInternetCheckDialogClickListener {
     /*
-        Method that controls InternetCheckDialog UI interactions.
+        Method that controls internetCheckDialog UI interactions.
     */
     fun internetCheckDialogPositiveButtonClicked()
 }
@@ -19,7 +19,7 @@ interface OnInternetCheckDialogButtonClickListener {
 fun internetCheckDialog(
     activity: Activity,
     context: Context,
-    dialogButtonListener: OnInternetCheckDialogButtonClickListener
+    dialogListener: OnInternetCheckDialogClickListener
 ) {
     /*
         Method to show a dialog when there's not internet connection.
@@ -43,29 +43,30 @@ fun internetCheckDialog(
     // Set Listener:
     binding.btnTryAgain.setOnClickListener {
         // Close dialog:
+        dialogListener.internetCheckDialogPositiveButtonClicked()
         dialogInstance.dismiss()
-        dialogButtonListener.internetCheckDialogPositiveButtonClicked()
     }
 
 }
 
-interface OnConfirmationDialogButtonClickListener {
+interface OnConfirmationDialogClickListener {
     /*
-        Method that controls ConfirmationDialog UI interactions.
+        Method that controls confirmation dialogs UI interactions.
     */
     fun confirmationDialogPositiveButtonClicked()
 }
 
-fun rateAppDialog(
+fun appRateDialog(
     activity: Activity,
     context: Context,
-    dialogButtonListener: OnConfirmationDialogButtonClickListener
+    dialogListener: OnConfirmationDialogClickListener
 ) {
     /*
-        Method to show a confirmation dialog (app rate).
+        Method to show a App Rate dialog.
     */
+
     // Inflate the dialog as custom view:
-    val binding = CustomRateAppDialogBinding.inflate(LayoutInflater.from(context))
+    val binding = CustomAppRateDialogBinding.inflate(LayoutInflater.from(context))
 
     // AlertDialogBuilder:
     val dialogBuilder = AlertDialog.Builder(activity).setView(binding.root)
@@ -82,7 +83,7 @@ fun rateAppDialog(
     // Set Listener:
     binding.btnConfirm.setOnClickListener {
         // Close dialog:
-        dialogButtonListener.confirmationDialogPositiveButtonClicked()
+        dialogListener.confirmationDialogPositiveButtonClicked()
         dialogInstance.dismiss()
     }
 

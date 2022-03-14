@@ -10,8 +10,8 @@ import com.circleappsstudio.foggyweather.core.BaseViewHolder
 import com.circleappsstudio.foggyweather.core.time.formatHour
 import com.circleappsstudio.foggyweather.core.time.splitDate
 import com.circleappsstudio.foggyweather.core.time.splitHour
-import com.circleappsstudio.foggyweather.core.ui.changeForecastByHourCardViewColor
-import com.circleappsstudio.foggyweather.core.ui.changeForecastByHourUnselectedCardViewColor
+import com.circleappsstudio.foggyweather.core.ui.changeForecastCardViewColor
+import com.circleappsstudio.foggyweather.core.ui.changeUnselectedForecastCardViewColor
 import com.circleappsstudio.foggyweather.data.model.Hour
 import com.circleappsstudio.foggyweather.databinding.ForecastItemViewBinding
 
@@ -45,7 +45,7 @@ class ForecastByHourAdapter(
 
                 if (currentHour.toInt() == splitHour) {
 
-                    changeForecastByHourCardViewColor(
+                    changeForecastCardViewColor(
                         context = context,
                         primaryCardView = holder.binding.primaryCardView,
                         secondaryCardView = holder.binding.secondaryCardView,
@@ -56,7 +56,7 @@ class ForecastByHourAdapter(
 
                 } else {
 
-                    changeForecastByHourUnselectedCardViewColor(
+                    changeUnselectedForecastCardViewColor(
                         context = context,
                         primaryCardView = holder.binding.primaryCardView,
                         secondaryCardView = holder.binding.secondaryCardView,

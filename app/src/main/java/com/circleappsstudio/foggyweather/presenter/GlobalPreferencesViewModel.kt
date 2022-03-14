@@ -1,12 +1,13 @@
 package com.circleappsstudio.foggyweather.presenter
 
 import androidx.lifecycle.ViewModel
-import com.circleappsstudio.foggyweather.application.GlobalPreferences
+import com.circleappsstudio.foggyweather.application.preferences.GlobalPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 /*
     @HiltViewModel creates automatically the ViewModel Dependency without create it in AppModule manually.
+    @Inject constructor(...) injects GlobalPreferences Interface.
 */
 @HiltViewModel
 class GlobalPreferencesViewModel @Inject constructor(

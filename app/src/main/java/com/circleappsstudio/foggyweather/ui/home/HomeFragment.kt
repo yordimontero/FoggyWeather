@@ -13,7 +13,7 @@ import com.circleappsstudio.foggyweather.application.AppConstants
 import com.circleappsstudio.foggyweather.core.*
 import com.circleappsstudio.foggyweather.core.permissions.checkIfLocationPermissionsAreGranted
 import com.circleappsstudio.foggyweather.core.time.*
-import com.circleappsstudio.foggyweather.core.ui.customdialogs.OnInternetCheckDialogButtonClickListener
+import com.circleappsstudio.foggyweather.core.ui.customdialogs.OnInternetCheckDialogClickListener
 import com.circleappsstudio.foggyweather.core.ui.customdialogs.internetCheckDialog
 import com.circleappsstudio.foggyweather.data.model.Locations
 import com.circleappsstudio.foggyweather.databinding.FragmentHomeBinding
@@ -30,14 +30,16 @@ import com.circleappsstudio.foggyweather.core.ui.hide
 import com.circleappsstudio.foggyweather.core.ui.hideKeyboard
 import com.circleappsstudio.foggyweather.core.ui.show
 import com.circleappsstudio.foggyweather.core.ui.showToast
+import com.circleappsstudio.foggyweather.data.model.ForecastByDay
 import com.circleappsstudio.foggyweather.data.model.ForecastDay
+import java.io.Serializable
 import java.util.*
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home),
     Forecast3DaysAdapter.OnForecastDayClickListener,
     AutocompleteAdapter.OnLocationClickListener,
-    OnInternetCheckDialogButtonClickListener {
+    OnInternetCheckDialogClickListener{
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var navController: NavController
@@ -175,9 +177,6 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
                             fetchAllWeatherDataObserver(
                                 location = coordinates,
-                                airQuality = false,
-                                days = 3,
-                                alerts = false,
                                 date = currentDate
                             )
 
@@ -283,16 +282,13 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
     private fun fetchAllWeatherDataObserver(
         location: String,
-        airQuality: Boolean,
-        days: Int,
-        alerts: Boolean,
         date: String
     ) {
         /*
             Method to fetch all weather data.
         */
         weatherViewModel.fetchAllWeatherData(
-            location, airQuality, days, alerts, date
+            location, date
         ).observe(viewLifecycleOwner, Observer { resultEmitted ->
 
             when (resultEmitted) {
@@ -358,7 +354,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
     private fun fetchAutocompleteResults(location: String) {
         /*
-            Method to fetch Autocomplete locations data.
+            Method to fetch autocomplete locations data.
         */
         weatherViewModel.fetchAutocompleteResults(
             location
@@ -483,7 +479,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
     private fun checkIfLocationPermissionsAreGranted() {
         /*
-            Method to check if location permissions are granted.
+            Method to check if location permission (GPS) are granted.
         */
         if (checkIfLocationPermissionsAreGranted(requireContext())) {
 
@@ -769,6 +765,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                 "date" to date
             )
         )
+
     }
 
     private fun clearSearchView() {

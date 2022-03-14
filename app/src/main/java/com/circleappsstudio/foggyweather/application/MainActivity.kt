@@ -12,8 +12,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.circleappsstudio.foggyweather.R
-import com.circleappsstudio.foggyweather.core.ui.customdialogs.OnConfirmationDialogButtonClickListener
-import com.circleappsstudio.foggyweather.core.ui.customdialogs.rateAppDialog
+import com.circleappsstudio.foggyweather.core.ui.customdialogs.OnConfirmationDialogClickListener
+import com.circleappsstudio.foggyweather.core.ui.customdialogs.appRateDialog
 import com.circleappsstudio.foggyweather.core.ui.hide
 import com.circleappsstudio.foggyweather.core.ui.show
 import com.circleappsstudio.foggyweather.databinding.ActivityMainBinding
@@ -25,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(),
     View.OnClickListener,
-    OnConfirmationDialogButtonClickListener {
+    OnConfirmationDialogClickListener {
 
     private lateinit var navHostFragment: NavHostFragment
     private lateinit var navController: NavController
@@ -40,15 +40,15 @@ class MainActivity : AppCompatActivity(),
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        navController = navHostFragment.navController
-
         val toolbar = binding.toolbar
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        binding.btnArrowBack.setOnClickListener(this)
+        navHostFragment = supportFragmentManager.findFragmentById(
+            R.id.nav_host_fragment
+        ) as NavHostFragment
+
+        navController = navHostFragment.navController
 
         val appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -59,9 +59,12 @@ class MainActivity : AppCompatActivity(),
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.navView.setupWithNavController(navController)
 
+        binding.btnArrowBack.setOnClickListener(this)
+
         setBottomNavigationVisibility()
 
         initAdMob()
+
         initAppRate()
 
     }
@@ -75,7 +78,9 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun setBottomNavigationVisibility() {
-
+        /*
+            Method to change BottomNavigationView visibility.
+        */
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
 
             when (destination.id) {
@@ -112,7 +117,6 @@ class MainActivity : AppCompatActivity(),
         /*
             Method to initialize AppRate.
         */
-
         if (appRateUtilsViewModel.initAppRate() && !didRateAppDialogIsLaunched()) {
             showRateAppDialog()
         }
@@ -145,11 +149,39 @@ class MainActivity : AppCompatActivity(),
         startActivity(intent)
     }
 
+    private fun showBottomNavigation() {
+        /*
+            Method to show BottomNavigation.
+        */
+        binding.navView.show()
+    }
+
+    private fun hideBottomNavigation() {
+        /*
+            Method to hide BottomNavigation.
+        */
+        binding.navView.hide()
+    }
+
+    private fun showArrowBack() {
+        /*
+            Method to show ArrowBack.
+        */
+        binding.btnArrowBack.show()
+    }
+
+    private fun hideArrowBack() {
+        /*
+            Method to hide ArrowBack.
+        */
+        binding.btnArrowBack.hide()
+    }
+
     private fun showRateAppDialog() {
         /*
             Method to show rateAppDialog.
         */
-        rateAppDialog(
+        appRateDialog(
             this,
             this,
             this
@@ -163,23 +195,6 @@ class MainActivity : AppCompatActivity(),
             Method that controls positive button of showAppRateDialog.
         */
         goToPlayStore()
-    }
-
-
-    private fun showBottomNavigation() {
-        binding.navView.show()
-    }
-
-    private fun hideBottomNavigation() {
-        binding.navView.hide()
-    }
-
-    private fun showArrowBack() {
-        binding.btnArrowBack.show()
-    }
-
-    private fun hideArrowBack() {
-        binding.btnArrowBack.hide()
     }
 
 }

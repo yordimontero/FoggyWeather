@@ -2,7 +2,6 @@ package com.circleappsstudio.foggyweather.repository.weather
 
 import com.circleappsstudio.foggyweather.data.model.*
 import com.circleappsstudio.foggyweather.data.remote.WeatherRemoteDataSource
-import com.circleappsstudio.foggyweather.data.remote.WeatherRemoteDataSourceImpl
 import javax.inject.Inject
 
 /*
@@ -14,27 +13,23 @@ class WeatherRepositoryImpl @Inject constructor(
 
     override suspend fun getCurrentWeather(
         /*
-            Method to get Current Weather data.
+            Method to get current weather data.
         */
-        location: String,
-        airQuality: Boolean
-    ): CurrentWeatherResults = dataSource.getCurrentWeather(location, airQuality)
+        location: String
+    ): CurrentWeatherResults = dataSource.getCurrentWeather(location)
 
     override suspend fun getForecast(
         /*
-            Method to get Forecast data.
+            Method to get forecast data.
         */
-        location: String,
-        days: Int,
-        airQuality: Boolean,
-        alerts: Boolean
+        location: String
     ): ForecastResults = dataSource.getForecast(
-        location, days, airQuality, alerts
+        location
     )
 
     override suspend fun getAstronomy(
         /*
-            Method to get Astronomy data.
+            Method to get astronomy data.
         */
         location: String,
         date: String
@@ -45,7 +40,7 @@ class WeatherRepositoryImpl @Inject constructor(
 
     override suspend fun getAutocompleteResults(
         /*
-            Method to get Autocomplete locations data.
+            Method to get autocomplete locations data.
         */
         location: String
     ): List<Locations> = dataSource.getAutocompleteResults(

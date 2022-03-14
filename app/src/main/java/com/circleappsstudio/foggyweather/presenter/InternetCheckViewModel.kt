@@ -10,24 +10,34 @@ import java.lang.Exception
 
 class InternetCheckViewModel : ViewModel() {
 
-    fun checkInternet() = liveData(viewModelScope.coroutineContext + Dispatchers.Main) {
+    fun checkInternet() = liveData(
+        viewModelScope.coroutineContext + Dispatchers.Main
+    ) {
         /*
             Method to check if there's internet connection.
         */
-        try {
+        kotlin.runCatching {
 
             emit(
                 Result.Loading()
             )
 
+            InternetCheck.isNetworkAvailable()
+
+        }.onSuccess { isThereInternet ->
+
             emit(
-                Result.Success(InternetCheck.isNetworkAvailable())
+                Result.Success(isThereInternet)
             )
 
-        } catch (e: Exception) {
+        }.onFailure { throwable ->
 
             emit(
-                Result.Failure(e)
+                Result.Failure(
+                    Exception(
+                        throwable.message
+                    )
+                )
             )
 
         }

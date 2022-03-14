@@ -1,6 +1,7 @@
 package com.circleappsstudio.foggyweather.ui.forecastbyday
 
 import android.os.Bundle
+import android.os.Parcelable
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -11,10 +12,11 @@ import com.circleappsstudio.foggyweather.core.Result
 import androidx.lifecycle.Observer
 import com.circleappsstudio.foggyweather.core.time.convertStringToDate
 import com.circleappsstudio.foggyweather.core.time.getDateWithMonthName
-import com.circleappsstudio.foggyweather.core.ui.customdialogs.OnInternetCheckDialogButtonClickListener
+import com.circleappsstudio.foggyweather.core.ui.customdialogs.OnInternetCheckDialogClickListener
 import com.circleappsstudio.foggyweather.core.ui.customdialogs.internetCheckDialog
 import com.circleappsstudio.foggyweather.core.ui.hide
 import com.circleappsstudio.foggyweather.core.ui.show
+import com.circleappsstudio.foggyweather.data.model.ForecastByDay
 import com.circleappsstudio.foggyweather.data.model.ForecastDay
 import com.circleappsstudio.foggyweather.databinding.FragmentForecastByDayBinding
 import com.circleappsstudio.foggyweather.presenter.AdMobUtilsViewModel
@@ -22,21 +24,22 @@ import com.circleappsstudio.foggyweather.presenter.InternetCheckViewModel
 import com.circleappsstudio.foggyweather.ui.forecastbyday.adapter.ForecastByDayAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import java.io.Serializable
 import java.util.*
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class ForecastByDayFragment: Fragment(R.layout.fragment_forecast_by_day),
-    OnInternetCheckDialogButtonClickListener {
+    OnInternetCheckDialogClickListener {
 
     private lateinit var binding: FragmentForecastByDayBinding
     private lateinit var navController: NavController
 
     private val internetCheckViewModel by viewModels<InternetCheckViewModel>()
-    private val adMobViewModel by viewModels<AdMobUtilsViewModel>()
+    private val adMobUtilsViewModel by viewModels<AdMobUtilsViewModel>()
     
     private var forecastDayList: List<ForecastDay>? = listOf()
-    private var forecast3DaysAdapterPosition: Int = 0
+    private var forecastAdapterPosition: Int = 0
 
     private var dateString: String = ""
     private lateinit var date: Date
@@ -66,12 +69,7 @@ class ForecastByDayFragment: Fragment(R.layout.fragment_forecast_by_day),
                     is Result.Success -> {
 
                         if (resultEmitted.data) {
-
                             showInterstitialAdObserver()
-                            showBannerAd()
-                            getBundle()
-                            checkIfForecastDayListIsNullOrEmpty()
-
                         } else {
                             showInternetCheckDialog()
                         }
@@ -100,9 +98,14 @@ class ForecastByDayFragment: Fragment(R.layout.fragment_forecast_by_day),
                 forecastDayList = listOf()
             }
 
-            forecast3DaysAdapterPosition = bundle.getInt("position")
+            forecastAdapterPosition = bundle.getInt("position")
 
             dateString = bundle.getString("date").toString()
+
+            // Testing:
+            bundle.remove("forecastList")
+            bundle.remove("position")
+            bundle.remove("date")
 
         }
 
@@ -133,7 +136,7 @@ class ForecastByDayFragment: Fragment(R.layout.fragment_forecast_by_day),
 
         forecastDayList.forEachIndexed { index, forecastDay ->
 
-            if (index == forecast3DaysAdapterPosition) {
+            if (index == forecastAdapterPosition) {
                 binding.rvForecast.adapter = ForecastByDayAdapter(forecastDay.hour)
             }
 
@@ -145,16 +148,16 @@ class ForecastByDayFragment: Fragment(R.layout.fragment_forecast_by_day),
         /*
             Method to show an BannerAd.
         */
-        adMobViewModel.showBannerAd(
+        adMobUtilsViewModel.showBannerAd(
             binding.bannerMain
         )
     }
 
     private fun showInterstitialAdObserver() {
         /*
-            Method to load an InterstitialAd.
+            Method to show an InterstitialAd.
         */
-        adMobViewModel.showInterstitialAd()
+        adMobUtilsViewModel.showInterstitialAd()
             .observe(viewLifecycleOwner, Observer { resultEmitted ->
 
                 when (resultEmitted) {
@@ -166,8 +169,11 @@ class ForecastByDayFragment: Fragment(R.layout.fragment_forecast_by_day),
                     is Result.Success -> {
 
                         val ad = resultEmitted.data
-
                         ad?.show(requireActivity())
+
+                        getBundle()
+                        checkIfForecastDayListIsNullOrEmpty()
+                        showBannerAd()
 
                         hideProgressBar()
 
@@ -186,8 +192,11 @@ class ForecastByDayFragment: Fragment(R.layout.fragment_forecast_by_day),
         /*
             Method to set date with month name.
         */
-        date = convertStringToDate(dateString)
-        binding.txtDate.text = getDateWithMonthName(date)
+        convertStringToDate(dateString)?.let {
+            date = it
+            binding.txtDate.text = getDateWithMonthName(date)
+        }
+
     }
 
     private fun showProgressBar() {

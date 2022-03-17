@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.circleappsstudio.foggyweather.application.AppConstants
 import com.circleappsstudio.foggyweather.core.BaseViewHolder
+import com.circleappsstudio.foggyweather.core.time.convertStringToDate
+import com.circleappsstudio.foggyweather.core.time.getDateWithMonthName
 import com.circleappsstudio.foggyweather.data.model.ForecastDay
 import com.circleappsstudio.foggyweather.databinding.Forecast3DaysItemViewBinding
 
@@ -24,7 +26,10 @@ class Forecast3DaysAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
-
+        /*
+            onCreateViewHolder returns class that binds each RecyclerView element.
+            It inflates the layout that will display the data.
+        */
         val itemBinding = Forecast3DaysItemViewBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
@@ -34,6 +39,7 @@ class Forecast3DaysAdapter(
         val holder = Forecast3DaysViewHolder(itemBinding, parent.context)
 
         itemBinding.root.setOnClickListener {
+            // Click on RecyclerView item with their position.
 
             val position = holder.adapterPosition.takeIf {
                 it != DiffUtil.DiffResult.NO_POSITION
@@ -48,7 +54,9 @@ class Forecast3DaysAdapter(
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) {
-
+        /*
+            Each RecyclerView element binds.
+        */
         when (holder) {
             is Forecast3DaysViewHolder -> {
                 holder.bind(forecast3DaysList[position])
@@ -65,8 +73,12 @@ class Forecast3DaysAdapter(
     ): BaseViewHolder<ForecastDay>(binding.root) {
 
         override fun bind(item: ForecastDay) {
-
-            binding.txtDate.text = item.date
+            /*
+                bind(...) method creates each element to "draw" in RecyclerView.
+            */
+            convertStringToDate(item.date)?.let {
+                binding.txtDate.text = getDateWithMonthName(it)
+            }
 
             binding.txtText.text = item.day.condition.text
 
@@ -76,6 +88,7 @@ class Forecast3DaysAdapter(
                 .into(binding.imgIcon)
 
             binding.txtMaxTemp.text = item.day.maxtemp_c.toString()
+
             binding.txtMinTemp.text = item.day.mintemp_c.toString()
 
         }

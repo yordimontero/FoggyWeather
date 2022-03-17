@@ -10,18 +10,18 @@ import com.circleappsstudio.foggyweather.application.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SplashScreenActivity : AppCompatActivity() {
+class SplashScreenActivity : AppCompatActivity(R.layout.activity_splash_screen) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash_screen)
 
         goToMainScreen()
-
     }
 
     private fun goToMainScreen() {
-
+        /*
+            Method to navigate to MainScreen.
+        */
         Handler(
             Looper.getMainLooper()
         ).postDelayed({

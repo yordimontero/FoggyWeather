@@ -10,7 +10,7 @@ import com.circleappsstudio.foggyweather.core.BaseViewHolder
 import com.circleappsstudio.foggyweather.core.time.formatHour
 import com.circleappsstudio.foggyweather.core.time.splitDate
 import com.circleappsstudio.foggyweather.core.time.splitHour
-import com.circleappsstudio.foggyweather.core.ui.changeForecastCardViewColor
+import com.circleappsstudio.foggyweather.core.ui.changeSelectedForecastCardViewColor
 import com.circleappsstudio.foggyweather.core.ui.changeUnselectedForecastCardViewColor
 import com.circleappsstudio.foggyweather.data.model.Hour
 import com.circleappsstudio.foggyweather.databinding.ForecastItemViewBinding
@@ -22,7 +22,10 @@ class ForecastByHourAdapter(
 ): RecyclerView.Adapter<BaseViewHolder<*>>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
-
+        /*
+            onCreateViewHolder returns class that binds each RecyclerView element.
+            It inflates the layout that will display the data.
+        */
         val itemBinding = ForecastItemViewBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
@@ -34,18 +37,21 @@ class ForecastByHourAdapter(
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) {
-
+        /*
+            Each RecyclerView element binds.
+        */
         when (holder) {
+
             is ForecastViewHolder -> {
 
                 holder.bind(forecastByHourList[position])
 
                 val hour = splitDate(forecastByHourList[position].time)
-                val splitHour = splitHour(hour, 0).toInt()
+                val splittedHour = splitHour(hour, 0).toInt()
 
-                if (currentHour.toInt() == splitHour) {
+                if (currentHour.toInt() == splittedHour) {
 
-                    changeForecastCardViewColor(
+                    changeSelectedForecastCardViewColor(
                         context = context,
                         primaryCardView = holder.binding.primaryCardView,
                         secondaryCardView = holder.binding.secondaryCardView,
@@ -68,6 +74,7 @@ class ForecastByHourAdapter(
                 }
 
             }
+
         }
 
     }
@@ -80,7 +87,9 @@ class ForecastByHourAdapter(
     ) : BaseViewHolder<Hour>(binding.root) {
 
         override fun bind(item: Hour) {
-
+            /*
+                bind(...) method creates each element to "draw" in RecyclerView.
+            */
             val hour = splitDate(item.time)
 
             val formattedHour = formatHour(

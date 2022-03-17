@@ -2,9 +2,9 @@ package com.circleappsstudio.foggyweather.ui.home
 
 import android.Manifest
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
@@ -30,9 +30,8 @@ import com.circleappsstudio.foggyweather.core.ui.hide
 import com.circleappsstudio.foggyweather.core.ui.hideKeyboard
 import com.circleappsstudio.foggyweather.core.ui.show
 import com.circleappsstudio.foggyweather.core.ui.showToast
-import com.circleappsstudio.foggyweather.data.model.ForecastByDay
 import com.circleappsstudio.foggyweather.data.model.ForecastDay
-import java.io.Serializable
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.util.*
 
 @AndroidEntryPoint
@@ -54,10 +53,6 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
     private val currentDate by lazy { getCurrentDate() }
 
-    private val currentDateWithMothName by lazy {
-        getDateWithMonthName(Calendar.getInstance().time)
-    }
-
     private var forecastDayList: List<ForecastDay> = listOf()
     private var forecast3DaysAdapterPosition: Int = 0
 
@@ -74,7 +69,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
         requestLocationPermissionsForSingleTime()
 
-        checkIfIsThereAnyLastLocationSearched()
+        checkIfThereIsAnyLastSearchedLocation()
 
         getWeatherFromCurrentLocation()
 
@@ -105,16 +100,16 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                 text?.let {
 
                     if (it.length >= 3) {
-
+                        // If SearchView submitted text has at least 3 characters, search weather data.
                         coordinates = it
                         setLastLocationSearchedPreference(it)
-                        checkInternetToGetWeatherInfoObserver()
+                        checkInternetToGetWeatherDataObserver()
 
                         clearSearchView()
                         showMainLayout()
 
                     } else {
-
+                        // If SearchView submitted text has not at least 3 characters, show error message.
                         requireContext().showToast(
                             requireContext(),
                             "Location not founded!"
@@ -123,7 +118,6 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                     }
 
                 }
-
                 return false
             }
 
@@ -132,14 +126,15 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                 text?.let {
 
                     if (it.isEmpty()) {
+                        // If SearchView text is empty, hide AutocompleteRecyclerView.
                         hideAutocompleteRecyclerView()
                     } else {
+                        // If SearchView text is not empty, show AutocompleteRecyclerView and search location.
                         showAutocompleteRecyclerView()
-                        checkInternetToGetAutocompleteSearchObserver(it)
+                        checkInternetToGetAutocompleteSearchDataObserver(it)
                     }
 
                 }
-
                 return false
             }
 
@@ -149,7 +144,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
     private fun pullToRefreshSetup() {
         /*
-            Pull to Refresh data setup.
+            Pull to refresh data setup.
         */
         binding.pullToRefresh.setOnRefreshListener {
             checkIfLocationPermissionsAreGranted()
@@ -158,9 +153,9 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
     }
 
-    private fun checkInternetToGetWeatherInfoObserver() {
+    private fun checkInternetToGetWeatherDataObserver() {
         /*
-            Method to check if there's internet connection and get weather.
+            Method to check if there's internet connection and get weather data.
         */
         internetCheckViewModel.checkInternet()
             .observe(viewLifecycleOwner, Observer { resultEmitted ->
@@ -196,9 +191,9 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
     }
 
-    private fun checkInternetToGetAutocompleteSearchObserver(location: String) {
+    private fun checkInternetToGetAutocompleteSearchDataObserver(location: String) {
         /*
-            Method to check if there's internet connection and get recyclerview autocomplete locations.
+            Method to check if there's internet connection and get autocomplete locations data.
         */
         internetCheckViewModel.checkInternet()
             .observe(viewLifecycleOwner, Observer { resultEmitted ->
@@ -212,7 +207,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                     is Result.Success -> {
 
                         if (resultEmitted.data) {
-                            fetchAutocompleteResults(location)
+                            fetchAutocompleteResultsObserver(location)
                         } else {
 
                             showInternetCheckDialog()
@@ -235,6 +230,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
     }
 
+    @ExperimentalCoroutinesApi
     private fun fetchLocationObserver() {
         /*
             Method to fetch current location from GPS.
@@ -250,16 +246,16 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
                     is Result.Success -> {
 
-                        if (!checkIfIsThereAnyLastLocationSearched()) {
+                        if (!checkIfThereIsAnyLastSearchedLocation()) {
                             /*
-                                If there's not any last location searched, coordinates will be the GPS data.
-                                If there's some last location searched, coordinates will be the that location.
+                                If there's not any last searched location, coordinates will be the GPS data.
+                                If there's some last searched location, coordinates will be the that location.
                             */
                             coordinates = "${resultEmitted.data[0]},${resultEmitted.data[1]}"
                             setLastLocationSearchedPreference(coordinates)
                         }
 
-                        checkInternetToGetWeatherInfoObserver()
+                        checkInternetToGetWeatherDataObserver()
 
                     }
 
@@ -314,11 +310,14 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                         feelsLike = resultEmitted.data.t1.current.feelslike_c,
                         lastUpdated = resultEmitted.data.t1.current.last_updated
                     )
+                    //...
+
 
                     // t2 - getForecast:
                     forecastDayList = resultEmitted.data.t2.forecast.forecastday
                     getForecastUISetup(
-                        forecastDayList = resultEmitted.data.t2.forecast.forecastday
+                        forecastDayList = resultEmitted.data.t2.forecast.forecastday,
+                        fetchedHour = resultEmitted.data.t1.current.last_updated
                     )
 
                     // t3 - getAstronomy:
@@ -342,8 +341,9 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                         "Something went wrong: ${resultEmitted.exception.message}"
                     )
 
-                    binding.mainLayout.hide()
-                    binding.progressBar.hide()
+                    hideMainLayout()
+                    hideMainProgressbar()
+
                 }
 
             }
@@ -352,7 +352,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
     }
 
-    private fun fetchAutocompleteResults(location: String) {
+    private fun fetchAutocompleteResultsObserver(location: String) {
         /*
             Method to fetch autocomplete locations data.
         */
@@ -403,13 +403,13 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
     }
 
-    private fun getWeatherFromLastLocationSearched() {
+    private fun getWeatherFromLastSearchedLocation() {
         /*
             Method to get weather from last location searched.
         */
-        if (checkIfIsThereAnyLastLocationSearched()) {
+        if (checkIfThereIsAnyLastSearchedLocation()) {
             // There's a location in SharedPreferences.
-            checkInternetToGetWeatherInfoObserver()
+            checkInternetToGetWeatherDataObserver()
         } else {
             // There's not any location in SharedPreferences.
             hideMainLayout()
@@ -418,9 +418,9 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
     }
 
-    private fun checkIfIsThereAnyLastLocationSearched(): Boolean {
+    private fun checkIfThereIsAnyLastSearchedLocation(): Boolean {
         /*
-            Method to check if is there any last location searched in SharedPreferences.
+            Method to check if there is any last searched location in SharedPreferences.
         */
         return if (!getLastSearchedLocationPreference().isNullOrEmpty()) {
             coordinates = getLastSearchedLocationPreference().toString()
@@ -432,12 +432,12 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
     private fun requestLocationPermissionsForSingleTime() {
         /*
-            Method that request location permission for single time.
+            Method that requests location permission for single time.
         */
         val result = didLocationPermissionsAreRequestedSingleTimePreference()
 
         if (!result) {
-            // If location permission are not requested for single time yet, requests it.
+            // If location permission are not requested for single time yet, request them.
             requestLocationPermissions()
             setLocationPermissionsRequestedSingleTimePreference()
         }
@@ -477,19 +477,20 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
     }
 
+    @ExperimentalCoroutinesApi
     private fun checkIfLocationPermissionsAreGranted() {
         /*
             Method to check if location permission (GPS) are granted.
         */
         if (checkIfLocationPermissionsAreGranted(requireContext())) {
-
+            // Location permissions are requested already.
             showMainLayout()
             fetchLocationObserver()
 
         } else {
-
+            // Location permissions are not requested.
             showMainLayout()
-            getWeatherFromLastLocationSearched()
+            getWeatherFromLastSearchedLocation()
 
         }
 
@@ -519,7 +520,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                 )
 
                 showMainLayout()
-                getWeatherFromLastLocationSearched()
+                getWeatherFromLastSearchedLocation()
 
             }
 
@@ -582,16 +583,16 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         lastUpdated: String
     ) {
         /*
-            Method to setup Current Weather UI section.
+            Method to setup current weather UI section.
         */
-        binding.txtLocation.text = "$name, $region"
-
-        binding.txtTemperature.text = temperature.toString()
-
         Glide.with(requireContext())
             .load("${AppConstants.BASE_IMAGE_URL}$icon")
             .centerCrop()
             .into(binding.imgIcon)
+
+        binding.txtTemperature.text = temperature.toString()
+
+        binding.txtLocation.text = "$name, $region"
 
         binding.txtCondition.text = condition
 
@@ -611,28 +612,25 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
     private fun getForecastUISetup(
         forecastDayList: List<ForecastDay>,
+        fetchedHour: String
     ) {
         /*
-            Method to setup Forecast UI section.
+            Method to setup forecast UI section.
         */
         forecastDayList.forEachIndexed { index, forecastDay ->
 
             if (index == 0) {
+
                 binding.txtMaxTemp.text = "${forecastDay.day.maxtemp_c}°C"
                 binding.txtMinTemp.text = "${forecastDay.day.mintemp_c}°C"
-            }
 
-        }
+                val hour = splitHour(splitDate(fetchedHour), 0)
+                val minute = splitHour(splitDate(fetchedHour), 1)
+                val formattedHour = formatHour(hour, minute, requireContext())
 
-        val currentHour = getCurrentHourFormatted(requireContext())
-
-        val forecastRecyclerViewPosition = getCurrentForecastCard(
-            currentHour, requireContext()
-        )
-
-        forecastDayList.forEachIndexed { index, forecastDay ->
-
-            if (index == 0) {
+                val forecastRecyclerViewPosition = getCurrentForecastCard(
+                    formattedHour, requireContext()
+                )
 
                 binding.rvForecast.adapter = ForecastByHourAdapter(
                     forecastDay.hour,
@@ -640,11 +638,11 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                     requireContext()
                 )
 
+                binding.rvForecast.scrollToPosition(forecastRecyclerViewPosition)
+
             }
 
         }
-
-        binding.rvForecast.scrollToPosition(forecastRecyclerViewPosition)
 
         binding.rvForecast3Days.adapter = Forecast3DaysAdapter(forecastDayList, this)
 
@@ -659,7 +657,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         moonIllumination: String
     ) {
         /*
-            Method to setup Astronomy UI section.
+            Method to setup astronomy UI section.
         */
         binding.txtSunrise.text = sunrise
         binding.txtSunset.text = sunset
@@ -751,7 +749,9 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         /*
             Method to set current date in UI.
         */
-        binding.txtCurrentDate.text = currentDateWithMothName
+        binding.txtCurrentDate.text = getDateWithMonthName(
+            Calendar.getInstance().time
+        )
     }
 
     private fun goToForecastByDayFragment(date: String) {
@@ -761,8 +761,8 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         navController.navigate(
             R.id.fragment_forecast_by_day, bundleOf(
                 "forecastList" to forecastDayList,
-                "position" to forecast3DaysAdapterPosition,
-                "date" to date
+                "forecastListPosition" to forecast3DaysAdapterPosition,
+                "forecastDate" to date
             )
         )
 
@@ -793,7 +793,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         /*
             Method to control positive button click on InternetCheckDialog.
         */
-        checkInternetToGetWeatherInfoObserver()
+        checkInternetToGetWeatherDataObserver()
     }
 
     override fun onLocationClick(locations: Locations) {
@@ -811,7 +811,6 @@ class HomeFragment : Fragment(R.layout.fragment_home),
             Method to set click function in RvForecast RecyclerView.
         */
         forecast3DaysAdapterPosition = position
-        Toast.makeText(requireContext(), "${forecastDay.date}, Position: $position", Toast.LENGTH_SHORT).show()
         goToForecastByDayFragment(forecastDay.date)
     }
 

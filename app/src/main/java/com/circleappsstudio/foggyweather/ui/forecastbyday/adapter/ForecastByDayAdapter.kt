@@ -22,7 +22,6 @@ class ForecastByDayAdapter(
             onCreateViewHolder returns class that binds each RecyclerView element.
             It inflates the layout that will display the data.
         */
-
         val itemBinding = ForecastByDayItemViewBinding
             .inflate(
                 LayoutInflater.from(parent.context),

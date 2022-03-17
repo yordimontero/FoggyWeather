@@ -46,7 +46,7 @@ fun Context.hideKeyboard(context: Context, view: View) {
     inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
 }
 
-fun changeForecastCardViewColor(
+fun changeSelectedForecastCardViewColor(
     context: Context,
     primaryCardView: CardView,
     secondaryCardView: CardView,

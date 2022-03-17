@@ -1,7 +1,6 @@
 package com.circleappsstudio.foggyweather.ui.forecastbyday
 
 import android.os.Bundle
-import android.os.Parcelable
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -16,7 +15,6 @@ import com.circleappsstudio.foggyweather.core.ui.customdialogs.OnInternetCheckDi
 import com.circleappsstudio.foggyweather.core.ui.customdialogs.internetCheckDialog
 import com.circleappsstudio.foggyweather.core.ui.hide
 import com.circleappsstudio.foggyweather.core.ui.show
-import com.circleappsstudio.foggyweather.data.model.ForecastByDay
 import com.circleappsstudio.foggyweather.data.model.ForecastDay
 import com.circleappsstudio.foggyweather.databinding.FragmentForecastByDayBinding
 import com.circleappsstudio.foggyweather.presenter.AdMobUtilsViewModel
@@ -24,7 +22,6 @@ import com.circleappsstudio.foggyweather.presenter.InternetCheckViewModel
 import com.circleappsstudio.foggyweather.ui.forecastbyday.adapter.ForecastByDayAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import java.io.Serializable
 import java.util.*
 
 @ExperimentalCoroutinesApi
@@ -94,18 +91,11 @@ class ForecastByDayFragment: Fragment(R.layout.fragment_forecast_by_day),
 
             forecastDayList = bundle.get("forecastList") as List<ForecastDay>?
 
-            if (forecastDayList == null) {
-                forecastDayList = listOf()
-            }
+            if (forecastDayList == null) forecastDayList = listOf()
 
-            forecastAdapterPosition = bundle.getInt("position")
+            forecastAdapterPosition = bundle.getInt("forecastListPosition")
 
-            dateString = bundle.getString("date").toString()
-
-            // Testing:
-            bundle.remove("forecastList")
-            bundle.remove("position")
-            bundle.remove("date")
+            dateString = bundle.getString("forecastDate").toString()
 
         }
 

@@ -14,10 +14,19 @@ fun splitDate(date: String): String {
     return splitDate[1]
 }
 
+/*fun splitDate(date: String, position: Int): String {
+    /*
+        Method to split date of hour from API field. Example: 2022-02-09 19:45
+        Result: 2022-02-09.
+    */
+    val splitDate = date.split(" ")
+    return splitDate[position]
+}*/
+
 fun splitHour(hour: String, position: Int): String {
     /*
         Method to split fetched hour from API in hours and minutes. Example: 19:45
-        Result: [1]19 / [2]45.
+        Result: [0]19 / [1]45.
     */
     val splitHour = hour.split(":")
     return splitHour[position]

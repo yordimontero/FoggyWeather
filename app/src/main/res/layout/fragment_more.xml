@@ -22,295 +22,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:orientation="vertical"
                 android:padding="10dp">
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_facebook"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/CustomDarkLightModeBackground"
-                    android:layout_margin="10dp"
-                    app:cardCornerRadius="20dp"
-                    app:cardElevation="8dp"
-                    app:cardPreventCornerOverlap="true"
-                    app:cardUseCompatPadding="false">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:padding="8dp">
-
-                            <androidx.cardview.widget.CardView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                style="@style/CustomDarkLightModeBackground"
-                                android:layout_margin="8dp"
-                                android:layout_marginStart="10dp"
-                                app:cardCornerRadius="40dp"
-                                app:cardElevation="8dp"
-                                app:cardPreventCornerOverlap="true"
-                                app:cardUseCompatPadding="false">
-
-                                <ImageView
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:layout_margin="8dp"
-                                    android:src="@drawable/facebook_icon" />
-
-                            </androidx.cardview.widget.CardView>
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:text="Find us on Facebook!"
-                                android:fontFamily="sans-serif-light"
-                                android:textAlignment="center"
-                                android:textSize="15sp" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_twitter"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/CustomDarkLightModeBackground"
-                    android:layout_margin="10dp"
-                    app:cardCornerRadius="20dp"
-                    app:cardElevation="8dp"
-                    app:cardPreventCornerOverlap="true"
-                    app:cardUseCompatPadding="false">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:padding="8dp">
-
-                            <androidx.cardview.widget.CardView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                style="@style/CustomDarkLightModeBackground"
-                                android:layout_margin="8dp"
-                                android:layout_marginStart="10dp"
-                                app:cardCornerRadius="40dp"
-                                app:cardElevation="8dp"
-                                app:cardPreventCornerOverlap="true"
-                                app:cardUseCompatPadding="false">
-
-                                <ImageView
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:layout_margin="8dp"
-                                    android:src="@drawable/twitter_icon" />
-
-                            </androidx.cardview.widget.CardView>
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:text="Find us on Twitter!"
-                                android:fontFamily="sans-serif-light"
-                                android:textAlignment="center"
-                                android:textSize="15sp" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_send_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/CustomDarkLightModeBackground"
-                    android:layout_margin="10dp"
-                    app:cardCornerRadius="20dp"
-                    app:cardElevation="8dp"
-                    app:cardPreventCornerOverlap="true"
-                    app:cardUseCompatPadding="false">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:padding="8dp">
-
-                            <androidx.cardview.widget.CardView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                style="@style/CustomDarkLightModeBackground"
-                                android:layout_margin="8dp"
-                                android:layout_marginStart="10dp"
-                                app:cardCornerRadius="40dp"
-                                app:cardElevation="8dp"
-                                app:cardPreventCornerOverlap="true"
-                                app:cardUseCompatPadding="false">
-
-                                <ImageView
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:layout_margin="8dp"
-                                    android:src="@drawable/ic_support" />
-
-                            </androidx.cardview.widget.CardView>
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:text="Questions or suggestions? Contact us!"
-                                android:fontFamily="sans-serif-light"
-                                android:textAlignment="center"
-                                android:textSize="15sp" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_web_page"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/CustomDarkLightModeBackground"
-                    android:layout_margin="10dp"
-                    app:cardCornerRadius="20dp"
-                    app:cardElevation="8dp"
-                    app:cardPreventCornerOverlap="true"
-                    app:cardUseCompatPadding="false">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:padding="8dp">
-
-                            <androidx.cardview.widget.CardView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                style="@style/CustomDarkLightModeBackground"
-                                android:layout_margin="8dp"
-                                android:layout_marginStart="10dp"
-                                app:cardCornerRadius="40dp"
-                                app:cardElevation="8dp"
-                                app:cardPreventCornerOverlap="true"
-                                app:cardUseCompatPadding="false">
-
-                                <ImageView
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:layout_margin="8dp"
-                                    android:src="@drawable/circle_apps_studio_icon" />
-
-                            </androidx.cardview.widget.CardView>
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:text="Visit our website!"
-                                android:fontFamily="sans-serif-light"
-                                android:textAlignment="center"
-                                android:textSize="15sp" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_privacy_policy"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/CustomDarkLightModeBackground"
-                    android:layout_margin="10dp"
-                    app:cardCornerRadius="20dp"
-                    app:cardElevation="8dp"
-                    app:cardPreventCornerOverlap="true"
-                    app:cardUseCompatPadding="false">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:padding="8dp">
-
-                            <androidx.cardview.widget.CardView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                style="@style/CustomDarkLightModeBackground"
-                                android:layout_margin="8dp"
-                                android:layout_marginStart="10dp"
-                                app:cardCornerRadius="40dp"
-                                app:cardElevation="8dp"
-                                app:cardPreventCornerOverlap="true"
-                                app:cardUseCompatPadding="false">
-
-                                <ImageView
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:layout_margin="8dp"
-                                    android:src="@drawable/ic_policy"
-                                    app:tint="@color/red" />
-
-                            </androidx.cardview.widget.CardView>
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:text="Privacy policy"
-                                android:fontFamily="sans-serif-light"
-                                android:textAlignment="center"
-                                android:textSize="15sp" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="Support our work:"
+                    android:textAlignment="center"
+                    android:textSize="18sp" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_rate_app"
@@ -362,7 +84,73 @@
                                 android:text="Rate this app!"
                                 android:fontFamily="sans-serif-light"
                                 android:textAlignment="center"
-                                android:textSize="15sp" />
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="Learn more about us:"
+                    android:textAlignment="center"
+                    android:textSize="18sp" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_web_page"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomDarkLightModeBackground"
+                    android:layout_margin="10dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="8dp"
+                    app:cardPreventCornerOverlap="true"
+                    app:cardUseCompatPadding="false">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="8dp">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                style="@style/CustomDarkLightModeBackground"
+                                android:layout_margin="8dp"
+                                android:layout_marginStart="10dp"
+                                app:cardCornerRadius="40dp"
+                                app:cardElevation="8dp"
+                                app:cardPreventCornerOverlap="true"
+                                app:cardUseCompatPadding="false">
+
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_margin="8dp"
+                                    android:src="@drawable/circle_apps_studio_icon" />
+
+                            </androidx.cardview.widget.CardView>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="Visit our website!"
+                                android:fontFamily="sans-serif-light"
+                                android:textAlignment="center"
+                                android:textSize="16sp" />
 
                         </LinearLayout>
 
@@ -419,7 +207,250 @@
                                 android:text="Look out our others apps!"
                                 android:fontFamily="sans-serif-light"
                                 android:textAlignment="center"
-                                android:textSize="15sp" />
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_privacy_policy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomDarkLightModeBackground"
+                    android:layout_margin="10dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="8dp"
+                    app:cardPreventCornerOverlap="true"
+                    app:cardUseCompatPadding="false">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="8dp">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                style="@style/CustomDarkLightModeBackground"
+                                android:layout_margin="8dp"
+                                android:layout_marginStart="10dp"
+                                app:cardCornerRadius="40dp"
+                                app:cardElevation="8dp"
+                                app:cardPreventCornerOverlap="true"
+                                app:cardUseCompatPadding="false">
+
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_margin="8dp"
+                                    android:src="@drawable/ic_policy" />
+
+                            </androidx.cardview.widget.CardView>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="Privacy policy"
+                                android:fontFamily="sans-serif-light"
+                                android:textAlignment="center"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+
+
+
+
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_facebook"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomDarkLightModeBackground"
+                    android:layout_margin="10dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="8dp"
+                    app:cardPreventCornerOverlap="true"
+                    app:cardUseCompatPadding="false">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="8dp">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                style="@style/CustomDarkLightModeBackground"
+                                android:layout_margin="8dp"
+                                android:layout_marginStart="10dp"
+                                app:cardCornerRadius="40dp"
+                                app:cardElevation="8dp"
+                                app:cardPreventCornerOverlap="true"
+                                app:cardUseCompatPadding="false">
+
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_margin="8dp"
+                                    android:src="@drawable/facebook_icon" />
+
+                            </androidx.cardview.widget.CardView>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="Find us on Facebook!"
+                                android:fontFamily="sans-serif-light"
+                                android:textAlignment="center"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_twitter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomDarkLightModeBackground"
+                    android:layout_margin="10dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="8dp"
+                    app:cardPreventCornerOverlap="true"
+                    app:cardUseCompatPadding="false">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="8dp">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                style="@style/CustomDarkLightModeBackground"
+                                android:layout_margin="8dp"
+                                android:layout_marginStart="10dp"
+                                app:cardCornerRadius="40dp"
+                                app:cardElevation="8dp"
+                                app:cardPreventCornerOverlap="true"
+                                app:cardUseCompatPadding="false">
+
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_margin="8dp"
+                                    android:src="@drawable/twitter_icon" />
+
+                            </androidx.cardview.widget.CardView>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="Find us on Twitter!"
+                                android:fontFamily="sans-serif-light"
+                                android:textAlignment="center"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="Support:"
+                    android:textAlignment="center"
+                    android:textSize="18sp" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_send_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomDarkLightModeBackground"
+                    android:layout_margin="10dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="8dp"
+                    app:cardPreventCornerOverlap="true"
+                    app:cardUseCompatPadding="false">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="8dp">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                style="@style/CustomDarkLightModeBackground"
+                                android:layout_margin="8dp"
+                                android:layout_marginStart="10dp"
+                                app:cardCornerRadius="40dp"
+                                app:cardElevation="8dp"
+                                app:cardPreventCornerOverlap="true"
+                                app:cardUseCompatPadding="false">
+
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_margin="8dp"
+                                    android:src="@drawable/ic_support" />
+
+                            </androidx.cardview.widget.CardView>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="Questions or suggestions? Contact us!"
+                                android:fontFamily="sans-serif-light"
+                                android:textAlignment="center"
+                                android:textSize="16sp" />
 
                         </LinearLayout>
 

@@ -8,6 +8,15 @@
     <string name="feels_like">Feels like:</string>
     <string name="powered_by_weather_api">Powered by WeatherAPI.com</string>
     <string name="choose_title">Chooser Title</string>
+    <string name="home">Home</string>
+    <string name="more">More</string>
+
+
+    <!-- app_rate_dialog -->
+    <string name="rate_app_title">Rate FoggyWeather!</string>
+    <string name="rate_app_msg">If you are enjoying FoggyWeather, would you mind taking a moment to rate it?\nThanks for your support!</string>
+    <string name="rate_it_now">Rate it now!</string>
+    <string name="no_rate">No, thanks</string>
 
 
     <!-- HomeFragment -->

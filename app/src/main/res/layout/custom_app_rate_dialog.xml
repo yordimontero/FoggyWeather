@@ -52,7 +52,7 @@
                 android:layout_gravity="center"
                 android:padding="8dp"
                 android:textAlignment="center"
-                android:text="@string/rate_dialog_title"
+                android:text="@string/rate_app_title"
                 android:textSize="20sp"
                 android:textStyle="bold"/>
 
@@ -64,7 +64,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:textAlignment="center"
-                android:text="@string/rate_dialog_message"
+                android:text="@string/rate_app_msg"
                 android:textSize="18sp" />
 
             <LinearLayout
@@ -91,16 +91,16 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/rate_dialog_ok"
+                        android:text="@string/rate_it_now"
                         android:textColor="@color/dark_blue"
                         android:fontFamily="sans-serif-light"
                         android:textStyle="bold"
                         android:textSize="16sp"
                         android:layout_gravity="center"
                         android:layout_margin="10dp"
-                        app:drawableStartCompat="@drawable/ic_check"
+                        app:drawableStartCompat="@drawable/ic_rate"
                         app:drawableTint="@color/dark_blue"
-                        android:drawablePadding="6dp"/>
+                        android:drawablePadding="3dp"/>
 
                 </androidx.cardview.widget.CardView>
 
@@ -108,14 +108,12 @@
                     android:id="@+id/btn_cancel"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="@string/rate_dialog_no"
+                    android:text="@string/no_rate"
                     android:fontFamily="sans-serif-light"
                     android:textStyle="bold"
                     android:textSize="16sp"
                     android:layout_gravity="center"
                     android:layout_margin="10dp"
-                    app:drawableStartCompat="@drawable/ic_close"
-                    app:drawableTint="@color/light_mode_text_color"
                     android:drawablePadding="6dp"/>
 
             </LinearLayout>

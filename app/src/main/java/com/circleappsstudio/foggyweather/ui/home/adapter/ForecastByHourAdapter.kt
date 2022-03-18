@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.circleappsstudio.foggyweather.application.AppConstants
 import com.circleappsstudio.foggyweather.core.BaseViewHolder
-import com.circleappsstudio.foggyweather.core.time.formatHour
+import com.circleappsstudio.foggyweather.core.time.getAnyHourFormatted
 import com.circleappsstudio.foggyweather.core.time.splitDate
 import com.circleappsstudio.foggyweather.core.time.splitHour
 import com.circleappsstudio.foggyweather.core.ui.changeSelectedForecastCardViewColor
@@ -46,7 +46,7 @@ class ForecastByHourAdapter(
 
                 holder.bind(forecastByHourList[position])
 
-                val hour = splitDate(forecastByHourList[position].time)
+                val hour = splitDate(forecastByHourList[position].time, 1)
                 val splittedHour = splitHour(hour, 0).toInt()
 
                 if (currentHour.toInt() == splittedHour) {
@@ -90,9 +90,9 @@ class ForecastByHourAdapter(
             /*
                 bind(...) method creates each element to "draw" in RecyclerView.
             */
-            val hour = splitDate(item.time)
+            val hour = splitDate(item.time, 1)
 
-            val formattedHour = formatHour(
+            val formattedHour = getAnyHourFormatted(
                 splitHour(hour, 0),
                 splitHour(hour, 1),
                 context

@@ -40,7 +40,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="8dp"
-                android:text="No internet connection!"
+                android:text="@string/no_internet_connection"
                 android:fontFamily="sans-serif-light"
                 android:textAlignment="center"
                 android:textSize="22sp"
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
-                android:text="Check your network and try again"
+                android:text="@string/check_your_network_and_try_again"
                 android:fontFamily="sans-serif-light"
                 android:textAlignment="center"
                 android:textSize="16sp" />
@@ -73,7 +73,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Try again"
+                    android:text="@string/try_again"
                     android:fontFamily="sans-serif-light"
                     android:textStyle="bold"
                     android:textSize="16sp"

@@ -144,7 +144,7 @@ class MainActivity : AppCompatActivity(),
         val packageName: String = packageName
         val intent = Intent(
             Intent.ACTION_VIEW,
-            Uri.parse("https://play.google.com/store/apps/details?id=$packageName")
+            Uri.parse("${resources.getString(R.string.google_play_store_base_url)}$packageName")
         )
         startActivity(intent)
     }

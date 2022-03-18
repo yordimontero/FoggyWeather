@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.circleappsstudio.foggyweather.application.AppConstants
 import com.circleappsstudio.foggyweather.core.BaseViewHolder
-import com.circleappsstudio.foggyweather.core.time.formatHour
+import com.circleappsstudio.foggyweather.core.time.getAnyHourFormatted
 import com.circleappsstudio.foggyweather.core.time.splitDate
 import com.circleappsstudio.foggyweather.core.time.splitHour
 import com.circleappsstudio.foggyweather.data.model.Hour
@@ -58,9 +58,9 @@ class ForecastByDayAdapter(
             /*
                 bind(...) method creates each element to "draw" in RecyclerView.
             */
-            val hour = splitDate(item.time)
+            val hour = splitDate(item.time, 1)
 
-            val formattedHour = formatHour(
+            val formattedHour = getAnyHourFormatted(
                 splitHour(hour, 0),
                 splitHour(hour, 1),
                 context

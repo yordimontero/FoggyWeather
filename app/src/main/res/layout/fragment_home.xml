@@ -86,7 +86,7 @@
                                     app:closeIcon="@drawable/ic_close"
                                     app:iconifiedByDefault="false"
                                     app:queryBackground="@android:color/transparent"
-                                    app:queryHint="Search any location"
+                                    app:queryHint="@string/search_any_location"
                                     app:searchIcon="@drawable/ic_search" />
 
                             </androidx.cardview.widget.CardView>
@@ -99,7 +99,7 @@
                                 android:fontFamily="sans-serif-light"
                                 android:gravity="start|center"
                                 android:padding="15dp"
-                                android:text="Current location"
+                                android:text="@string/current_location"
                                 android:textSize="15sp"
                                 android:visibility="gone"
                                 app:drawableStartCompat="@drawable/ic_location"
@@ -130,7 +130,6 @@
                                     android:visibility="gone" />
 
                             </LinearLayout>
-
 
                         </LinearLayout>
 
@@ -171,7 +170,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="start"
                                             android:fontFamily="sans-serif-light"
-                                            android:text="Today"
+                                            android:text="@string/today"
                                             android:textSize="24sp"
                                             android:textStyle="bold" />
 
@@ -209,7 +208,7 @@
                                         android:layout_marginTop="12dp"
                                         android:fontFamily="sans-serif-light"
                                         android:gravity="top"
-                                        android:text="°C"
+                                        android:text="@string/celsius"
                                         android:textSize="35sp" />
 
                                 </LinearLayout>
@@ -239,7 +238,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="sans-serif-light"
-                                    android:text="Condition:"
+                                    android:text="@string/condition"
                                     android:textSize="15sp"
                                     android:textStyle="bold" />
 
@@ -258,7 +257,7 @@
                                     android:layout_marginStart="5dp"
                                     android:layout_marginEnd="5dp"
                                     android:fontFamily="sans-serif-light"
-                                    android:text="•"
+                                    android:text="@string/bullet_point"
                                     android:textSize="16sp"
                                     android:textStyle="bold" />
 
@@ -267,7 +266,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="sans-serif-light"
-                                    android:text="Feels like:"
+                                    android:text="@string/feels_like"
                                     android:textSize="15sp"
                                     android:textStyle="bold"
                                     app:layout_constraintStart_toStartOf="@+id/linearlayout1"
@@ -356,7 +355,16 @@
                                         android:layout_height="match_parent"
                                         android:fontFamily="sans-serif-light"
                                         android:gravity="center"
-                                        android:text="• Last updated:"
+                                        android:text="@string/bullet_point"
+                                        android:textSize="14sp"
+                                        android:layout_marginEnd="2dp"/>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:fontFamily="sans-serif-light"
+                                        android:gravity="center"
+                                        android:text="@string/last_updated"
                                         android:textSize="14sp" />
 
                                     <TextView
@@ -392,7 +400,7 @@
                                     android:layout_marginStart="10dp"
                                     android:layout_marginTop="8dp"
                                     android:fontFamily="sans-serif-light"
-                                    android:text="Today's Forecast:"
+                                    android:text="@string/today_forecast"
                                     android:textSize="18sp"
                                     android:textStyle="bold" />
 
@@ -424,7 +432,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_marginStart="10dp"
                                             android:fontFamily="sans-serif-light"
-                                            android:text="Sunrise and Sunset:"
+                                            android:text="@string/sunrise_and_sunset"
                                             android:textSize="18sp"
                                             android:textStyle="bold" />
 
@@ -464,7 +472,7 @@
                                                     android:layout_height="wrap_content"
                                                     android:fontFamily="sans-serif-light"
                                                     android:gravity="center"
-                                                    android:text="Sunrise"
+                                                    android:text="@string/sunrise"
                                                     android:textSize="16sp"
                                                     android:textStyle="bold" />
 
@@ -507,7 +515,7 @@
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:fontFamily="sans-serif-light"
-                                                    android:text="Sunset"
+                                                    android:text="@string/sunset"
                                                     android:textSize="16sp"
                                                     android:textStyle="bold" />
 
@@ -547,7 +555,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_marginStart="10dp"
                                             android:fontFamily="sans-serif-light"
-                                            android:text="Moonrise and Moonset:"
+                                            android:text="@string/moonrise_and_moonset"
                                             android:textSize="18sp"
                                             android:textStyle="bold" />
 
@@ -587,7 +595,7 @@
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:fontFamily="sans-serif-light"
-                                                    android:text="Moonrise"
+                                                    android:text="@string/moonrise"
                                                     android:textSize="16sp"
                                                     android:textStyle="bold" />
 
@@ -630,7 +638,7 @@
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:fontFamily="sans-serif-light"
-                                                    android:text="Moonset"
+                                                    android:text="@string/moonset"
                                                     android:textSize="16sp"
                                                     android:textStyle="bold" />
 
@@ -680,7 +688,7 @@
                                                     android:layout_height="wrap_content"
                                                     android:layout_marginEnd="5dp"
                                                     android:fontFamily="sans-serif-light"
-                                                    android:text="Moon Phase:"
+                                                    android:text="@string/moon_phase"
                                                     android:textSize="16sp"
                                                     android:textStyle="bold" />
 
@@ -704,7 +712,7 @@
                                                     android:layout_height="wrap_content"
                                                     android:layout_marginEnd="5dp"
                                                     android:fontFamily="sans-serif-light"
-                                                    android:text="Illumination:"
+                                                    android:text="@string/illumination"
                                                     android:textSize="16sp"
                                                     android:textStyle="bold" />
 
@@ -739,7 +747,7 @@
                                         android:layout_marginStart="10dp"
                                         android:layout_marginTop="8dp"
                                         android:fontFamily="sans-serif-light"
-                                        android:text="3-Days Forecast:"
+                                        android:text="@string/next_three_days"
                                         android:textSize="18sp"
                                         android:textStyle="bold" />
 
@@ -756,18 +764,16 @@
                             </LinearLayout>
 
                             <TextView
+                                android:id="@+id/txt_weather_api_link"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
-                                android:layout_marginTop="8dp"
-                                android:layout_marginBottom="8dp"
-                                android:drawablePadding="5dp"
+                                android:layout_marginTop="12dp"
+                                android:layout_marginBottom="12dp"
                                 android:fontFamily="sans-serif-light"
                                 android:gravity="center"
-                                android:text="Source: weatherapi.com"
-                                android:textSize="14sp"
-                                app:drawableStartCompat="@drawable/ic_cloud"
-                                app:drawableTint="@color/light_blue" />
+                                android:text="@string/powered_by_weather_api"
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 

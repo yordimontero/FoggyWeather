@@ -1,6 +1,8 @@
 package com.circleappsstudio.foggyweather.ui.home
 
 import android.Manifest
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -26,6 +28,9 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.circleappsstudio.foggyweather.application.AppConstants.FORECAST_DATE
+import com.circleappsstudio.foggyweather.application.AppConstants.FORECAST_LIST
+import com.circleappsstudio.foggyweather.application.AppConstants.FORECAST_LIST_POSITION
 import com.circleappsstudio.foggyweather.core.ui.hide
 import com.circleappsstudio.foggyweather.core.ui.hideKeyboard
 import com.circleappsstudio.foggyweather.core.ui.show
@@ -66,6 +71,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         searchViewSetup()
         pullToRefreshSetup()
         currentDateTextViewSetup()
+        goToWeatherApi()
 
         requestLocationPermissionsForSingleTime()
 
@@ -87,7 +93,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                 // If SearchView has focus, show TextView that gets current location.
                 showRequestCurrentLocationTextView()
             } else {
-                // If SearchView hasn't focus, hide TextView that gets current location.
+                // If SearchView has not focus, hide TextView that gets current location.
                 hideRequestCurrentLocationTextView()
             }
 
@@ -112,7 +118,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                         // If SearchView submitted text has not at least 3 characters, show error message.
                         requireContext().showToast(
                             requireContext(),
-                            "Location not founded!"
+                            resources.getString(R.string.location_not_founded)
                         )
 
                     }
@@ -129,7 +135,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                         // If SearchView text is empty, hide AutocompleteRecyclerView.
                         hideAutocompleteRecyclerView()
                     } else {
-                        // If SearchView text is not empty, show AutocompleteRecyclerView and search location.
+                        // If SearchView text is not empty, show AutocompleteRecyclerView and search locations.
                         showAutocompleteRecyclerView()
                         checkInternetToGetAutocompleteSearchDataObserver(it)
                     }
@@ -263,7 +269,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
                         requireContext().showToast(
                             requireContext(),
-                            "Something went wrong: ${resultEmitted.exception.message}"
+                            "${resources.getString(R.string.something_went_wrong)}: ${resultEmitted.exception.message}"
                         )
 
                         hideMainProgressbar()
@@ -338,7 +344,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
                     requireContext().showToast(
                         requireContext(),
-                        "Something went wrong: ${resultEmitted.exception.message}"
+                        "${resources.getString(R.string.something_went_wrong)}: ${resultEmitted.exception.message}"
                     )
 
                     hideMainLayout()
@@ -390,7 +396,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
                         requireContext().showToast(
                             requireContext(),
-                            "Something went wrong: ${resultEmitted.exception.message}"
+                            "${resources.getString(R.string.something_went_wrong)}: ${resultEmitted.exception.message}"
                         )
 
                         hideRvAutocompleteProgressbar()
@@ -516,7 +522,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
                 requireContext().showToast(
                     requireContext(),
-                    "Location permission not granted!"
+                    resources.getString(R.string.location_permissions_not_granted)
                 )
 
                 showMainLayout()
@@ -528,7 +534,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
             requireContext().showToast(
                 requireContext(),
-                "Something went wrong"
+                resources.getString(R.string.something_went_wrong)
             )
 
             hideMainLayout()
@@ -596,11 +602,11 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
         binding.txtCondition.text = condition
 
-        binding.txtFeelsLike.text = "${feelsLike}°C"
+        binding.txtFeelsLike.text = "${feelsLike}${resources.getString(R.string.celsius)}"
 
-        val hour = splitDate(lastUpdated)
+        val hour = splitDate(lastUpdated, 1)
 
-        val formattedHour = formatHour(
+        val formattedHour = getAnyHourFormatted(
             splitHour(hour, 0),
             splitHour(hour, 1),
             requireContext()
@@ -621,12 +627,12 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
             if (index == 0) {
 
-                binding.txtMaxTemp.text = "${forecastDay.day.maxtemp_c}°C"
-                binding.txtMinTemp.text = "${forecastDay.day.mintemp_c}°C"
+                binding.txtMaxTemp.text = "${forecastDay.day.maxtemp_c}${resources.getString(R.string.celsius)}"
+                binding.txtMinTemp.text = "${forecastDay.day.mintemp_c}${resources.getString(R.string.celsius)}"
 
-                val hour = splitHour(splitDate(fetchedHour), 0)
-                val minute = splitHour(splitDate(fetchedHour), 1)
-                val formattedHour = formatHour(hour, minute, requireContext())
+                val hour = splitHour(splitDate(fetchedHour, 1), 0)
+                val minute = splitHour(splitDate(fetchedHour, 1), 1)
+                val formattedHour = getAnyHourFormatted(hour, minute, requireContext())
 
                 val forecastRecyclerViewPosition = getCurrentForecastCard(
                     formattedHour, requireContext()
@@ -753,6 +759,24 @@ class HomeFragment : Fragment(R.layout.fragment_home),
             Calendar.getInstance().time
         )
     }
+    
+    private fun goToWeatherApi() {
+        /*
+            Method to navigate to weatherapi.com web page.
+        */
+        binding.txtWeatherApiLink.setOnClickListener {
+
+            val intent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(
+                    resources.getString(R.string.weather_api_url)
+                )
+            )
+
+            requireContext().startActivity(intent)
+
+        }
+    }
 
     private fun goToForecastByDayFragment(date: String) {
         /*
@@ -760,9 +784,9 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         */
         navController.navigate(
             R.id.fragment_forecast_by_day, bundleOf(
-                "forecastList" to forecastDayList,
-                "forecastListPosition" to forecast3DaysAdapterPosition,
-                "forecastDate" to date
+                FORECAST_LIST to forecastDayList,
+                FORECAST_LIST_POSITION to forecast3DaysAdapterPosition,
+                FORECAST_DATE to date
             )
         )
 
@@ -808,7 +832,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
     override fun onForecastDayClick(forecastDay: ForecastDay, position: Int) {
         /*
-            Method to set click function in RvForecast RecyclerView.
+            Method to set click function in RvForecast3Days RecyclerView.
         */
         forecast3DaysAdapterPosition = position
         goToForecastByDayFragment(forecastDay.date)

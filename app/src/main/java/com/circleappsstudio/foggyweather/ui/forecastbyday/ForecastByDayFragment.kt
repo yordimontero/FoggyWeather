@@ -9,6 +9,9 @@ import androidx.navigation.Navigation
 import com.circleappsstudio.foggyweather.R
 import com.circleappsstudio.foggyweather.core.Result
 import androidx.lifecycle.Observer
+import com.circleappsstudio.foggyweather.application.AppConstants.FORECAST_DATE
+import com.circleappsstudio.foggyweather.application.AppConstants.FORECAST_LIST
+import com.circleappsstudio.foggyweather.application.AppConstants.FORECAST_LIST_POSITION
 import com.circleappsstudio.foggyweather.core.time.convertStringToDate
 import com.circleappsstudio.foggyweather.core.time.getDateWithMonthName
 import com.circleappsstudio.foggyweather.core.ui.customdialogs.OnInternetCheckDialogClickListener
@@ -89,13 +92,13 @@ class ForecastByDayFragment: Fragment(R.layout.fragment_forecast_by_day),
         */
         arguments?.let { bundle ->
 
-            forecastDayList = bundle.get("forecastList") as List<ForecastDay>?
+            forecastDayList = bundle.get(FORECAST_LIST) as List<ForecastDay>?
 
             if (forecastDayList == null) forecastDayList = listOf()
 
-            forecastAdapterPosition = bundle.getInt("forecastListPosition")
+            forecastAdapterPosition = bundle.getInt(FORECAST_LIST_POSITION)
 
-            dateString = bundle.getString("forecastDate").toString()
+            dateString = bundle.getString(FORECAST_DATE).toString()
 
         }
 

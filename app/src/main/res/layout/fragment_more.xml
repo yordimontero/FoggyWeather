@@ -30,7 +30,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:fontFamily="sans-serif-light"
-                    android:text="Support our work:"
+                    android:text="@string/support_our_work"
                     android:textAlignment="center"
                     android:textSize="18sp" />
 
@@ -81,7 +81,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
-                                android:text="Rate this app!"
+                                android:text="@string/rate_this_app"
                                 android:fontFamily="sans-serif-light"
                                 android:textAlignment="center"
                                 android:textSize="16sp" />
@@ -97,7 +97,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:fontFamily="sans-serif-light"
-                    android:text="Learn more about us:"
+                    android:text="@string/learn_more_about_us"
                     android:textAlignment="center"
                     android:textSize="18sp" />
 
@@ -147,7 +147,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
-                                android:text="Visit our website!"
+                                android:text="@string/visit_our_website"
                                 android:fontFamily="sans-serif-light"
                                 android:textAlignment="center"
                                 android:textSize="16sp" />
@@ -204,7 +204,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
-                                android:text="Look out our others apps!"
+                                android:text="@string/look_out_our_other_apps"
                                 android:fontFamily="sans-serif-light"
                                 android:textAlignment="center"
                                 android:textSize="16sp" />
@@ -261,7 +261,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
-                                android:text="Privacy policy"
+                                android:text="@string/privacy_policy"
                                 android:fontFamily="sans-serif-light"
                                 android:textAlignment="center"
                                 android:textSize="16sp" />
@@ -271,12 +271,6 @@
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
-
-
-
-
-
-
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_facebook"
@@ -324,7 +318,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
-                                android:text="Find us on Facebook!"
+                                android:text="@string/find_us_on_facebook"
                                 android:fontFamily="sans-serif-light"
                                 android:textAlignment="center"
                                 android:textSize="16sp" />
@@ -381,7 +375,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
-                                android:text="Find us on Twitter!"
+                                android:text="@string/find_us_on_twitter"
                                 android:fontFamily="sans-serif-light"
                                 android:textAlignment="center"
                                 android:textSize="16sp" />
@@ -397,7 +391,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:fontFamily="sans-serif-light"
-                    android:text="Support:"
+                    android:text="@string/support"
                     android:textAlignment="center"
                     android:textSize="18sp" />
 
@@ -447,7 +441,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
-                                android:text="Questions or suggestions? Contact us!"
+                                android:text="@string/questions_or_suggestions"
                                 android:fontFamily="sans-serif-light"
                                 android:textAlignment="center"
                                 android:textSize="16sp" />

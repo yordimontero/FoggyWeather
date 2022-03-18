@@ -1,5 +1,65 @@
 <resources>
+
+    <!-- Base -->
     <string name="app_name">FoggyWeather</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="celsius">°C</string>
+    <string name="bullet_point">•</string>
+    <string name="feels_like">Feels like:</string>
+    <string name="powered_by_weather_api">Powered by WeatherAPI.com</string>
+    <string name="choose_title">Chooser Title</string>
+
+
+    <!-- HomeFragment -->
+    <string name="location_not_founded">Location not founded!</string>
+    <string name="location_permissions_not_granted">Location permissions not granted!</string>
+    <string name="search_any_location">Search any location</string>
+    <string name="current_location">Current location</string>
+    <string name="today">Today</string>
+    <string name="condition">Condition:</string>
+    <string name="last_updated">Last updated:</string>
+    <string name="today_forecast">Today\'s forecast:</string>
+    <string name="sunrise_and_sunset">Sunrise and Sunset:</string>
+    <string name="sunrise">Sunrise</string>
+    <string name="sunset">Sunset</string>
+    <string name="moonrise_and_moonset">Moonrise and Moonset:</string>
+    <string name="moonrise">Moonrise</string>
+    <string name="moonset">Moonset</string>
+    <string name="moon_phase">Moon phase:</string>
+    <string name="illumination">Illumination:</string>
+    <string name="next_three_days">Next 3 days:</string>
+    <string name="weather_api_url">https://www.weatherapi.com/</string>
+
+
+    <!-- MoreFragment -->
+    <string name="circle_apps_studio_facebook_url">https://www.facebook.com/CircleAppsStudio/</string>
+    <string name="circle_apps_studio_twitter_url">https://twitter.com/CircleApps_</string>
+    <string name="circle_apps_studio_mail_to">mailto:soporte.circleappsstudio@gmail.com</string>
+    <string name="circle_apps_studio_web_page">https://circleappsstudio.com</string>
+    <string name="circle_apps_studio_privacy_policy">https://circleappsstudio.com/inicio/politicaprivacidad</string>
+    <string name="google_play_store_base_url">https://play.google.com/store/apps/details?id=</string>
+    <string name="google_play_store_more_apps_url">https://play.google.com/store/apps/dev?id=5626559995007331377</string>
+    <string name="support_our_work">Support our work:</string>
+    <string name="rate_this_app">Rate this app!</string>
+    <string name="learn_more_about_us">Learn more about us:</string>
+    <string name="visit_our_website">Visit our website!</string>
+    <string name="look_out_our_other_apps">Look out our others apps!</string>
+    <string name="privacy_policy">Privacy policy</string>
+    <string name="find_us_on_facebook">Find us on Facebook!</string>
+    <string name="find_us_on_twitter">Find us on Twitter!</string>
+    <string name="support">Support:</string>
+    <string name="questions_or_suggestions">Questions or suggestions? Contact us!</string>
+
+
+    <!-- ForecastByDayFragment -->
+    <string name="error_fetching_forecast_data">Error fetching forecast data!</string>
+    <string name="chance_of_rain">Chance of rain:</string>
+    <string name="percentage">%</string>
+
+
+    <!-- custom_internet_check_dialog -->
+    <string name="no_internet_connection">No internet connection!</string>
+    <string name="check_your_network_and_try_again">Check your network and try again</string>
+    <string name="try_again">Try again</string>
+
 </resources>

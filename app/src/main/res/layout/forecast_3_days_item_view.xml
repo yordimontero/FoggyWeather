@@ -35,7 +35,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawablePadding="4dp"
-                    tools:text="2021-05-06"
+                    tools:text="Fri, 18 Mar"
                     android:fontFamily="sans-serif-light"
                     android:textSize="16sp"
                     android:textStyle="bold"/>
@@ -90,7 +90,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="°C"
+                    android:text="@string/celsius"
                     android:fontFamily="sans-serif-light"
                     android:textSize="13sp"
                     android:layout_marginTop="2dp"
@@ -109,7 +109,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="°C"
+                    android:text="@string/celsius"
                     android:fontFamily="sans-serif-light"
                     android:textSize="13sp"
                     android:layout_marginTop="2dp"/>

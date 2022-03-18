@@ -42,11 +42,11 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         tools:text="00:00"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:layout_marginBottom="10dp"
                         app:drawableStartCompat="@drawable/ic_hour"
                         app:drawableTint="@color/light_blue"
-                        android:drawablePadding="1dp"/>
+                        android:drawablePadding="2dp"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -68,7 +68,7 @@
                             android:layout_marginTop="12dp"
                             android:fontFamily="sans-serif-light"
                             android:gravity="top"
-                            android:text="°C"
+                            android:text="@string/celsius"
                             android:textSize="25sp" />
 
                     </LinearLayout>
@@ -79,7 +79,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         tools:text="Partly Cloudy"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -90,8 +90,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif-light"
-                            android:text="Feels like"
-                            android:textSize="18sp"
+                            android:text="@string/feels_like"
+                            android:textSize="16sp"
                             android:layout_marginEnd="3dp"/>
 
                         <TextView
@@ -100,15 +100,15 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif-light"
                             tools:text="16"
-                            android:textSize="18sp" />
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/txt_feels_like_grades"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:fontFamily="sans-serif-light"
-                            android:text="°C"
-                            android:textSize="13sp"
+                            android:text="@string/celsius"
+                            android:textSize="11sp"
                             android:layout_marginTop="2dp"/>
 
                     </LinearLayout>
@@ -122,8 +122,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif-light"
-                            android:text="Chance of rain"
-                            android:textSize="18sp"
+                            android:text="@string/chance_of_rain"
+                            android:textSize="16sp"
                             android:layout_marginEnd="3dp"/>
 
                         <TextView
@@ -132,15 +132,15 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif-light"
                             tools:text="50"
-                            android:textSize="18sp"
+                            android:textSize="16sp"
                             android:layout_marginEnd="2dp"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif-light"
-                            android:text="%"
-                            android:textSize="18sp" />
+                            android:text="@string/percentage"
+                            android:textSize="16sp" />
 
                     </LinearLayout>
 
@@ -164,7 +164,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="4dp"
                         android:scaleType="centerCrop"
-                        tools:src="@drawable/ic_cloud"
+                        android:src="@drawable/ic_cloud_off"
                         tools:tint="@color/black"/>
 
                 </androidx.cardview.widget.CardView>

@@ -38,13 +38,12 @@
         android:id="@+id/txt_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="0dp"
+        android:layout_marginStart="15dp"
         android:fontFamily="sans-serif-light"
         tools:text="Sat, 3 Aug"
-        android:textSize="24sp"
+        android:textSize="18sp"
         android:textStyle="bold"
-        android:padding="10dp"/>
+        android:padding="6dp"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -56,7 +55,7 @@
             android:layout_height="wrap_content"
             android:drawablePadding="4dp"
             android:fontFamily="sans-serif-light"
-            android:text="Error fetching forecast data!"
+            android:text="@string/error_fetching_forecast_data"
             android:textSize="18sp"
             android:textStyle="bold"
             android:visibility="gone"

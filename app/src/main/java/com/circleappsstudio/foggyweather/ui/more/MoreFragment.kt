@@ -5,6 +5,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.circleappsstudio.foggyweather.R
 import com.circleappsstudio.foggyweather.databinding.FragmentMoreBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -13,10 +15,12 @@ import dagger.hilt.android.AndroidEntryPoint
 class MoreFragment : Fragment(R.layout.fragment_more) {
 
     private lateinit var binding: FragmentMoreBinding
+    private lateinit var navController: NavController
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentMoreBinding.bind(view)
+        navController = Navigation.findNavController(view)
 
         links()
     }
@@ -26,7 +30,7 @@ class MoreFragment : Fragment(R.layout.fragment_more) {
         goToTwitter()
         sendEmail()
         goToWebPage()
-        goToPolicyPrivacy()
+        goToPrivacyPolicy()
         rateApp()
         goToPlayStoreMoreApps()
     }
@@ -39,7 +43,9 @@ class MoreFragment : Fragment(R.layout.fragment_more) {
 
             val intent = Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse("https://www.facebook.com/CircleAppsStudio/")
+                Uri.parse(
+                    resources.getString(R.string.circle_apps_studio_facebook_url)
+                )
             )
 
             requireContext().startActivity(intent)
@@ -55,7 +61,9 @@ class MoreFragment : Fragment(R.layout.fragment_more) {
 
             val intent = Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse("https://twitter.com/CircleApps_")
+                Uri.parse(
+                    resources.getString(R.string.circle_apps_studio_twitter_url)
+                )
             )
 
             requireContext().startActivity(intent)
@@ -71,10 +79,16 @@ class MoreFragment : Fragment(R.layout.fragment_more) {
 
             val emailIntent = Intent(
                 Intent.ACTION_SENDTO,
-                Uri.parse("mailto:soporte.circleappsstudio@gmail.com")
+                Uri.parse(
+                    resources.getString(R.string.circle_apps_studio_mail_to)
+                )
             )
 
-            startActivity(Intent.createChooser(emailIntent, "Chooser title"))
+            startActivity(
+                Intent.createChooser(
+                    emailIntent, resources.getString(R.string.choose_title)
+                )
+            )
 
         }
 
@@ -88,7 +102,9 @@ class MoreFragment : Fragment(R.layout.fragment_more) {
 
             val intent = Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse("https://circleappsstudio.com")
+                Uri.parse(
+                    resources.getString(R.string.circle_apps_studio_web_page)
+                )
             )
 
             requireContext().startActivity(intent)
@@ -96,7 +112,7 @@ class MoreFragment : Fragment(R.layout.fragment_more) {
         }
     }
 
-    private fun goToPolicyPrivacy() {
+    private fun goToPrivacyPolicy() {
         /*
             Method to navigate to Circle Apps Studio's URL privacy policy.
         */
@@ -104,7 +120,9 @@ class MoreFragment : Fragment(R.layout.fragment_more) {
 
             val intent = Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse("https://circleappsstudio.com/inicio/politicaprivacidad")
+                Uri.parse(
+                    resources.getString(R.string.circle_apps_studio_privacy_policy)
+                )
             )
 
             requireContext().startActivity(intent)
@@ -122,7 +140,7 @@ class MoreFragment : Fragment(R.layout.fragment_more) {
 
             val intent = Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse("https://play.google.com/store/apps/details?id=$packageName")
+                Uri.parse("${resources.getString(R.string.google_play_store_base_url)}$packageName")
             )
 
             requireContext().startActivity(intent)
@@ -138,7 +156,9 @@ class MoreFragment : Fragment(R.layout.fragment_more) {
 
             val intent = Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse("https://play.google.com/store/apps/dev?id=5626559995007331377")
+                Uri.parse(
+                    resources.getString(R.string.google_play_store_more_apps_url)
+                )
             )
 
             requireContext().startActivity(intent)

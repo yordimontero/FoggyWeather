@@ -4,9 +4,9 @@ import android.Manifest
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
@@ -31,6 +31,7 @@ import androidx.navigation.Navigation
 import com.circleappsstudio.foggyweather.application.AppConstants.FORECAST_DATE
 import com.circleappsstudio.foggyweather.application.AppConstants.FORECAST_LIST
 import com.circleappsstudio.foggyweather.application.AppConstants.FORECAST_LIST_POSITION
+import com.circleappsstudio.foggyweather.core.permissions.checkIfGPSIsEnabled
 import com.circleappsstudio.foggyweather.core.ui.hide
 import com.circleappsstudio.foggyweather.core.ui.hideKeyboard
 import com.circleappsstudio.foggyweather.core.ui.show
@@ -71,7 +72,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         searchViewSetup()
         pullToRefreshSetup()
         currentDateTextViewSetup()
-        goToWeatherApi()
+        goToWeatherApiURL()
 
         requestLocationPermissionsForSingleTime()
 
@@ -176,6 +177,8 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
                         if (resultEmitted.data) {
 
+                            loadNativeAd()
+
                             fetchAllWeatherDataObserver(
                                 location = coordinates,
                                 date = currentDate
@@ -236,7 +239,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
     }
 
-    @ExperimentalCoroutinesApi
+    /*@ExperimentalCoroutinesApi
     private fun fetchLocationObserver() {
         /*
             Method to fetch current location from GPS.
@@ -269,16 +272,82 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
                         requireContext().showToast(
                             requireContext(),
-                            "${resources.getString(R.string.something_went_wrong)}: ${resultEmitted.exception.message}"
+                            "${resources.getString(R.string.something_went_wrong)}: ${resources.getString(R.string.could_not_get_location)}",
+                            Toast.LENGTH_LONG
                         )
 
                         hideMainProgressbar()
+                        hideMainLayout()
 
                     }
 
                 }
 
             })
+
+    }*/
+
+    @ExperimentalCoroutinesApi
+    private fun fetchLocationObserver() {
+        /*
+            Method to fetch current location from GPS.
+        */
+        
+        if (checkIfGPSIsEnabled(requireContext())) {
+
+            locationViewModel.fetchLocation(requireContext())
+                .observe(viewLifecycleOwner, Observer { resultEmitted ->
+
+                    when (resultEmitted) {
+
+                        is Result.Loading -> {
+                            showMainProgressbar()
+                        }
+
+                        is Result.Success -> {
+
+                            if (!checkIfThereIsAnyLastSearchedLocation()) {
+
+                                if (checkIfGPSIsEnabled(requireContext())) {
+                                    /*
+                                        If there's not any last searched location, coordinates will be the GPS data.
+                                        If there's some last searched location, coordinates will be the that location.
+                                    */
+                                    coordinates = "${resultEmitted.data[0]},${resultEmitted.data[1]}"
+                                    setLastLocationSearchedPreference(coordinates)
+
+                                }
+
+                            }
+
+                            checkInternetToGetWeatherDataObserver()
+
+                        }
+
+                        is Result.Failure -> {
+
+                            requireContext().showToast(
+                                requireContext(),
+                                "${resources.getString(R.string.something_went_wrong)}: ${resources.getString(R.string.could_not_get_location)}",
+                                Toast.LENGTH_LONG
+                            )
+
+                            hideMainProgressbar()
+                            hideMainLayout()
+
+                        }
+
+                    }
+
+                })
+            
+        } else {
+
+            checkIfThereIsAnyLastSearchedLocation()
+            checkInternetToGetWeatherDataObserver()
+
+        }
+        
 
     }
 
@@ -337,6 +406,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                     )
 
                     hideMainProgressbar()
+                    showMainLayout()
 
                 }
 
@@ -488,16 +558,18 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         /*
             Method to check if location permission (GPS) are granted.
         */
-        if (checkIfLocationPermissionsAreGranted(requireContext())) {
-            // Location permissions are requested already.
-            showMainLayout()
+        if (
+            checkIfLocationPermissionsAreGranted(requireContext())
+        ) {
+            /*
+                Location permissions are requested already and GPS is enabled.
+            */
             fetchLocationObserver()
-
         } else {
-            // Location permissions are not requested.
-            showMainLayout()
+            /*
+                Location permissions are not requested and GPS is disabled.
+            */
             getWeatherFromLastSearchedLocation()
-
         }
 
     }
@@ -511,7 +583,9 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
         if (requestCode == AppConstants.LOCATION_REQUEST_CODE) {
 
-            if (checkIfLocationPermissionsAreGranted(requireContext())) {
+            if (
+                checkIfLocationPermissionsAreGranted(requireContext())
+            ) {
 
                 fetchLocationObserver()
                 clearSearchView()
@@ -760,7 +834,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         )
     }
     
-    private fun goToWeatherApi() {
+    private fun goToWeatherApiURL() {
         /*
             Method to navigate to weatherapi.com web page.
         */

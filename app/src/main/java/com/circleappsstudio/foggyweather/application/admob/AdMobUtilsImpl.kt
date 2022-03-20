@@ -26,6 +26,8 @@ class AdMobUtilsImpl @Inject constructor(
         /*
             Method to load a NativeAd.
         */
+        // ID NativeAd: ...
+        // ID Test NativeAd: ca-app-pub-3940256099942544/2247696110
         val adLoader: AdLoader = AdLoader.Builder(
             context,
             "ca-app-pub-3940256099942544/2247696110"
@@ -37,7 +39,7 @@ class AdMobUtilsImpl @Inject constructor(
         }.build()
 
         adLoader.loadAd(
-            AdRequest.Builder().build()
+            buildAdRequest()
         )
 
     }

@@ -5,9 +5,7 @@ import android.content.Context
 import com.circleappsstudio.foggyweather.core.permissions.checkIfLocationPermissionsAreGranted
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
-import dagger.hilt.android.qualifiers.ApplicationContext
+import com.google.android.gms.location.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.suspendCancellableCoroutine
 import javax.inject.Inject

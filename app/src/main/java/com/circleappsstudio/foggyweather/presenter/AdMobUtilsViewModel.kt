@@ -71,26 +71,6 @@ class AdMobUtilsViewModel @Inject constructor(
 
         }
 
-        /*try {
-
-            emit(
-                Result.Loading()
-            )
-
-            emit(
-                Result.Success(
-                    adMobUtils.showInterstitialAd()
-                )
-            )
-
-        } catch (e: Exception) {
-
-            emit(
-                Result.Failure(e)
-            )
-
-        }*/
-
     }
 
     fun showBannerAd(banner: AdView) {

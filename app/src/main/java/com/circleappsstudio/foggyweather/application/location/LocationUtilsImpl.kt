@@ -2,6 +2,7 @@ package com.circleappsstudio.foggyweather.application.location
 
 import android.annotation.SuppressLint
 import android.content.Context
+import com.circleappsstudio.foggyweather.core.permissions.checkIfGPSIsEnabled
 import com.circleappsstudio.foggyweather.core.permissions.checkIfLocationPermissionsAreGranted
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
@@ -22,37 +23,76 @@ class LocationUtilsImpl @Inject constructor(): LocationUtils {
         /*
             Method to get current location (latitude & longitude) from GPS.
         */
-        var latitude = ""
-        var longitude = ""
 
-        val currentLocation = mutableListOf<String>()
+        // Checking if GPS is enabled.
+        if (checkIfGPSIsEnabled(context)) {
+            // GPS is enabled.
 
-        // Check is current device has Google Play Services.
-        if (GoogleApiAvailability.getInstance()
-                .isGooglePlayServicesAvailable(context) == ConnectionResult.SUCCESS) {
-            // Google Play Services are available.
+            var latitude = ""
+            var longitude = ""
 
-            fusedLocationProviderClient =
-                LocationServices.getFusedLocationProviderClient(context)
+            val currentLocation = mutableListOf<String>()
 
-            if (checkIfLocationPermissionsAreGranted(context)) {
+            // Check if current device has Google Play Services.
+            if (GoogleApiAvailability.getInstance()
+                    .isGooglePlayServicesAvailable(context) == ConnectionResult.SUCCESS) {
+                // Google Play Services are available.
 
-                val task = fusedLocationProviderClient.lastLocation
+                fusedLocationProviderClient =
+                    LocationServices.getFusedLocationProviderClient(context)
 
-                task.addOnSuccessListener { location ->
+                if (checkIfLocationPermissionsAreGranted(context)) {
 
-                    if (location != null) {
+                    val task = fusedLocationProviderClient.lastLocation
 
-                        latitude = location.latitude.toString()
-                        longitude = location.longitude.toString()
+                    task.addOnSuccessListener { location ->
 
-                        currentLocation.add(latitude)
-                        currentLocation.add(longitude)
+                        if (location != null) {
 
-                        cont.resume(currentLocation)
+                            latitude = location.latitude.toString()
+                            longitude = location.longitude.toString()
 
-                    } else {
-                        cont.cancel()
+                            currentLocation.add(latitude)
+                            currentLocation.add(longitude)
+
+                            cont.resume(currentLocation)
+
+                        } else {
+                            cont.cancel()
+                        }
+
+                    }
+
+                }
+
+            } else {
+                // Google Play Services are not available.
+
+                huaweiFusedLocationProviderClient =
+                    com.huawei.hms.location.LocationServices.getFusedLocationProviderClient(
+                        context
+                    )
+
+                if (checkIfLocationPermissionsAreGranted(context)) {
+
+                    val task = huaweiFusedLocationProviderClient.lastLocation
+
+                    task.addOnSuccessListener { location ->
+
+                        if (location != null) {
+
+                            latitude = location.latitude.toString()
+                            longitude = location.longitude.toString()
+
+                            currentLocation.add(latitude)
+                            currentLocation.add(longitude)
+
+                            cont.resume(currentLocation)
+
+                        } else {
+                            cont.cancel()
+                        }
+
                     }
 
                 }
@@ -60,37 +100,8 @@ class LocationUtilsImpl @Inject constructor(): LocationUtils {
             }
 
         } else {
-            // Google Play Services are not available.
-
-            huaweiFusedLocationProviderClient =
-                com.huawei.hms.location.LocationServices.getFusedLocationProviderClient(
-                    context
-                )
-
-            if (checkIfLocationPermissionsAreGranted(context)) {
-
-                val task = huaweiFusedLocationProviderClient.lastLocation
-
-                task.addOnSuccessListener { location ->
-
-                    if (location != null) {
-
-                        latitude = location.latitude.toString()
-                        longitude = location.longitude.toString()
-
-                        currentLocation.add(latitude)
-                        currentLocation.add(longitude)
-
-                        cont.resume(currentLocation)
-
-                    } else {
-                        cont.cancel()
-                    }
-
-                }
-
-            }
-
+            // GPS is disabled.
+            cont.cancel()
         }
 
     }

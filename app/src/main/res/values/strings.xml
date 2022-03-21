@@ -10,6 +10,7 @@
     <string name="choose_title">Chooser Title</string>
     <string name="home">Home</string>
     <string name="more">More</string>
+    <string name="got_it">Got it</string>
 
 
     <!-- app_rate_dialog -->
@@ -69,7 +70,12 @@
 
     <!-- custom_internet_check_dialog -->
     <string name="no_internet_connection">No internet connection!</string>
-    <string name="check_your_network_and_try_again">Check your network and try again</string>
+    <string name="check_your_network_and_try_again">Please check your network</string>
     <string name="try_again">Try again</string>
+
+
+    <!-- custom_gps_check_dialog -->
+    <string name="gps_is_off">GPS is off!</string>
+    <string name="turn_on_gps">Please turn on your GPS</string>
 
 </resources>

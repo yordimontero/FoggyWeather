@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import com.circleappsstudio.foggyweather.databinding.CustomAppRateDialogBinding
+import com.circleappsstudio.foggyweather.databinding.CustomGpsCheckDialogBinding
 import com.circleappsstudio.foggyweather.databinding.CustomInternetCheckDialogBinding
 
 interface OnInternetCheckDialogClickListener {
@@ -90,6 +91,39 @@ fun appRateDialog(
     // Set Listener:
     binding.btnCancel.setOnClickListener {
         // Close dialog:
+        dialogInstance.dismiss()
+    }
+
+}
+
+fun gpsCheckDialog(
+    activity: Activity,
+    context: Context,
+    dialogListener: OnConfirmationDialogClickListener
+) {
+    /*
+        Method to show a dialog when GPS is turned off.
+    */
+
+    // Inflate the dialog as custom view:
+    val binding = CustomGpsCheckDialogBinding.inflate(LayoutInflater.from(context))
+
+    // AlertDialogBuilder:
+    val dialogBuilder = AlertDialog.Builder(activity).setView(binding.root)
+    dialogBuilder.setCancelable(false)
+
+    // Show dialog:
+    val dialogInstance = dialogBuilder.show()
+
+    // Setting dialog with transparent background:
+    dialogInstance.window?.setBackgroundDrawable(
+        ColorDrawable(Color.TRANSPARENT)
+    )
+
+    // Set Listener:
+    binding.btnTurnGpsOn.setOnClickListener {
+        // Close dialog:
+        dialogListener.confirmationDialogPositiveButtonClicked()
         dialogInstance.dismiss()
     }
 

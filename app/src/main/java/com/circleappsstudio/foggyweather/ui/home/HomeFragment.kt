@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Toast
@@ -32,6 +33,8 @@ import com.circleappsstudio.foggyweather.application.AppConstants.FORECAST_DATE
 import com.circleappsstudio.foggyweather.application.AppConstants.FORECAST_LIST
 import com.circleappsstudio.foggyweather.application.AppConstants.FORECAST_LIST_POSITION
 import com.circleappsstudio.foggyweather.core.permissions.checkIfGPSIsEnabled
+import com.circleappsstudio.foggyweather.core.ui.customdialogs.OnConfirmationDialogClickListener
+import com.circleappsstudio.foggyweather.core.ui.customdialogs.gpsCheckDialog
 import com.circleappsstudio.foggyweather.core.ui.hide
 import com.circleappsstudio.foggyweather.core.ui.hideKeyboard
 import com.circleappsstudio.foggyweather.core.ui.show
@@ -44,7 +47,8 @@ import java.util.*
 class HomeFragment : Fragment(R.layout.fragment_home),
     Forecast3DaysAdapter.OnForecastDayClickListener,
     AutocompleteAdapter.OnLocationClickListener,
-    OnInternetCheckDialogClickListener{
+    OnInternetCheckDialogClickListener,
+    OnConfirmationDialogClickListener {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var navController: NavController
@@ -78,7 +82,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
         checkIfThereIsAnyLastSearchedLocation()
 
-        getWeatherFromCurrentLocation()
+        getWeatherFromCurrentLocationTextViewClick()
 
         checkIfLocationPermissionsAreGranted()
 
@@ -239,60 +243,14 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
     }
 
-    /*@ExperimentalCoroutinesApi
-    private fun fetchLocationObserver() {
-        /*
-            Method to fetch current location from GPS.
-        */
-        locationViewModel.fetchLocation(requireContext())
-            .observe(viewLifecycleOwner, Observer { resultEmitted ->
-
-                when (resultEmitted) {
-
-                    is Result.Loading -> {
-                        showMainProgressbar()
-                    }
-
-                    is Result.Success -> {
-
-                        if (!checkIfThereIsAnyLastSearchedLocation()) {
-                            /*
-                                If there's not any last searched location, coordinates will be the GPS data.
-                                If there's some last searched location, coordinates will be the that location.
-                            */
-                            coordinates = "${resultEmitted.data[0]},${resultEmitted.data[1]}"
-                            setLastLocationSearchedPreference(coordinates)
-                        }
-
-                        checkInternetToGetWeatherDataObserver()
-
-                    }
-
-                    is Result.Failure -> {
-
-                        requireContext().showToast(
-                            requireContext(),
-                            "${resources.getString(R.string.something_went_wrong)}: ${resources.getString(R.string.could_not_get_location)}",
-                            Toast.LENGTH_LONG
-                        )
-
-                        hideMainProgressbar()
-                        hideMainLayout()
-
-                    }
-
-                }
-
-            })
-
-    }*/
-
     @ExperimentalCoroutinesApi
     private fun fetchLocationObserver() {
         /*
             Method to fetch current location from GPS.
         */
-        
+
+        showMainProgressbar()
+
         if (checkIfGPSIsEnabled(requireContext())) {
 
             locationViewModel.fetchLocation(requireContext())
@@ -307,16 +265,12 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                         is Result.Success -> {
 
                             if (!checkIfThereIsAnyLastSearchedLocation()) {
-
-                                if (checkIfGPSIsEnabled(requireContext())) {
-                                    /*
-                                        If there's not any last searched location, coordinates will be the GPS data.
-                                        If there's some last searched location, coordinates will be the that location.
-                                    */
-                                    coordinates = "${resultEmitted.data[0]},${resultEmitted.data[1]}"
-                                    setLastLocationSearchedPreference(coordinates)
-
-                                }
+                                /*
+                                    If there's not any last searched location, coordinates will be the GPS data.
+                                    If there's some last searched location, coordinates will be the that location.
+                                */
+                                coordinates = "${resultEmitted.data[0]},${resultEmitted.data[1]}"
+                                setLastLocationSearchedPreference(coordinates)
 
                             }
 
@@ -342,12 +296,21 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                 })
             
         } else {
-
-            checkIfThereIsAnyLastSearchedLocation()
-            checkInternetToGetWeatherDataObserver()
-
+            /*
+                If GPS is turned off but there is some last searched location, coordinates will be the that location.
+                If there is not any last searched location, gpsCheckDialog will be displayed.
+            */
+            if (checkIfThereIsAnyLastSearchedLocation()) {
+                // There is some last searched location.
+                checkInternetToGetWeatherDataObserver()
+            } else {
+                // There is not any last searched location.
+                showGPSCheckDialog()
+                hideMainProgressbar()
+                hideMainLayout()
+            }
+            
         }
-        
 
     }
 
@@ -534,19 +497,21 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         )
     }
 
-    private fun getWeatherFromCurrentLocation() {
+    private fun getWeatherFromCurrentLocationTextViewClick() {
         /*
             Method to get weather from current location when CurrentLocation TextView is clicked in RecyclerViewAutoComplete.
         */
-        hideMainLayout()
-
         binding.txtRequestCurrentLocation.setOnClickListener {
+
+            hideMainLayout()
+
             requestPermissions(
                 arrayOf(
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION
                 ), AppConstants.LOCATION_REQUEST_CODE
             )
+
             deleteLastSearchedLocationPreference()
             clearSearchView()
         }
@@ -587,10 +552,19 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                 checkIfLocationPermissionsAreGranted(requireContext())
             ) {
 
-                fetchLocationObserver()
-                clearSearchView()
-                hideRequestCurrentLocationTextView()
-                showMainLayout()
+                if (checkIfGPSIsEnabled(requireContext())) {
+
+                    fetchLocationObserver()
+                    clearSearchView()
+                    hideRequestCurrentLocationTextView()
+                    showMainLayout()
+
+                } else {
+                    showGPSCheckDialog()
+                    showRequestCurrentLocationTextView()
+                    hideMainLayout()
+                    hideMainProgressbar()
+                }
 
             } else {
 
@@ -833,6 +807,15 @@ class HomeFragment : Fragment(R.layout.fragment_home),
             Calendar.getInstance().time
         )
     }
+
+    private fun goToLocationSettings() {
+        /*
+            Method to navigate to Android's location settings.
+        */
+        requireActivity().startActivity(
+            Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+        )
+    }
     
     private fun goToWeatherApiURL() {
         /*
@@ -866,6 +849,13 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
     }
 
+    private fun requestFocusSearchView() {
+        /*
+            Method to request focus on SearchView.
+        */
+        binding.searchView.requestFocus()
+    }
+
     private fun clearSearchView() {
         /*
             Method to clear SearchView.
@@ -887,11 +877,31 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
     }
 
+    private fun showGPSCheckDialog() {
+        /*
+            Method to show internetCheckDialog.
+        */
+        gpsCheckDialog(
+            requireActivity(),
+            requireContext(),
+            this
+        )
+
+    }
+
     override fun internetCheckDialogPositiveButtonClicked() {
         /*
             Method to control positive button click on InternetCheckDialog.
         */
         checkInternetToGetWeatherDataObserver()
+    }
+
+    override fun confirmationDialogPositiveButtonClicked() {
+        /*
+            Method to control positive button click on GPSCheckDialog.
+        */
+        goToLocationSettings()
+        requestFocusSearchView()
     }
 
     override fun onLocationClick(locations: Locations) {

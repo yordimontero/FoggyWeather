@@ -14,7 +14,8 @@
         <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/activity_splash_screen.xml" value="0.33" />
         <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/autocomplete_item_view.xml" value="0.33" />
         <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/custom_app_rate_dialog.xml" value="0.5" />
-        <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/custom_internet_check_dialog.xml" value="0.33" />
+        <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/custom_gps_check_dialog.xml" value="0.33" />
+        <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/custom_internet_check_dialog.xml" value="0.25" />
         <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/custom_internet_dialog.xml" value="0.16574074074074074" />
         <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/custom_rate_app_dialog.xml" value="0.25" />
         <entry key="..\:/Users/monte/AndroidStudioProjects/FoggyWeather/app/src/main/res/layout/forecast_3_days_item_view.xml" value="0.33" />

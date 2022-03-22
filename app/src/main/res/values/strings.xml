@@ -15,7 +15,7 @@
 
     <!-- app_rate_dialog -->
     <string name="rate_app_title">Rate FoggyWeather!</string>
-    <string name="rate_app_msg">If you are enjoying FoggyWeather, would you mind taking a moment to rate it?\nThanks for your support!</string>
+    <string name="rate_app_msg">If you are enjoying this app, would you mind taking a moment to rate it?\nThanks for your support!</string>
     <string name="rate_it_now">Rate it now!</string>
     <string name="no_rate">No, thanks</string>
 

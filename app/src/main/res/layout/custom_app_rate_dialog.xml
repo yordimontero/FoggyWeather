@@ -30,21 +30,11 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-            <androidx.cardview.widget.CardView
+            <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="8dp"
-                app:cardPreventCornerOverlap="true"
-                app:cardUseCompatPadding="true">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:src="@drawable/rate_app"
-                    android:layout_gravity="center"
-                    android:scaleType="centerCrop"/>
-
-            </androidx.cardview.widget.CardView>
+                android:layout_height="250dp"
+                android:src="@drawable/rate_app"
+                android:layout_gravity="center" />
 
             <TextView
                 android:layout_width="wrap_content"

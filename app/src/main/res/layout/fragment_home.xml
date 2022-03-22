@@ -392,7 +392,8 @@
                                     android:layout_height="wrap_content"
                                     app:gnt_template_type="@layout/gnt_small_template_view"
                                     android:layout_marginTop="12dp"
-                                    android:layout_marginBottom="12dp"/>
+                                    android:layout_marginBottom="12dp"
+                                    android:visibility="gone"/>
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -722,7 +723,15 @@
                                                     android:layout_height="wrap_content"
                                                     android:fontFamily="sans-serif-light"
                                                     android:textSize="16sp"
+                                                    android:layout_marginEnd="2dp"
                                                     tools:text="0" />
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:fontFamily="sans-serif-light"
+                                                    android:text="@string/percentage"
+                                                    android:textSize="16sp" />
 
                                             </LinearLayout>
 

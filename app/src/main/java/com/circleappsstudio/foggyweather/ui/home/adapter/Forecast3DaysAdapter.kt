@@ -80,7 +80,7 @@ class Forecast3DaysAdapter(
                 binding.txtDate.text = getDateWithMonthName(it)
             }
 
-            binding.txtText.text = item.day.condition.text
+            binding.txtCondition.text = item.day.condition.text
 
             Glide.with(context)
                 .load("${AppConstants.BASE_IMAGE_URL}${item.day.condition.icon}")

@@ -28,28 +28,34 @@
         <item name="android:statusBarColor">@color/secondary_dark_mode</item>
     </style>
 
+    <!-- Custom style for background layouts -->
     <style name="CustomDarkLightModeBackgroundLayout" parent="Theme.AppCompat.NoActionBar">
         <item name="cardBackgroundColor">@color/dark_blue</item>
     </style>
 
+    <!-- Custom style for CardView backgrounds -->
     <style name="CustomDarkLightModeBackground" parent="Theme.AppCompat.NoActionBar">
         <item name="cardBackgroundColor">@color/primary_dark_mode</item>
     </style>
 
+    <!-- Custom style for secondary CardView backgrounds -->
     <style name="CustomDarkLightModeSecondaryBackground" parent="Theme.AppCompat.NoActionBar">
         <item name="cardBackgroundColor">@color/secondary_dark_mode</item>
     </style>
 
+    <!-- Custom style for SplashScreen background -->
     <style name="CustomSplashScreenBackgroundLayout" parent="Theme.AppCompat.NoActionBar">
         <item name="cardBackgroundColor">@color/secondary_dark_mode</item>
     </style>
 
+    <!-- Custom style for SearchView -->
     <style name="SearchViewStyle" parent="Widget.AppCompat.Light.SearchView">
         <item name="android:textSize">15sp</item>
         <item name="android:editTextColor">@color/light_mode_text_color</item>
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
+    <!-- Custom style for BottomNavigation -->
     <style name="BottomNavigation" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:background">@color/dark_blue</item>
         <item name="itemIconTint">@color/soft_white</item>

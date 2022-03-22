@@ -39,7 +39,7 @@
     <string name="illumination">Illumination:</string>
     <string name="next_three_days">Next 3 days:</string>
     <string name="weather_api_url">https://www.weatherapi.com/</string>
-    <string name="could_not_get_location">Could not get current location!</string>
+    <string name="could_not_get_location">could not get current location!</string>
 
 
     <!-- MoreFragment -->

@@ -76,7 +76,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         searchViewSetup()
         pullToRefreshSetup()
         currentDateTextViewSetup()
-        goToWeatherApiURL()
+        goToWeatherApiURLTextViewClick()
 
         requestLocationPermissionsForSingleTime()
 
@@ -252,7 +252,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         showMainProgressbar()
 
         if (checkIfGPSIsEnabled(requireContext())) {
-
+            // GPS is turned on.
             locationViewModel.fetchLocation(requireContext())
                 .observe(viewLifecycleOwner, Observer { resultEmitted ->
 
@@ -348,8 +348,6 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                         feelsLike = resultEmitted.data.t1.current.feelslike_c,
                         lastUpdated = resultEmitted.data.t1.current.last_updated
                     )
-                    //...
-
 
                     // t2 - getForecast:
                     forecastDayList = resultEmitted.data.t2.forecast.forecastday
@@ -377,7 +375,8 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
                     requireContext().showToast(
                         requireContext(),
-                        "${resources.getString(R.string.something_went_wrong)}: ${resultEmitted.exception.message}"
+                        "${resources.getString(R.string.something_went_wrong)}: ${resultEmitted.exception.message}",
+                        Toast.LENGTH_LONG
                     )
 
                     hideMainLayout()
@@ -429,7 +428,8 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
                         requireContext().showToast(
                             requireContext(),
-                            "${resources.getString(R.string.something_went_wrong)}: ${resultEmitted.exception.message}"
+                            "${resources.getString(R.string.something_went_wrong)}: ${resultEmitted.exception.message}",
+                            Toast.LENGTH_LONG
                         )
 
                         hideRvAutocompleteProgressbar()
@@ -527,12 +527,12 @@ class HomeFragment : Fragment(R.layout.fragment_home),
             checkIfLocationPermissionsAreGranted(requireContext())
         ) {
             /*
-                Location permissions are requested already and GPS is enabled.
+                Location permissions are requested already.
             */
             fetchLocationObserver()
         } else {
             /*
-                Location permissions are not requested and GPS is disabled.
+                Location permissions are not requested yet.
             */
             getWeatherFromLastSearchedLocation()
         }
@@ -551,26 +551,32 @@ class HomeFragment : Fragment(R.layout.fragment_home),
             if (
                 checkIfLocationPermissionsAreGranted(requireContext())
             ) {
-
+                // Location permissions are granted.
                 if (checkIfGPSIsEnabled(requireContext())) {
-
+                    // GPS is turned on, fetch weather data.
                     fetchLocationObserver()
                     clearSearchView()
                     hideRequestCurrentLocationTextView()
                     showMainLayout()
 
                 } else {
+                    // GPS is turned off, gpsCheckDialog will be displayed.
                     showGPSCheckDialog()
-                    showRequestCurrentLocationTextView()
+                    //showRequestCurrentLocationTextView()
                     hideMainLayout()
                     hideMainProgressbar()
+
                 }
 
             } else {
-
+                /*
+                    Location permissions are not granted.
+                    If there is some last searched location, get weather data from that location.
+                */
                 requireContext().showToast(
                     requireContext(),
-                    resources.getString(R.string.location_permissions_not_granted)
+                    resources.getString(R.string.location_permissions_not_granted),
+                    Toast.LENGTH_LONG
                 )
 
                 showMainLayout()
@@ -579,10 +585,12 @@ class HomeFragment : Fragment(R.layout.fragment_home),
             }
 
         } else {
+            // requestCode is wrong.
 
             requireContext().showToast(
                 requireContext(),
-                resources.getString(R.string.something_went_wrong)
+                resources.getString(R.string.something_went_wrong),
+                Toast.LENGTH_LONG
             )
 
             hideMainLayout()
@@ -817,9 +825,9 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         )
     }
     
-    private fun goToWeatherApiURL() {
+    private fun goToWeatherApiURLTextViewClick() {
         /*
-            Method to navigate to weatherapi.com web page.
+            Method to navigate to WeatherApi.com web page.
         */
         binding.txtWeatherApiLink.setOnClickListener {
 
@@ -879,7 +887,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
     private fun showGPSCheckDialog() {
         /*
-            Method to show internetCheckDialog.
+            Method to show gpsCheckDialog.
         */
         gpsCheckDialog(
             requireActivity(),

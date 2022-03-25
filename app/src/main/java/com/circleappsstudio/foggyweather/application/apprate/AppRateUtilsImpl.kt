@@ -15,18 +15,18 @@ class AppRateUtilsImpl @Inject constructor(
          */
 
         // Production:
-        /*AppRate.with(context)
+        AppRate.with(context)
             .setInstallDays(2)
-            .setLaunchTimes(4)
+            .setLaunchTimes(5)
             .setDebug(false)
-            .monitor()*/
+            .monitor()
 
         // Debug:
-        AppRate.with(context)
+        /*AppRate.with(context)
             .setInstallDays(0)
             .setLaunchTimes(3)
             .setDebug(true)
-            .monitor()
+            .monitor()*/
 
         return AppRate.with(context).shouldShowRateDialog()
 

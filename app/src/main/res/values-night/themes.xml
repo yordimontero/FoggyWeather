@@ -11,6 +11,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:navigationBarColor">@color/dark_blue</item>
     </style>
 
     <style name="Theme.FoggyWeather.SplashScreen" parent="Theme.MaterialComponents.Light.NoActionBar">
@@ -26,6 +27,7 @@
 
         <!-- Customize your theme here. -->
         <item name="android:statusBarColor">@color/secondary_dark_mode</item>
+        <item name="android:navigationBarColor">@color/secondary_dark_mode</item>
     </style>
 
     <!-- Custom style for background layouts -->

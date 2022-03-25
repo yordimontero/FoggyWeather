@@ -26,11 +26,11 @@ class AdMobUtilsImpl @Inject constructor(
         /*
             Method to load a NativeAd.
         */
-        // ID NativeAd: ...
+        // ID NativeAd: ca-app-pub-2174482267964625/5821815502
         // ID Test NativeAd: ca-app-pub-3940256099942544/2247696110
         val adLoader: AdLoader = AdLoader.Builder(
             context,
-            "ca-app-pub-3940256099942544/2247696110"
+            "ca-app-pub-2174482267964625/5821815502"
         ).forNativeAd {
             val styles = NativeTemplateStyle.Builder().build()
             val template: TemplateView = templateView
@@ -57,8 +57,8 @@ class AdMobUtilsImpl @Inject constructor(
             Method to load an InterstitialAd.
             It returns an InterstitialAd, that is used to show it in a View (Activity or Fragment).
         */
-        // ID Banner: ...
-        // ID Test Banner: ca-app-pub-3940256099942544/1033173712
+        // ID InterstitialAd: ca-app-pub-2174482267964625/9413972937
+        // ID Test InterstitialAd: ca-app-pub-3940256099942544/1033173712
 
         val loadCallback = object : InterstitialAdLoadCallback() {
 
@@ -76,7 +76,7 @@ class AdMobUtilsImpl @Inject constructor(
 
         InterstitialAd.load(
             context,
-            "ca-app-pub-3940256099942544/1033173712",
+            "ca-app-pub-2174482267964625/9413972937",
             buildAdRequest(),
             loadCallback
         )
@@ -87,7 +87,7 @@ class AdMobUtilsImpl @Inject constructor(
         /*
             Method to show an BannerAd.
         */
-        // ID Banner: ...
+        // ID Banner: ca-app-pub-2174482267964625/1458110228
         // ID Test Banner: ca-app-pub-3940256099942544/6300978111
         banner.loadAd(
             buildAdRequest()

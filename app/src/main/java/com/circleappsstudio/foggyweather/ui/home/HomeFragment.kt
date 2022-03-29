@@ -270,8 +270,6 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                                     If there's some last searched location, coordinates will be the that location.
                                 */
                                 coordinates = "${resultEmitted.data[0]},${resultEmitted.data[1]}"
-                                setLastLocationSearchedPreference(coordinates)
-
                             }
 
                             checkInternetToGetWeatherDataObserver()
@@ -294,7 +292,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                     }
 
                 })
-            
+
         } else {
             /*
                 If GPS is turned off but there is some last searched location, coordinates will be the that location.
@@ -309,7 +307,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                 hideMainProgressbar()
                 hideMainLayout()
             }
-            
+
         }
 
     }

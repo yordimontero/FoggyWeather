@@ -6,7 +6,9 @@ data class CurrentWeather(
     val country: String = "",
     val last_updated: String = "",
     val temp_c: Float = 0.0F,
+    val temp_f: Float = 0.0F,
     val feelslike_c: Float = 0.0F,
+    val feelslike_f: Float = 0.0F,
     val condition: CurrentWeatherCondition
 )
 

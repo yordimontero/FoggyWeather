@@ -203,12 +203,13 @@
                                         tools:text="22" />
 
                                     <TextView
+                                        android:id="@+id/txt_temperature_unit"
                                         android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
                                         android:layout_marginTop="12dp"
                                         android:fontFamily="sans-serif-light"
                                         android:gravity="top"
-                                        android:text="@string/celsius"
+                                        tools:text="@string/celsius"
                                         android:textSize="35sp" />
 
                                 </LinearLayout>
@@ -244,14 +245,30 @@
                                     app:layout_constraintStart_toStartOf="@+id/linearlayout1"
                                     app:layout_constraintTop_toBottomOf="@+id/linearlayout1" />
 
-                                <TextView
-                                    android:id="@+id/txt_feels_like"
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="5dp"
-                                    android:fontFamily="sans-serif-light"
-                                    android:textSize="15sp"
-                                    tools:text="30" />
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/txt_feels_like"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="5dp"
+                                        android:fontFamily="sans-serif-light"
+                                        android:textSize="15sp"
+                                        tools:text="30" />
+
+                                    <TextView
+                                        android:id="@+id/txt_temperature_unit_feels_like"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        tools:text="@string/celsius"
+                                        android:fontFamily="sans-serif-light"
+                                        android:textSize="11sp"
+                                        android:layout_marginTop="2dp"/>
+
+                                </LinearLayout>
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -279,7 +296,8 @@
                                     android:layout_marginStart="5dp"
                                     android:fontFamily="sans-serif-light"
                                     android:textSize="15sp"
-                                    tools:text="Partly Cloudy" />
+                                    tools:text="Partly Cloudy"
+                                    android:marqueeRepeatLimit="marquee_forever" />
 
                             </LinearLayout>
 
@@ -298,17 +316,48 @@
                                     app:cardPreventCornerOverlap="true"
                                     app:cardUseCompatPadding="true">
 
-                                    <TextView
-                                        android:id="@+id/txt_max_temp"
+                                    <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:fontFamily="sans-serif-light"
-                                        android:gravity="center"
-                                        android:padding="8dp"
-                                        android:textSize="20sp"
-                                        android:textStyle="bold"
-                                        app:drawableStartCompat="@drawable/ic_max"
-                                        tools:text="24.9°C" />
+                                        android:orientation="horizontal"
+                                        android:gravity="center">
+
+                                        <ImageView
+                                            android:layout_width="0dp"
+                                            android:layout_height="25dp"
+                                            android:layout_weight="1"
+                                            android:src="@drawable/ic_max"/>
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:orientation="horizontal"
+                                            android:gravity="center"
+                                            android:padding="8dp">
+
+                                            <TextView
+                                                android:id="@+id/txt_max_temp"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:fontFamily="sans-serif-light"
+                                                android:gravity="center"
+                                                android:textSize="20sp"
+                                                android:textStyle="bold"
+                                                tools:text="24.9" />
+
+                                            <TextView
+                                                android:id="@+id/txt_temperature_unit_max"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="match_parent"
+                                                tools:text="@string/celsius"
+                                                android:fontFamily="sans-serif-light"
+                                                android:textSize="13sp"
+                                                android:layout_marginTop="2dp"/>
+
+                                        </LinearLayout>
+
+                                    </LinearLayout>
 
                                 </androidx.cardview.widget.CardView>
 
@@ -322,17 +371,48 @@
                                     app:cardPreventCornerOverlap="true"
                                     app:cardUseCompatPadding="true">
 
-                                    <TextView
-                                        android:id="@+id/txt_min_temp"
+                                    <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:fontFamily="sans-serif-light"
-                                        android:gravity="center"
-                                        android:padding="8dp"
-                                        android:textSize="20sp"
-                                        android:textStyle="bold"
-                                        app:drawableStartCompat="@drawable/ic_min"
-                                        tools:text="18.3°C" />
+                                        android:orientation="horizontal"
+                                        android:gravity="center">
+
+                                        <ImageView
+                                            android:layout_width="0dp"
+                                            android:layout_height="25dp"
+                                            android:layout_weight="1"
+                                            android:src="@drawable/ic_max"/>
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:orientation="horizontal"
+                                            android:gravity="center"
+                                            android:padding="8dp">
+
+                                            <TextView
+                                                android:id="@+id/txt_min_temp"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:fontFamily="sans-serif-light"
+                                                android:gravity="center"
+                                                android:textSize="20sp"
+                                                android:textStyle="bold"
+                                                tools:text="24.9" />
+
+                                            <TextView
+                                                android:id="@+id/txt_temperature_unit_min"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="match_parent"
+                                                tools:text="@string/celsius"
+                                                android:fontFamily="sans-serif-light"
+                                                android:textSize="13sp"
+                                                android:layout_marginTop="2dp"/>
+
+                                        </LinearLayout>
+
+                                    </LinearLayout>
 
                                 </androidx.cardview.widget.CardView>
 

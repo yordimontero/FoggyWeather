@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -67,6 +68,8 @@ class MainActivity : AppCompatActivity(),
 
         initAppRate()
 
+        goToSettingsFragment()
+
     }
 
     override fun onClick(view: View?) {
@@ -88,16 +91,23 @@ class MainActivity : AppCompatActivity(),
                 R.id.fragment_home -> {
                     showBottomNavigation()
                     hideArrowBack()
+                    showSettings()
                 }
 
                 R.id.fragment_forecast_by_day -> {
                     hideBottomNavigation()
                     showArrowBack()
+                    showSettings()
+                }
+
+                R.id.fragment_more -> {
+                    showSettings()
                 }
 
                 else -> {
                     showBottomNavigation()
                     showArrowBack()
+                    hideSettings()
                 }
 
             }
@@ -149,6 +159,17 @@ class MainActivity : AppCompatActivity(),
         startActivity(intent)
     }
 
+    private fun goToSettingsFragment() {
+        /*
+            Method to go to SettingsFragment.
+        */
+        binding.btnSettings.setOnClickListener {
+            navController.navigate(
+                R.id.fragment_settings
+            )
+        }
+    }
+
     private fun showBottomNavigation() {
         /*
             Method to show BottomNavigation.
@@ -175,6 +196,20 @@ class MainActivity : AppCompatActivity(),
             Method to hide ArrowBack.
         */
         binding.btnArrowBack.hide()
+    }
+
+    private fun showSettings() {
+        /*
+            Method to show Settings button.
+        */
+        binding.btnSettings.show()
+    }
+
+    private fun hideSettings() {
+        /*
+            Method to hide Settings button.
+        */
+        binding.btnSettings.hide()
     }
 
     private fun showRateAppDialog() {

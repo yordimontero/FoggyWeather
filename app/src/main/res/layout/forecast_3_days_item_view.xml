@@ -89,9 +89,10 @@
                     app:drawableStartCompat="@drawable/ic_max" />
 
                 <TextView
+                    android:id="@+id/txt_temperature_unit_max"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="@string/celsius"
+                    tools:text="@string/celsius"
                     android:fontFamily="sans-serif-light"
                     android:textSize="13sp"
                     android:layout_marginTop="2dp"
@@ -108,9 +109,10 @@
                     android:layout_marginStart="5dp" />
 
                 <TextView
+                    android:id="@+id/txt_temperature_unit_min"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="@string/celsius"
+                    tools:text="@string/celsius"
                     android:fontFamily="sans-serif-light"
                     android:textSize="13sp"
                     android:layout_marginTop="2dp"/>

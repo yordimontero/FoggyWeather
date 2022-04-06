@@ -63,4 +63,18 @@ class GlobalPreferencesViewModel @Inject constructor(
         globalPreferences.deleteLastSearchedLocation()
     }
 
+    fun getTemperatureUnit(): String? {
+        /*
+            Method to get selected temperature unit.
+        */
+        return globalPreferences.getTemperatureUnit()
+    }
+
+    fun setTemperatureUnit(temperatureUnit: String) {
+        /*
+            Method to set selected temperature unit.
+        */
+        globalPreferences.setTemperatureUnit(temperatureUnit)
+    }
+
 }

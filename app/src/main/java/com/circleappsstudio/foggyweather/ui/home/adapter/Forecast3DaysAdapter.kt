@@ -6,7 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.circleappsstudio.foggyweather.R
 import com.circleappsstudio.foggyweather.application.AppConstants
+import com.circleappsstudio.foggyweather.application.AppConstants.CELSIUS
+import com.circleappsstudio.foggyweather.application.AppConstants.FAHRENHEIT
 import com.circleappsstudio.foggyweather.core.BaseViewHolder
 import com.circleappsstudio.foggyweather.core.time.convertStringToDate
 import com.circleappsstudio.foggyweather.core.time.getDateWithMonthName
@@ -15,6 +18,7 @@ import com.circleappsstudio.foggyweather.databinding.Forecast3DaysItemViewBindin
 
 class Forecast3DaysAdapter(
     private val forecast3DaysList: List<ForecastDay>,
+    private val temperatureUnit: String?,
     private val itemClickListener: OnForecastDayClickListener
 ): RecyclerView.Adapter<BaseViewHolder<*>>() {
 
@@ -87,9 +91,29 @@ class Forecast3DaysAdapter(
                 .centerCrop()
                 .into(binding.imgIcon)
 
-            binding.txtMaxTemp.text = item.day.maxtemp_c.toString()
+            when (temperatureUnit) {
 
-            binding.txtMinTemp.text = item.day.mintemp_c.toString()
+                CELSIUS -> {
+
+                    binding.txtMaxTemp.text = item.day.maxtemp_c.toString()
+                    binding.txtTemperatureUnitMax.text = context.resources.getString(R.string.celsius)
+
+                    binding.txtMinTemp.text = item.day.mintemp_c.toString()
+                    binding.txtTemperatureUnitMin.text = context.resources.getString(R.string.celsius)
+
+                }
+
+                FAHRENHEIT -> {
+
+                    binding.txtMaxTemp.text = item.day.maxtemp_f.toString()
+                    binding.txtTemperatureUnitMax.text = context.resources.getString(R.string.fahrenheit)
+
+                    binding.txtMinTemp.text = item.day.mintemp_f.toString()
+                    binding.txtTemperatureUnitMin.text = context.resources.getString(R.string.fahrenheit)
+
+                }
+
+            }
 
         }
 

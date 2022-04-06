@@ -30,7 +30,7 @@ class AdMobUtilsImpl @Inject constructor(
         // ID Test NativeAd: ca-app-pub-3940256099942544/2247696110
         val adLoader: AdLoader = AdLoader.Builder(
             context,
-            "ca-app-pub-2174482267964625/5821815502"
+            "ca-app-pub-3940256099942544/2247696110"
         ).forNativeAd {
             val styles = NativeTemplateStyle.Builder().build()
             val template: TemplateView = templateView
@@ -76,7 +76,7 @@ class AdMobUtilsImpl @Inject constructor(
 
         InterstitialAd.load(
             context,
-            "ca-app-pub-2174482267964625/9413972937",
+            "ca-app-pub-3940256099942544/1033173712",
             buildAdRequest(),
             loadCallback
         )

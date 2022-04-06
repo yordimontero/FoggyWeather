@@ -3,10 +3,13 @@ package com.circleappsstudio.foggyweather.core.ui
 import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
+import android.text.TextUtils
 import android.view.View
+import android.view.ViewTreeObserver
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.circleappsstudio.foggyweather.R
@@ -86,6 +89,28 @@ fun changeSelectedForecastCardViewColor(
 
 }
 
+fun checkCurrentUIMode(context: Context): String {
+    /*
+         Method to check current UI mode.
+    */
+    return when (context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+
+        Configuration.UI_MODE_NIGHT_YES -> {
+            "Dark Mode"
+        }
+
+        Configuration.UI_MODE_NIGHT_NO ->  {
+            "Light Mode"
+        }
+
+        else -> {
+            "Automatic Mode"
+        }
+
+    }
+
+}
+
 fun changeUnselectedForecastCardViewColor(
     context: Context,
     primaryCardView: CardView,
@@ -97,21 +122,15 @@ fun changeUnselectedForecastCardViewColor(
     /*
         Method to change all unselected cards aspect based if Light Mode or Dark Mode is enabled.
     */
-    when (context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+    when (checkCurrentUIMode(context)) {
 
-        Configuration.UI_MODE_NIGHT_YES -> {
+        "Dark Mode" -> {
             unselectedForecastCardViewDark(
                 context, primaryCardView, secondaryCardView, hour, temperature, grades
             )
         }
 
-        Configuration.UI_MODE_NIGHT_NO ->  {
-            unselectedForecastCardViewLight(
-                context, primaryCardView, secondaryCardView, hour, temperature, grades
-            )
-        }
-
-        Configuration.UI_MODE_NIGHT_UNDEFINED -> {
+        "Light Mode" ->  {
             unselectedForecastCardViewLight(
                 context, primaryCardView, secondaryCardView, hour, temperature, grades
             )
@@ -256,5 +275,62 @@ fun unselectedForecastCardViewDark(
     grades.setTextColor(
         ContextCompat.getColor(context, R.color.soft_white)
     )
+
+}
+
+fun checkIfDefaultModeIsEnabled(): Boolean {
+    /*
+         Method to check if default mode UI is enabled.
+    */
+    return AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_UNSPECIFIED
+}
+
+fun checkIfAutomaticModeIsEnabled(): Boolean {
+    /*
+         Method to check if automatic mode UI is enabled.
+    */
+    return AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+}
+
+fun setLightMode() {
+    /*
+         Method to set light mode UI.
+    */
+    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+}
+
+fun setDarkMode() {
+    /*
+         Method to set dark mode UI.
+    */
+    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+}
+
+fun setAutomaticMode() {
+    /*
+         Method to set automatic mode UI.
+    */
+    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+}
+
+fun addMarquee(textView: TextView) {
+    /*
+         Method to add marquee to any TextView.
+         NOTE: this method only work when TextView width is "wrap_content"
+    */
+    textView.viewTreeObserver.addOnGlobalLayoutListener(object :
+        ViewTreeObserver.OnGlobalLayoutListener {
+        override fun onGlobalLayout() {
+            val pixels = textView.measuredWidth - 1
+            val params = textView.layoutParams
+            params.width = pixels
+            textView.layoutParams = params
+            textView.isSelected = true
+            textView.ellipsize = TextUtils.TruncateAt.MARQUEE
+            textView.isSingleLine = true
+            textView.marqueeRepeatLimit = -1
+            textView.viewTreeObserver.removeOnGlobalLayoutListener(this)
+        }
+    })
 
 }

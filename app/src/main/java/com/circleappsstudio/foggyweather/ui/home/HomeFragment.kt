@@ -5,8 +5,11 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.view.ViewTreeObserver
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -29,16 +32,15 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.circleappsstudio.foggyweather.application.AppConstants.CELSIUS
+import com.circleappsstudio.foggyweather.application.AppConstants.FAHRENHEIT
 import com.circleappsstudio.foggyweather.application.AppConstants.FORECAST_DATE
 import com.circleappsstudio.foggyweather.application.AppConstants.FORECAST_LIST
 import com.circleappsstudio.foggyweather.application.AppConstants.FORECAST_LIST_POSITION
 import com.circleappsstudio.foggyweather.core.permissions.checkIfGPSIsEnabled
+import com.circleappsstudio.foggyweather.core.ui.*
 import com.circleappsstudio.foggyweather.core.ui.customdialogs.OnConfirmationDialogClickListener
 import com.circleappsstudio.foggyweather.core.ui.customdialogs.gpsCheckDialog
-import com.circleappsstudio.foggyweather.core.ui.hide
-import com.circleappsstudio.foggyweather.core.ui.hideKeyboard
-import com.circleappsstudio.foggyweather.core.ui.show
-import com.circleappsstudio.foggyweather.core.ui.showToast
 import com.circleappsstudio.foggyweather.data.model.ForecastDay
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.util.*
@@ -336,6 +338,106 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                         t3 = getAstronomy.
                     */
 
+                    when (getTemperatureUnitPreference()) {
+
+                        CELSIUS -> {
+
+                            // t1 - getCurrentWeather:
+                            getCurrentWeatherUISetup(
+                                name = resultEmitted.data.t1.location.name,
+                                region = resultEmitted.data.t1.location.region,
+                                temperature = resultEmitted.data.t1.current.temp_c,
+                                icon = resultEmitted.data.t1.current.condition.icon,
+                                condition = resultEmitted.data.t1.current.condition.text,
+                                feelsLike = resultEmitted.data.t1.current.feelslike_c,
+                                lastUpdated = resultEmitted.data.t1.current.last_updated
+                            )
+
+                        }
+
+                        FAHRENHEIT -> {
+
+                            // t1 - getCurrentWeather:
+                            getCurrentWeatherUISetup(
+                                name = resultEmitted.data.t1.location.name,
+                                region = resultEmitted.data.t1.location.region,
+                                temperature = resultEmitted.data.t1.current.temp_f,
+                                icon = resultEmitted.data.t1.current.condition.icon,
+                                condition = resultEmitted.data.t1.current.condition.text,
+                                feelsLike = resultEmitted.data.t1.current.feelslike_f,
+                                lastUpdated = resultEmitted.data.t1.current.last_updated
+                            )
+
+                        }
+
+                    }
+
+                    // t2 - getForecast:
+                    forecastDayList = resultEmitted.data.t2.forecast.forecastday
+                    getForecastUISetup(
+                        forecastDayList = resultEmitted.data.t2.forecast.forecastday,
+                        fetchedHour = resultEmitted.data.t1.current.last_updated,
+                        temperatureUnit = getTemperatureUnitPreference()
+                    )
+
+                    // t3 - getAstronomy:
+                    getAstronomyUISetup(
+                        sunrise = resultEmitted.data.t3.astronomy.astro.sunrise,
+                        sunset = resultEmitted.data.t3.astronomy.astro.sunset,
+                        moonrise = resultEmitted.data.t3.astronomy.astro.moonrise,
+                        moonset = resultEmitted.data.t3.astronomy.astro.moonset,
+                        moonPhase = resultEmitted.data.t3.astronomy.astro.moon_phase,
+                        moonIllumination = resultEmitted.data.t3.astronomy.astro.moon_illumination
+                    )
+
+                    hideMainProgressbar()
+                    showMainLayout()
+
+                }
+
+                is Result.Failure -> {
+
+                    requireContext().showToast(
+                        requireContext(),
+                        "${resources.getString(R.string.something_went_wrong)}: ${resultEmitted.exception.message}",
+                        Toast.LENGTH_LONG
+                    )
+
+                    hideMainLayout()
+                    hideMainProgressbar()
+
+                }
+
+            }
+
+        })
+
+    }
+
+    /*private fun fetchAllWeatherDataObserver(
+        location: String,
+        date: String
+    ) {
+        /*
+            Method to fetch all weather data.
+        */
+        weatherViewModel.fetchAllWeatherData(
+            location, date
+        ).observe(viewLifecycleOwner, Observer { resultEmitted ->
+
+            when (resultEmitted) {
+
+                is Result.Loading -> {
+                    showMainProgressbar()
+                }
+
+                is Result.Success -> {
+                    /*
+                        t1 = getCurrentWeather.
+                        t2 = getForecast.
+                        t3 = getAstronomy.
+                    */
+
                     // t1 - getCurrentWeather:
                     getCurrentWeatherUISetup(
                         name = resultEmitted.data.t1.location.name,
@@ -386,7 +488,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
         })
 
-    }
+    }*/
 
     private fun fetchAutocompleteResultsObserver(location: String) {
         /*
@@ -633,6 +735,13 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         globalPreferencesViewModel.deleteLastSearchedLocation()
     }
 
+    private fun getTemperatureUnitPreference(): String? {
+        /*
+            Method to get selected temperature unit.
+        */
+        return globalPreferencesViewModel.getTemperatureUnit()
+    }
+
     private fun getCurrentWeatherUISetup(
         name: String,
         region: String,
@@ -645,6 +754,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         /*
             Method to setup current weather UI section.
         */
+
         Glide.with(requireContext())
             .load("${AppConstants.BASE_IMAGE_URL}$icon")
             .centerCrop()
@@ -654,9 +764,24 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
         binding.txtLocation.text = "$name, $region"
 
+        addMarquee(binding.txtCondition)
         binding.txtCondition.text = condition
 
-        binding.txtFeelsLike.text = "${feelsLike}${resources.getString(R.string.celsius)}"
+        when (getTemperatureUnitPreference()) {
+
+            CELSIUS -> {
+                binding.txtTemperatureUnit.text = resources.getString(R.string.celsius)
+                binding.txtFeelsLike.text = "$feelsLike"
+                binding.txtTemperatureUnitFeelsLike.text = resources.getString(R.string.celsius)
+            }
+
+            FAHRENHEIT -> {
+                binding.txtTemperatureUnit.text = resources.getString(R.string.fahrenheit)
+                binding.txtFeelsLike.text = "$feelsLike"
+                binding.txtTemperatureUnitFeelsLike.text = resources.getString(R.string.fahrenheit)
+            }
+
+        }
 
         val hour = splitDate(lastUpdated, 1)
 
@@ -672,7 +797,8 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
     private fun getForecastUISetup(
         forecastDayList: List<ForecastDay>,
-        fetchedHour: String
+        fetchedHour: String,
+        temperatureUnit: String?
     ) {
         /*
             Method to setup forecast UI section.
@@ -681,8 +807,23 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
             if (index == 0) {
 
-                binding.txtMaxTemp.text = "${forecastDay.day.maxtemp_c}${resources.getString(R.string.celsius)}"
-                binding.txtMinTemp.text = "${forecastDay.day.mintemp_c}${resources.getString(R.string.celsius)}"
+                when (getTemperatureUnitPreference()) {
+
+                    CELSIUS -> {
+                        binding.txtMaxTemp.text = "${forecastDay.day.maxtemp_c}"
+                        binding.txtTemperatureUnitMax.text = resources.getString(R.string.celsius)
+                        binding.txtMinTemp.text = "${forecastDay.day.mintemp_c}"
+                        binding.txtTemperatureUnitMin.text = resources.getString(R.string.celsius)
+                    }
+
+                    FAHRENHEIT -> {
+                        binding.txtMaxTemp.text = "${forecastDay.day.maxtemp_f}"
+                        binding.txtTemperatureUnitMax.text = resources.getString(R.string.fahrenheit)
+                        binding.txtMinTemp.text = "${forecastDay.day.mintemp_f}"
+                        binding.txtTemperatureUnitMin.text = resources.getString(R.string.fahrenheit)
+                    }
+
+                }
 
                 val hour = splitHour(splitDate(fetchedHour, 1), 0)
                 val minute = splitHour(splitDate(fetchedHour, 1), 1)
@@ -695,7 +836,8 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                 binding.rvForecast.adapter = ForecastByHourAdapter(
                     forecastDay.hour,
                     forecastRecyclerViewPosition.toString(),
-                    requireContext()
+                    requireContext(),
+                    temperatureUnit
                 )
 
                 binding.rvForecast.scrollToPosition(forecastRecyclerViewPosition)
@@ -704,7 +846,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
         }
 
-        binding.rvForecast3Days.adapter = Forecast3DaysAdapter(forecastDayList, this)
+        binding.rvForecast3Days.adapter = Forecast3DaysAdapter(forecastDayList, temperatureUnit, this)
 
     }
 

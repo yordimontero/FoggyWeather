@@ -5,7 +5,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.circleappsstudio.foggyweather.R
 import com.circleappsstudio.foggyweather.application.AppConstants
+import com.circleappsstudio.foggyweather.application.AppConstants.CELSIUS
+import com.circleappsstudio.foggyweather.application.AppConstants.FAHRENHEIT
 import com.circleappsstudio.foggyweather.core.BaseViewHolder
 import com.circleappsstudio.foggyweather.core.time.getAnyHourFormatted
 import com.circleappsstudio.foggyweather.core.time.splitDate
@@ -18,7 +21,8 @@ import com.circleappsstudio.foggyweather.databinding.ForecastItemViewBinding
 class ForecastByHourAdapter(
     private val forecastByHourList: List<Hour>,
     private var currentHour: String,
-    private val context: Context
+    private val context: Context,
+    private val temperatureUnit: String?
 ): RecyclerView.Adapter<BaseViewHolder<*>>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
@@ -57,7 +61,7 @@ class ForecastByHourAdapter(
                         secondaryCardView = holder.binding.secondaryCardView,
                         hour = holder.binding.txtHour,
                         temperature = holder.binding.txtTemperature,
-                        grades = holder.binding.txtGrades
+                        grades = holder.binding.txtTemperatureUnit
                     )
 
                 } else {
@@ -68,7 +72,7 @@ class ForecastByHourAdapter(
                         secondaryCardView = holder.binding.secondaryCardView,
                         hour = holder.binding.txtHour,
                         temperature = holder.binding.txtTemperature,
-                        grades = holder.binding.txtGrades
+                        grades = holder.binding.txtTemperatureUnit
                     )
 
                 }
@@ -105,7 +109,19 @@ class ForecastByHourAdapter(
                 .centerCrop()
                 .into(binding.imgIcon)
 
-            binding.txtTemperature.text = item.temp_c
+            when (temperatureUnit) {
+
+                CELSIUS -> {
+                    binding.txtTemperature.text = item.temp_c
+                    binding.txtTemperatureUnit.text = context.resources.getString(R.string.celsius)
+                }
+
+                FAHRENHEIT -> {
+                    binding.txtTemperature.text = item.temp_f
+                    binding.txtTemperatureUnit.text = context.resources.getString(R.string.fahrenheit)
+                }
+
+            }
 
         }
 

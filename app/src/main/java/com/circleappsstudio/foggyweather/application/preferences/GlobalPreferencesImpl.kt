@@ -1,10 +1,12 @@
 package com.circleappsstudio.foggyweather.application.preferences
 
 import android.content.Context
+import com.circleappsstudio.foggyweather.application.AppConstants.CELSIUS
 import com.circleappsstudio.foggyweather.application.AppConstants.GLOBAL_PREFERENCE
 import com.circleappsstudio.foggyweather.application.AppConstants.PREFERENCE_DID_RATE_APP_DIALOG_IS_LAUNCHED
 import com.circleappsstudio.foggyweather.application.AppConstants.PREFERENCE_DID_LOCATION_PERMISSION_ARE_REQUESTED_SINGLE_TIME
 import com.circleappsstudio.foggyweather.application.AppConstants.PREFERENCE_LAST_SEARCHED_LOCATION
+import com.circleappsstudio.foggyweather.application.AppConstants.PREFERENCE_SELECTED_TEMPERATURE_UNIT
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
@@ -81,6 +83,38 @@ class GlobalPreferencesImpl @Inject constructor(
         if (getLastSearchedLocation() != null) {
             preference.edit().remove(PREFERENCE_LAST_SEARCHED_LOCATION).apply()
         }
+    }
+
+    override fun getTemperatureUnit(): String? {
+        /*
+            Method to get selected temperature unit.
+        */
+        if (preference.getString(PREFERENCE_SELECTED_TEMPERATURE_UNIT, null) == null) {
+            setTemperatureUnit(CELSIUS)
+        }
+
+        return preference.getString(PREFERENCE_SELECTED_TEMPERATURE_UNIT, null)
+
+    }
+
+    override fun setTemperatureUnit(temperatureUnit: String) {
+        /*
+            Method to set selected temperature unit.
+        */
+        if (temperatureUnit.isNotEmpty()) {
+
+            editor.putString(
+                PREFERENCE_SELECTED_TEMPERATURE_UNIT, temperatureUnit
+            ).apply()
+
+        } else {
+
+            editor.putString(
+                PREFERENCE_SELECTED_TEMPERATURE_UNIT, ""
+            ).apply()
+
+        }
+
     }
 
 }

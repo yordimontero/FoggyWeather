@@ -13,6 +13,8 @@ data class Condition(
 data class Day(
     val maxtemp_c: Float = 0.0F,
     val mintemp_c: Float = 0.0F,
+    val maxtemp_f: Float = 0.0F,
+    val mintemp_f: Float = 0.0F,
     val condition: Condition
 ): Parcelable
 
@@ -20,8 +22,10 @@ data class Day(
 data class Hour(
     val time: String = "",
     val temp_c: String = "",
+    val temp_f: String = "",
     val condition: Condition,
     val feelslike_c: String = "",
+    val feelslike_f: String = "",
     val chance_of_rain: Int = 0
 ): Parcelable
 

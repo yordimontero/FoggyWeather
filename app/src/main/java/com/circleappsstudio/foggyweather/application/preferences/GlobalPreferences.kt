@@ -16,4 +16,8 @@ interface GlobalPreferences {
 
     fun deleteLastSearchedLocation()
 
+    fun getTemperatureUnit(): String?
+
+    fun setTemperatureUnit(temperatureUnit: String)
+
 }

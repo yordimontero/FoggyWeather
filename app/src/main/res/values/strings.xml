@@ -4,6 +4,7 @@
     <string name="app_name">FoggyWeather</string>
     <string name="something_went_wrong">Something went wrong</string>
     <string name="celsius">°C</string>
+    <string name="fahrenheit">°F</string>
     <string name="bullet_point">•</string>
     <string name="feels_like">Feels like:</string>
     <string name="powered_by_weather_api">Powered by WeatherAPI.com</string>
@@ -68,6 +69,10 @@
     <string name="percentage">%</string>
 
 
+    <!-- SettingsFragment -->
+    <string name="settings">Settings</string>
+
+
     <!-- custom_internet_check_dialog -->
     <string name="no_internet_connection">No internet connection!</string>
     <string name="check_your_network_and_try_again">Please check your network</string>
@@ -77,5 +82,7 @@
     <!-- custom_gps_check_dialog -->
     <string name="gps_is_off">GPS is off!</string>
     <string name="turn_on_gps">Please turn on your GPS</string>
+
+
 
 </resources>

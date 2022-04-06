@@ -21,6 +21,7 @@ import com.circleappsstudio.foggyweather.core.ui.show
 import com.circleappsstudio.foggyweather.data.model.ForecastDay
 import com.circleappsstudio.foggyweather.databinding.FragmentForecastByDayBinding
 import com.circleappsstudio.foggyweather.presenter.AdMobUtilsViewModel
+import com.circleappsstudio.foggyweather.presenter.GlobalPreferencesViewModel
 import com.circleappsstudio.foggyweather.presenter.InternetCheckViewModel
 import com.circleappsstudio.foggyweather.ui.forecastbyday.adapter.ForecastByDayAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,6 +36,7 @@ class ForecastByDayFragment: Fragment(R.layout.fragment_forecast_by_day),
     private lateinit var binding: FragmentForecastByDayBinding
     private lateinit var navController: NavController
 
+    private val globalPreferencesViewModel by viewModels<GlobalPreferencesViewModel>()
     private val internetCheckViewModel by viewModels<InternetCheckViewModel>()
     private val adMobUtilsViewModel by viewModels<AdMobUtilsViewModel>()
     
@@ -104,6 +106,13 @@ class ForecastByDayFragment: Fragment(R.layout.fragment_forecast_by_day),
 
     }
 
+    private fun getTemperatureUnitPreference(): String? {
+        /*
+            Method to get selected temperature unit.
+        */
+        return globalPreferencesViewModel.getTemperatureUnit()
+    }
+
     private fun checkIfForecastDayListIsNullOrEmpty() {
         /*
             Method to check if forecastDayList is null or empty.
@@ -116,12 +125,18 @@ class ForecastByDayFragment: Fragment(R.layout.fragment_forecast_by_day),
         }
 
         forecastDayList?.let {
-            getForecastUISetup(it)
+            getForecastUISetup(
+                forecastDayList = it,
+                temperatureUnit = getTemperatureUnitPreference()
+            )
         }
 
     }
 
-    private fun getForecastUISetup(forecastDayList: List<ForecastDay>) {
+    private fun getForecastUISetup(
+        forecastDayList: List<ForecastDay>,
+        temperatureUnit: String?
+    ) {
         /*
             Method to prepare UI to display forecast data.
         */
@@ -130,7 +145,10 @@ class ForecastByDayFragment: Fragment(R.layout.fragment_forecast_by_day),
         forecastDayList.forEachIndexed { index, forecastDay ->
 
             if (index == forecastAdapterPosition) {
-                binding.rvForecast.adapter = ForecastByDayAdapter(forecastDay.hour)
+                binding.rvForecast.adapter = ForecastByDayAdapter(
+                    forecastDay.hour,
+                    temperatureUnit
+                )
             }
 
         }

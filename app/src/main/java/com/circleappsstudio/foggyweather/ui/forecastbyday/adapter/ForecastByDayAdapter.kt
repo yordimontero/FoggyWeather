@@ -5,7 +5,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.circleappsstudio.foggyweather.R
 import com.circleappsstudio.foggyweather.application.AppConstants
+import com.circleappsstudio.foggyweather.application.AppConstants.CELSIUS
+import com.circleappsstudio.foggyweather.application.AppConstants.FAHRENHEIT
 import com.circleappsstudio.foggyweather.core.BaseViewHolder
 import com.circleappsstudio.foggyweather.core.time.getAnyHourFormatted
 import com.circleappsstudio.foggyweather.core.time.splitDate
@@ -14,7 +17,8 @@ import com.circleappsstudio.foggyweather.data.model.Hour
 import com.circleappsstudio.foggyweather.databinding.ForecastByDayItemViewBinding
 
 class ForecastByDayAdapter(
-    private val forecastByHourList: List<Hour>
+    private val forecastByHourList: List<Hour>,
+    private val temperatureUnit: String?
 ): RecyclerView.Adapter<BaseViewHolder<*>>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
@@ -75,9 +79,23 @@ class ForecastByDayAdapter(
 
             binding.txtCondition.text = item.condition.text
 
-            binding.txtTemperature.text = item.temp_c
+            when (temperatureUnit) {
 
-            binding.txtFeelsLike.text = item.feelslike_c
+                CELSIUS -> {
+                    binding.txtTemperature.text = item.temp_c
+                    binding.txtTemperatureUnit.text = context.resources.getString(R.string.celsius)
+                    binding.txtFeelsLike.text = item.feelslike_c
+                    binding.txtFeelsLikeTemperatureUnit.text = context.resources.getString(R.string.celsius)
+                }
+
+                FAHRENHEIT -> {
+                    binding.txtTemperature.text = item.temp_f
+                    binding.txtTemperatureUnit.text = context.resources.getString(R.string.fahrenheit)
+                    binding.txtFeelsLike.text = item.feelslike_f
+                    binding.txtFeelsLikeTemperatureUnit.text = context.resources.getString(R.string.fahrenheit)
+                }
+
+            }
 
             binding.txtChanceOfRain.text = item.chance_of_rain.toString()
 

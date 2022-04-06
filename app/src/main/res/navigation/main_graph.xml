@@ -11,7 +11,7 @@
         android:label="Home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_fragment_home_to_forecastByDayFragment"
+            android:id="@+id/action_navigate_to_fragment_forecast_by_day_from_fragment_home"
             app:destination="@id/fragment_forecast_by_day"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
@@ -28,4 +28,9 @@
         android:name="com.circleappsstudio.foggyweather.ui.forecastbyday.ForecastByDayFragment"
         android:label="Forecast"
         tools:layout="@layout/fragment_forecast_by_day" />
+    <fragment
+        android:id="@+id/fragment_settings"
+        android:name="com.circleappsstudio.foggyweather.ui.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

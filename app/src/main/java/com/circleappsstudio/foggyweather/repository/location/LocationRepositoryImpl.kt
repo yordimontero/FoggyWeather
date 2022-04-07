@@ -14,9 +14,7 @@ class LocationRepositoryImpl @Inject constructor(
     private val locationUtils: LocationUtils
 ): LocationRepository {
 
-    @ExperimentalCoroutinesApi
-    override suspend fun requestLocation(context: Context)
-            = withContext(Dispatchers.IO) {
+    override fun requestLocation(context: Context) {
         /*
             Method to request current location from GPS.
         */

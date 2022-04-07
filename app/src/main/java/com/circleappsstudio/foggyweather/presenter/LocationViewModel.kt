@@ -21,37 +21,11 @@ class LocationViewModel @Inject constructor(
     private val repository: LocationRepository
 ): ViewModel() {
 
-    @ExperimentalCoroutinesApi
-    fun requestLocation(
-        context: Context
-    ) = liveData(viewModelScope.coroutineContext + Dispatchers.Main) {
+    fun requestLocation(context: Context) {
         /*
             Method to request current location from GPS.
         */
-        kotlin.runCatching {
-
-            emit(
-                Result.Loading()
-            )
-
-            repository.requestLocation(context)
-
-        }.onSuccess {
-
-            emit(
-                Result.Success(it)
-            )
-
-        }.onFailure { throwable ->
-
-            emit(
-                Result.Failure(
-                    Exception(throwable.message)
-                )
-            )
-
-        }
-
+        repository.requestLocation(context)
     }
 
     @ExperimentalCoroutinesApi

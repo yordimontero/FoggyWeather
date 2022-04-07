@@ -5,116 +5,14 @@ import android.content.Context
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.location.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import javax.inject.Inject
 import kotlin.coroutines.resume
 
 class LocationUtilsImpl @Inject constructor() : LocationUtils {
 
-    /*@ExperimentalCoroutinesApi
     @SuppressLint("MissingPermission")
-    override suspend fun getLocation(context: Context): List<String> = suspendCancellableCoroutine { cont ->
-        /*
-            Method to get current location (latitude & longitude) from GPS.
-        */
-
-        var latitude = ""
-        var longitude = ""
-        val currentLocation = mutableListOf<String>()
-
-        if (GoogleApiAvailability.getInstance()
-                .isGooglePlayServicesAvailable(context) == ConnectionResult.SUCCESS) {
-
-            val mLocationRequest = LocationRequest.create()
-            mLocationRequest.interval = 60000
-            mLocationRequest.fastestInterval = 5000
-            mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-            val mLocationCallback: LocationCallback = object : LocationCallback() {
-                override fun onLocationResult(locationResult: LocationResult?) {
-                    if (locationResult == null) {
-                        cont.cancel()
-                        return
-                    }
-                    for (location in locationResult.locations) {
-                        if (location != null) {
-                            //TODO: UI updates.
-                        }
-                    }
-                }
-            }
-            LocationServices.getFusedLocationProviderClient(context)
-                .requestLocationUpdates(mLocationRequest, mLocationCallback, null)
-
-            LocationServices.getFusedLocationProviderClient(context).lastLocation.addOnSuccessListener { location ->
-                //TODO: UI updates.
-                latitude = location.latitude.toString()
-                longitude = location.longitude.toString()
-
-                Log.wtf("TAG", "latitude: $latitude")
-                Log.wtf("TAG", "longitude: $longitude")
-
-                currentLocation.add(latitude)
-                currentLocation.add(longitude)
-
-                cont.resume(currentLocation)
-            }
-
-        } else {
-
-            val mLocationRequest = com.huawei.hms.location.LocationRequest.create()
-            mLocationRequest.interval = 60000
-            mLocationRequest.fastestInterval = 5000
-            mLocationRequest.priority = com.huawei.hms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
-
-            val mLocationCallback: com.huawei.hms.location.LocationCallback = object : com.huawei.hms.location.LocationCallback() {
-
-                override fun onLocationResult(locationResult: com.huawei.hms.location.LocationResult?) {
-                    super.onLocationResult(locationResult)
-
-                    if (locationResult == null) {
-                        cont.cancel()
-                        return
-                    }
-
-                }
-
-            }
-
-            com.huawei.hms.location.LocationServices.getFusedLocationProviderClient(context)
-                .requestLocationUpdates(mLocationRequest, mLocationCallback, null)
-
-            val task = com.huawei.hms.location.LocationServices.getFusedLocationProviderClient(context).lastLocation
-
-            task.addOnSuccessListener { location ->
-
-                if (location == null) {
-                    cont.cancel()
-                    return@addOnSuccessListener
-                }
-
-                latitude = location.latitude.toString()
-                longitude = location.longitude.toString()
-
-                Log.wtf("TAG", "latitude2: $latitude")
-                Log.wtf("TAG", "longitude2: $longitude")
-
-                currentLocation.add(latitude)
-                currentLocation.add(longitude)
-
-                cont.resume(currentLocation)
-
-            }
-
-        }
-
-    }*/
-
-    @ExperimentalCoroutinesApi
-    @SuppressLint("MissingPermission")
-    override suspend fun requestLocation(context: Context): Unit = withContext(Dispatchers.IO) {
+    override fun requestLocation(context: Context) {
         /*
             Method to request current location from GPS.
         */

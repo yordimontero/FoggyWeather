@@ -8,32 +8,6 @@
     android:orientation="vertical"
     tools:context=".ui.settings.SettingsFragment">
 
-    <RelativeLayout
-        android:id="@+id/progress_bar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
-
-        <androidx.cardview.widget.CardView
-            style="@style/CustomDarkLightModeBackground"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="8dp"
-            app:cardPreventCornerOverlap="true"
-            app:cardUseCompatPadding="true">
-
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:indeterminateTint="@color/light_blue" />
-
-        </androidx.cardview.widget.CardView>
-
-    </RelativeLayout>
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

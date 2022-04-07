@@ -5,8 +5,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 interface LocationRepository {
 
-    @ExperimentalCoroutinesApi
-    suspend fun requestLocation(context: Context)
+    fun requestLocation(context: Context)
 
     @ExperimentalCoroutinesApi
     suspend fun getLocation(context: Context): List<String>

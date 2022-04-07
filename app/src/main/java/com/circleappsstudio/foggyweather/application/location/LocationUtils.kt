@@ -6,9 +6,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 interface LocationUtils {
 
-    @ExperimentalCoroutinesApi
-    @SuppressLint("MissingPermission")
-    suspend fun requestLocation(context: Context)
+    fun requestLocation(context: Context)
 
     @ExperimentalCoroutinesApi
     @SuppressLint("MissingPermission")

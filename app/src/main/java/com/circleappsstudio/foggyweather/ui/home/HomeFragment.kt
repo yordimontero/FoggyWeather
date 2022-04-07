@@ -42,7 +42,6 @@ import com.circleappsstudio.foggyweather.core.ui.customdialogs.OnConfirmationDia
 import com.circleappsstudio.foggyweather.core.ui.customdialogs.gpsCheckDialog
 import com.circleappsstudio.foggyweather.data.model.ForecastDay
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
 import java.util.*
 
 @AndroidEntryPoint
@@ -88,12 +87,6 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
         checkIfLocationPermissionsAreGranted()
 
-    }
-
-    override fun onStart() {
-        super.onStart()
-        // Requesting current location from GPS.
-        requestLocationObserver()
     }
 
     private fun searchViewSetup() {
@@ -258,7 +251,6 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         if (checkIfGPSIsEnabled(requireContext())) {
             // GPS is turned on.
             locationViewModel.requestLocation(requireContext())
-                .observe(viewLifecycleOwner, Observer {})
         }
 
     }
@@ -268,54 +260,70 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         /*
             Method to get current location (latitude & longitude) from GPS.
         */
-
         showMainProgressbar()
 
         if (checkIfGPSIsEnabled(requireContext())) {
             // GPS is turned on.
 
-            locationViewModel.fetchLocation(requireContext())
-                .observe(viewLifecycleOwner, Observer { resultEmitted ->
+            /*
+                Request location from GPS and delay locationViewModel.fetchLocation(...) Observer
+                to have time to get current location.
+            */
+            requestLocationObserver()
 
-                    when (resultEmitted) {
+            Handler(
+                Looper.getMainLooper()
+            ).postDelayed({
+                // Delaying locationViewModel.fetchLocation(...) Observer.
+                if (view != null) {
 
-                        is Result.Loading -> {
-                            showMainProgressbar()
-                        }
+                    locationViewModel.fetchLocation(requireContext())
+                        .observe(viewLifecycleOwner, Observer { resultEmitted ->
 
-                        is Result.Success -> {
+                            when (resultEmitted) {
 
-                            if (!checkIfThereIsAnyLastSearchedLocation()) {
-                                /*
-                                    If there's not any last searched location, coordinates will be the GPS data.
-                                    If there's some last searched location, coordinates will be the that location.
-                                */
-                                coordinates = "${resultEmitted.data[0]},${resultEmitted.data[1]}"
+                                is Result.Loading -> {
+                                    showMainProgressbar()
+                                }
+
+                                is Result.Success -> {
+
+                                    if (!checkIfThereIsAnyLastSearchedLocation()) {
+                                        /*
+                                            If there's not any last searched location, coordinates will be the GPS data.
+                                            If there's some last searched location, coordinates will be the that location.
+                                        */
+                                        coordinates =
+                                            "${resultEmitted.data[0]},${resultEmitted.data[1]}"
+                                    }
+
+                                    checkInternetToGetWeatherDataObserver()
+
+                                }
+
+                                is Result.Failure -> {
+
+                                    requireContext().showToast(
+                                        "${resources.getString(R.string.something_went_wrong)}: ${
+                                            resources.getString(
+                                                R.string.could_not_get_location
+                                            )
+                                        }",
+                                        Toast.LENGTH_LONG
+                                    )
+
+                                    hideMainProgressbar()
+                                    hideMainLayout()
+
+                                }
+
                             }
 
-                            checkInternetToGetWeatherDataObserver()
+                        })
 
-                        }
+                }
 
-                        is Result.Failure -> {
-
-                            requireContext().showToast(
-                                "${resources.getString(R.string.something_went_wrong)}: ${
-                                    resources.getString(
-                                        R.string.could_not_get_location
-                                    )
-                                }",
-                                Toast.LENGTH_LONG
-                            )
-
-                            hideMainProgressbar()
-                            hideMainLayout()
-
-                        }
-
-                    }
-
-                })
+            }, 3500L)
 
         } else {
             /*
@@ -437,82 +445,6 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         })
 
     }
-
-    /*private fun fetchAllWeatherDataObserver(
-        location: String,
-        date: String
-    ) {
-        /*
-            Method to fetch all weather data.
-        */
-        weatherViewModel.fetchAllWeatherData(
-            location, date
-        ).observe(viewLifecycleOwner, Observer { resultEmitted ->
-
-            when (resultEmitted) {
-
-                is Result.Loading -> {
-                    showMainProgressbar()
-                }
-
-                is Result.Success -> {
-                    /*
-                        t1 = getCurrentWeather.
-                        t2 = getForecast.
-                        t3 = getAstronomy.
-                    */
-
-                    // t1 - getCurrentWeather:
-                    getCurrentWeatherUISetup(
-                        name = resultEmitted.data.t1.location.name,
-                        region = resultEmitted.data.t1.location.region,
-                        temperature = resultEmitted.data.t1.current.temp_c,
-                        icon = resultEmitted.data.t1.current.condition.icon,
-                        condition = resultEmitted.data.t1.current.condition.text,
-                        feelsLike = resultEmitted.data.t1.current.feelslike_c,
-                        lastUpdated = resultEmitted.data.t1.current.last_updated
-                    )
-
-                    // t2 - getForecast:
-                    forecastDayList = resultEmitted.data.t2.forecast.forecastday
-                    getForecastUISetup(
-                        forecastDayList = resultEmitted.data.t2.forecast.forecastday,
-                        fetchedHour = resultEmitted.data.t1.current.last_updated
-                    )
-
-                    // t3 - getAstronomy:
-                    getAstronomyUISetup(
-                        sunrise = resultEmitted.data.t3.astronomy.astro.sunrise,
-                        sunset = resultEmitted.data.t3.astronomy.astro.sunset,
-                        moonrise = resultEmitted.data.t3.astronomy.astro.moonrise,
-                        moonset = resultEmitted.data.t3.astronomy.astro.moonset,
-                        moonPhase = resultEmitted.data.t3.astronomy.astro.moon_phase,
-                        moonIllumination = resultEmitted.data.t3.astronomy.astro.moon_illumination
-                    )
-
-                    hideMainProgressbar()
-                    showMainLayout()
-
-                }
-
-                is Result.Failure -> {
-
-                    requireContext().showToast(
-                        requireContext(),
-                        "${resources.getString(R.string.something_went_wrong)}: ${resultEmitted.exception.message}",
-                        Toast.LENGTH_LONG
-                    )
-
-                    hideMainLayout()
-                    hideMainProgressbar()
-
-                }
-
-            }
-
-        })
-
-    }*/
 
     private fun fetchAutocompleteResultsObserver(location: String) {
         /*
@@ -678,21 +610,10 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                 if (checkIfGPSIsEnabled(requireContext())) {
                     // GPS is turned on, fetch weather data.
 
-                    showMainProgressbar()
-                    requestLocationObserver()
-
-                    Handler(
-                        Looper.getMainLooper()
-                    ).postDelayed({
-
-                        if (view != null) {
-                            fetchLocationObserver()
-                            clearSearchView()
-                            hideRequestCurrentLocationTextView()
-                            showMainLayout()
-                        }
-
-                    }, 2500)
+                    fetchLocationObserver()
+                    clearSearchView()
+                    hideRequestCurrentLocationTextView()
+                    showMainLayout()
 
                 } else {
                     // GPS is turned off, gpsCheckDialog will be displayed.

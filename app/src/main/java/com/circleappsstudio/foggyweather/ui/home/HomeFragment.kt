@@ -4,12 +4,11 @@ import android.Manifest
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
-import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import android.view.View
-import android.view.ViewTreeObserver
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -43,6 +42,7 @@ import com.circleappsstudio.foggyweather.core.ui.customdialogs.OnConfirmationDia
 import com.circleappsstudio.foggyweather.core.ui.customdialogs.gpsCheckDialog
 import com.circleappsstudio.foggyweather.data.model.ForecastDay
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import java.util.*
 
 @AndroidEntryPoint
@@ -90,6 +90,12 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
     }
 
+    override fun onStart() {
+        super.onStart()
+        // Requesting current location from GPS.
+        requestLocationObserver()
+    }
+
     private fun searchViewSetup() {
         /*
             SearchView setup.
@@ -124,7 +130,6 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                     } else {
                         // If SearchView submitted text has not at least 3 characters, show error message.
                         requireContext().showToast(
-                            requireContext(),
                             resources.getString(R.string.location_not_founded)
                         )
 
@@ -229,7 +234,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                             clearSearchView()
                             hideRvAutocompleteProgressbar()
                             showMainProgressbar()
-                            requireContext().hideKeyboard(requireContext(), requireView())
+                            requireView().hideKeyboard()
 
                         }
 
@@ -246,15 +251,29 @@ class HomeFragment : Fragment(R.layout.fragment_home),
     }
 
     @ExperimentalCoroutinesApi
+    private fun requestLocationObserver() {
+        /*
+            Method to request current location from GPS.
+        */
+        if (checkIfGPSIsEnabled(requireContext())) {
+            // GPS is turned on.
+            locationViewModel.requestLocation(requireContext())
+                .observe(viewLifecycleOwner, Observer {})
+        }
+
+    }
+
+    @ExperimentalCoroutinesApi
     private fun fetchLocationObserver() {
         /*
-            Method to fetch current location from GPS.
+            Method to get current location (latitude & longitude) from GPS.
         */
 
         showMainProgressbar()
 
         if (checkIfGPSIsEnabled(requireContext())) {
             // GPS is turned on.
+
             locationViewModel.fetchLocation(requireContext())
                 .observe(viewLifecycleOwner, Observer { resultEmitted ->
 
@@ -281,8 +300,11 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                         is Result.Failure -> {
 
                             requireContext().showToast(
-                                requireContext(),
-                                "${resources.getString(R.string.something_went_wrong)}: ${resources.getString(R.string.could_not_get_location)}",
+                                "${resources.getString(R.string.something_went_wrong)}: ${
+                                    resources.getString(
+                                        R.string.could_not_get_location
+                                    )
+                                }",
                                 Toast.LENGTH_LONG
                             )
 
@@ -338,9 +360,11 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                         t3 = getAstronomy.
                     */
 
+                    // Check which temperature unit is selected.
                     when (getTemperatureUnitPreference()) {
 
                         CELSIUS -> {
+                            // Selected temperature unit is celsius.
 
                             // t1 - getCurrentWeather:
                             getCurrentWeatherUISetup(
@@ -356,6 +380,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                         }
 
                         FAHRENHEIT -> {
+                            // Selected temperature unit is fahrenheit.
 
                             // t1 - getCurrentWeather:
                             getCurrentWeatherUISetup(
@@ -398,7 +423,6 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                 is Result.Failure -> {
 
                     requireContext().showToast(
-                        requireContext(),
                         "${resources.getString(R.string.something_went_wrong)}: ${resultEmitted.exception.message}",
                         Toast.LENGTH_LONG
                     )
@@ -527,7 +551,6 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                     is Result.Failure -> {
 
                         requireContext().showToast(
-                            requireContext(),
                             "${resources.getString(R.string.something_went_wrong)}: ${resultEmitted.exception.message}",
                             Toast.LENGTH_LONG
                         )
@@ -654,15 +677,26 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                 // Location permissions are granted.
                 if (checkIfGPSIsEnabled(requireContext())) {
                     // GPS is turned on, fetch weather data.
-                    fetchLocationObserver()
-                    clearSearchView()
-                    hideRequestCurrentLocationTextView()
-                    showMainLayout()
+
+                    showMainProgressbar()
+                    requestLocationObserver()
+
+                    Handler(
+                        Looper.getMainLooper()
+                    ).postDelayed({
+
+                        if (view != null) {
+                            fetchLocationObserver()
+                            clearSearchView()
+                            hideRequestCurrentLocationTextView()
+                            showMainLayout()
+                        }
+
+                    }, 2500)
 
                 } else {
                     // GPS is turned off, gpsCheckDialog will be displayed.
                     showGPSCheckDialog()
-                    //showRequestCurrentLocationTextView()
                     hideMainLayout()
                     hideMainProgressbar()
 
@@ -674,7 +708,6 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                     If there is some last searched location, get weather data from that location.
                 */
                 requireContext().showToast(
-                    requireContext(),
                     resources.getString(R.string.location_permissions_not_granted),
                     Toast.LENGTH_LONG
                 )
@@ -688,7 +721,6 @@ class HomeFragment : Fragment(R.layout.fragment_home),
             // requestCode is wrong.
 
             requireContext().showToast(
-                requireContext(),
                 resources.getString(R.string.something_went_wrong),
                 Toast.LENGTH_LONG
             )
@@ -764,18 +796,27 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
         binding.txtLocation.text = "$name, $region"
 
-        addMarquee(binding.txtCondition)
+        // Check if TextView should have Marquee effect.
+        if (condition.length > 15) {
+            addMarquee(binding.txtCondition)
+        } else {
+            removeMarquee(binding.txtCondition)
+        }
+
         binding.txtCondition.text = condition
 
+        // Check which temperature unit is selected.
         when (getTemperatureUnitPreference()) {
 
             CELSIUS -> {
+                // Selected temperature unit is celsius.
                 binding.txtTemperatureUnit.text = resources.getString(R.string.celsius)
                 binding.txtFeelsLike.text = "$feelsLike"
                 binding.txtTemperatureUnitFeelsLike.text = resources.getString(R.string.celsius)
             }
 
             FAHRENHEIT -> {
+                // Selected temperature unit is fahrenheit.
                 binding.txtTemperatureUnit.text = resources.getString(R.string.fahrenheit)
                 binding.txtFeelsLike.text = "$feelsLike"
                 binding.txtTemperatureUnitFeelsLike.text = resources.getString(R.string.fahrenheit)
@@ -807,9 +848,11 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
             if (index == 0) {
 
+                // Check which temperature unit is selected.
                 when (getTemperatureUnitPreference()) {
 
                     CELSIUS -> {
+                        // Selected temperature unit is celsius.
                         binding.txtMaxTemp.text = "${forecastDay.day.maxtemp_c}"
                         binding.txtTemperatureUnitMax.text = resources.getString(R.string.celsius)
                         binding.txtMinTemp.text = "${forecastDay.day.mintemp_c}"
@@ -817,10 +860,13 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                     }
 
                     FAHRENHEIT -> {
+                        // Selected temperature unit is fahrenheit.
                         binding.txtMaxTemp.text = "${forecastDay.day.maxtemp_f}"
-                        binding.txtTemperatureUnitMax.text = resources.getString(R.string.fahrenheit)
+                        binding.txtTemperatureUnitMax.text =
+                            resources.getString(R.string.fahrenheit)
                         binding.txtMinTemp.text = "${forecastDay.day.mintemp_f}"
-                        binding.txtTemperatureUnitMin.text = resources.getString(R.string.fahrenheit)
+                        binding.txtTemperatureUnitMin.text =
+                            resources.getString(R.string.fahrenheit)
                     }
 
                 }
@@ -846,7 +892,8 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
         }
 
-        binding.rvForecast3Days.adapter = Forecast3DaysAdapter(forecastDayList, temperatureUnit, this)
+        binding.rvForecast3Days.adapter =
+            Forecast3DaysAdapter(forecastDayList, temperatureUnit, this)
 
     }
 
@@ -885,6 +932,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         */
         binding.progressBar.show()
     }
+
     private fun hideMainProgressbar() {
         /*
             Method to hide MainProgressbar.
@@ -898,6 +946,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         */
         binding.progressbarRvAutocomplete.show()
     }
+
     private fun hideRvAutocompleteProgressbar() {
         /*
             Method to hide RvAutocompleteProgressbar.
@@ -964,7 +1013,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
             Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
         )
     }
-    
+
     private fun goToWeatherApiURLTextViewClick() {
         /*
             Method to navigate to WeatherApi.com web page.

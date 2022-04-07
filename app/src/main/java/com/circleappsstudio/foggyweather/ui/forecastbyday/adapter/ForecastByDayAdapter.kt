@@ -79,9 +79,11 @@ class ForecastByDayAdapter(
 
             binding.txtCondition.text = item.condition.text
 
+            // Check which temperature unit is selected.
             when (temperatureUnit) {
 
                 CELSIUS -> {
+                    // Selected temperature unit is celsius.
                     binding.txtTemperature.text = item.temp_c
                     binding.txtTemperatureUnit.text = context.resources.getString(R.string.celsius)
                     binding.txtFeelsLike.text = item.feelslike_c
@@ -89,6 +91,7 @@ class ForecastByDayAdapter(
                 }
 
                 FAHRENHEIT -> {
+                    // Selected temperature unit is fahrenheit.
                     binding.txtTemperature.text = item.temp_f
                     binding.txtTemperatureUnit.text = context.resources.getString(R.string.fahrenheit)
                     binding.txtFeelsLike.text = item.feelslike_f

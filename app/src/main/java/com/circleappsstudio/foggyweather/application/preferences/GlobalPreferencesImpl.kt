@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class GlobalPreferencesImpl @Inject constructor(
     @ApplicationContext context: Context
-): GlobalPreferences {
+) : GlobalPreferences {
 
     private val preference = context.getSharedPreferences(GLOBAL_PREFERENCE, Context.MODE_PRIVATE)
     private val editor = preference.edit()
@@ -37,7 +37,10 @@ class GlobalPreferencesImpl @Inject constructor(
         /*
             Method to check if location permission were requested for single time.
         */
-        return preference.getBoolean(PREFERENCE_DID_LOCATION_PERMISSION_ARE_REQUESTED_SINGLE_TIME, false)
+        return preference.getBoolean(
+            PREFERENCE_DID_LOCATION_PERMISSION_ARE_REQUESTED_SINGLE_TIME,
+            false
+        )
     }
 
     override fun setLocationPermissionsRequestedSingleTime() {
@@ -110,7 +113,7 @@ class GlobalPreferencesImpl @Inject constructor(
         } else {
 
             editor.putString(
-                PREFERENCE_SELECTED_TEMPERATURE_UNIT, ""
+                PREFERENCE_SELECTED_TEMPERATURE_UNIT, null
             ).apply()
 
         }

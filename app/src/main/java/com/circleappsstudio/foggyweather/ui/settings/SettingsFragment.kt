@@ -3,7 +3,6 @@ package com.circleappsstudio.foggyweather.ui.settings
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.viewModels
 import com.circleappsstudio.foggyweather.R
 import com.circleappsstudio.foggyweather.application.AppConstants.CELSIUS
@@ -25,34 +24,46 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         binding = FragmentSettingsBinding.bind(view)
 
         checkSelectedTemperatureUnit()
+        temperatureUnitButtonsListener()
+
         checkSelectedTheme()
+        themeButtonsListener()
+
     }
 
     private fun checkSelectedTemperatureUnit() {
+        /*
+            Method to check which temperature is selected.
+        */
 
+        // Check which temperature unit is selected.
         when (getTemperatureUnitPreference()) {
 
             CELSIUS -> {
+                // Selected temperature unit is celsius.
                 binding.btnCelsius.isChecked = true
             }
 
             FAHRENHEIT -> {
+                // Selected temperature unit is fahrenheit.
                 binding.btnFahrenheit.isChecked = true
-            }
-
-            else -> {
-                binding.btnCelsius.isChecked = true
             }
 
         }
 
+    }
+
+    private fun temperatureUnitButtonsListener() {
+        /*
+            Method to listen which temperature unit Button is pressed.
+        */
         binding.btnCelsius.setOnClickListener {
 
             if (binding.btnFahrenheit.isChecked) {
                 binding.btnFahrenheit.isChecked = false
             }
 
-            // Set SharedPreference...
+            // Set temperature unit SharedPreference to celsius.
             setTemperatureUnitPreference(CELSIUS)
 
         }
@@ -63,7 +74,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 binding.btnCelsius.isChecked = false
             }
 
-            // Set SharedPreference...
+            // Set temperature unit SharedPreference to fahrenheit.
             setTemperatureUnitPreference(FAHRENHEIT)
 
         }
@@ -104,8 +115,13 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
         }
 
-        binding.btnLightMode.setOnClickListener {
+    }
 
+    private fun themeButtonsListener() {
+        /*
+            Method to listen which theme Button is pressed.
+        */
+        binding.btnLightMode.setOnClickListener {
 
             if (binding.btnDarkMode.isChecked) {
                 binding.btnDarkMode.isChecked = false
@@ -115,6 +131,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 binding.btnAutomaticMode.isChecked = false
             }
 
+            // Set light mode.
             setLightMode()
 
         }
@@ -129,6 +146,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 binding.btnAutomaticMode.isChecked = false
             }
 
+            // Set dark mode.
             setDarkMode()
 
         }
@@ -143,6 +161,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 binding.btnDarkMode.isChecked = false
             }
 
+            // Set automatic mode.
             setAutomaticMode()
 
         }
@@ -156,7 +175,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         return globalPreferencesViewModel.getTemperatureUnit()
     }
 
-    fun setTemperatureUnitPreference(temperatureUnit: String) {
+    private fun setTemperatureUnitPreference(temperatureUnit: String) {
         /*
             Method to set selected temperature unit.
         */

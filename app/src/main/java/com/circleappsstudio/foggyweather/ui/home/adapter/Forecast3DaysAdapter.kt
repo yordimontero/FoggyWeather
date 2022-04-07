@@ -91,10 +91,11 @@ class Forecast3DaysAdapter(
                 .centerCrop()
                 .into(binding.imgIcon)
 
+            // Check which temperature unit is selected.
             when (temperatureUnit) {
 
                 CELSIUS -> {
-
+                    // Selected temperature unit is celsius.
                     binding.txtMaxTemp.text = item.day.maxtemp_c.toString()
                     binding.txtTemperatureUnitMax.text = context.resources.getString(R.string.celsius)
 
@@ -104,7 +105,7 @@ class Forecast3DaysAdapter(
                 }
 
                 FAHRENHEIT -> {
-
+                    // Selected temperature unit is fahrenheit.
                     binding.txtMaxTemp.text = item.day.maxtemp_f.toString()
                     binding.txtTemperatureUnitMax.text = context.resources.getString(R.string.fahrenheit)
 

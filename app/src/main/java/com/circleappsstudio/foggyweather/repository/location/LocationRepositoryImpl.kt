@@ -2,7 +2,6 @@ package com.circleappsstudio.foggyweather.repository.location
 
 import android.content.Context
 import com.circleappsstudio.foggyweather.application.location.LocationUtils
-import com.circleappsstudio.foggyweather.application.location.LocationUtilsImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.withContext
@@ -16,13 +15,21 @@ class LocationRepositoryImpl @Inject constructor(
 ): LocationRepository {
 
     @ExperimentalCoroutinesApi
+    override suspend fun requestLocation(context: Context)
+            = withContext(Dispatchers.IO) {
+        /*
+            Method to request current location from GPS.
+        */
+        locationUtils.requestLocation(context)
+    }
+
+    @ExperimentalCoroutinesApi
     override suspend fun getLocation(
         context: Context
     ): List<String> = withContext(Dispatchers.IO) {
         /*
-            Method to get current location from GPS.
+            Method to get current location (latitude & longitude) from GPS.
         */
         locationUtils.getLocation(context)
     }
-
 }

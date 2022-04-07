@@ -109,14 +109,17 @@ class ForecastByHourAdapter(
                 .centerCrop()
                 .into(binding.imgIcon)
 
+            // Check which temperature unit is selected.
             when (temperatureUnit) {
 
                 CELSIUS -> {
+                    // Selected temperature unit is celsius.
                     binding.txtTemperature.text = item.temp_c
                     binding.txtTemperatureUnit.text = context.resources.getString(R.string.celsius)
                 }
 
                 FAHRENHEIT -> {
+                    // Selected temperature unit is fahrenheit.
                     binding.txtTemperature.text = item.temp_f
                     binding.txtTemperatureUnit.text = context.resources.getString(R.string.fahrenheit)
                 }

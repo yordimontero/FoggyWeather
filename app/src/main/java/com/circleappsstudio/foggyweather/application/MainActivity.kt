@@ -101,7 +101,15 @@ class MainActivity : AppCompatActivity(),
                 }
 
                 R.id.fragment_more -> {
+                    showBottomNavigation()
+                    showArrowBack()
                     showSettings()
+                }
+
+                R.id.fragment_settings -> {
+                    hideBottomNavigation()
+                    showArrowBack()
+                    hideSettings()
                 }
 
                 else -> {

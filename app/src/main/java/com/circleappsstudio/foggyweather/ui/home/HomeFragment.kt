@@ -255,7 +255,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
     }
 
-    @ExperimentalCoroutinesApi
+    /*@ExperimentalCoroutinesApi
     private fun fetchLocationObserver() {
         /*
             Method to get current location (latitude & longitude) from GPS.
@@ -324,6 +324,96 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                 }
 
             }, 3500L)
+
+        } else {
+            /*
+                If GPS is turned off but there is some last searched location, coordinates will be the that location.
+                If there is not any last searched location, gpsCheckDialog will be displayed.
+            */
+            if (checkIfThereIsAnyLastSearchedLocation()) {
+                // There is some last searched location.
+                checkInternetToGetWeatherDataObserver()
+            } else {
+                // There is not any last searched location.
+                showGPSCheckDialog()
+                hideMainProgressbar()
+                hideMainLayout()
+            }
+
+        }
+
+    }*/
+
+    @ExperimentalCoroutinesApi
+    private fun fetchLocationObserver() {
+        /*
+            Method to get current location (latitude & longitude) from GPS.
+        */
+        showMainProgressbar()
+
+        if (checkIfGPSIsEnabled(requireContext())) {
+            // GPS is turned on.
+
+            locationViewModel.fetchLocation(requireContext())
+                .observe(viewLifecycleOwner, Observer { resultEmitted ->
+
+                    when (resultEmitted) {
+
+                        is Result.Loading -> {
+                            showMainProgressbar()
+                        }
+
+                        is Result.Success -> {
+
+                            if (!checkIfThereIsAnyLastSearchedLocation()) {
+                                /*
+                                    If there's not any last searched location, coordinates will be the GPS data.
+                                    If there's some last searched location, coordinates will be the that location.
+                                */
+                                coordinates =
+                                    "${resultEmitted.data[0]},${resultEmitted.data[1]}"
+                            }
+
+                            checkInternetToGetWeatherDataObserver()
+
+                        }
+
+                        is Result.Failure -> {
+                            /*
+                                Could not fetch current location, request location from GPS.
+                            */
+                            requestLocationObserver()
+
+                            Handler(
+                                Looper.getMainLooper()
+                            ).postDelayed({
+                                /*
+                                    Delaying to have time to get current location when user try again.
+                                */
+                                if (view != null) {
+
+                                    requireContext().showToast(
+                                        "${resources.getString(R.string.something_went_wrong)}: ${
+                                            resources.getString(
+                                                R.string.could_not_get_location
+                                            )
+                                        }",
+                                        Toast.LENGTH_LONG
+                                    )
+
+                                    hideMainProgressbar()
+                                    hideMainLayout()
+
+                                }
+
+                            }, 4000L)
+
+                        }
+
+                    }
+
+                })
+
 
         } else {
             /*
